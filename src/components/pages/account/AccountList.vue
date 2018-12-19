@@ -1,0 +1,216 @@
+<template>
+  <div class="account-list">
+      <el-breadcrumb separator-class="el-icon-arrow-right">
+        <el-breadcrumb-item :to="{ path: '/' }">{{$t('nav.home')}}</el-breadcrumb-item>
+        <el-breadcrumb-item to="">{{$t('account.accounts')}}</el-breadcrumb-item>
+      </el-breadcrumb>
+
+    <div style="padding: 40px 44px;">
+      <el-table
+        :data="accountList"
+        v-loading="isloading">
+        <el-table-column
+          prop=""
+          :label="$t('account.rank')"
+          width="150"
+          align="left">
+          <template slot-scope="scope">
+            <span>{{getRank((currentPage-1)*pageSize,scope.row)}}</span>
+          </template>
+        </el-table-column>
+
+        <el-table-column
+          prop="address"
+          :label="$t('account.address')"
+          align="left">
+          <template slot-scope="scope">
+            <span @click="handleClickAddress(scope.row.address)" type="text" class="btn-hash">{{scope.row.address}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="balance"
+          :label="$t('account.balance')"
+          align="left">
+        </el-table-column>
+        <el-table-column
+          prop="weight"
+          :label="$t('account.weight')"
+          width="150"
+          align="left">
+        </el-table-column>
+      </el-table>
+      <el-pagination
+        class="ep"
+        current-page.sync="currentPage"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :page-sizes="[10, 20, 50, 100]"
+        layout="sizes, prev, pager, next, jumper"
+        :total="total">
+      </el-pagination>
+    </div>
+  </div>
+</template>
+
+<script>
+  import axios from 'axios'
+  import { dataFilter } from '../../../utils/common.js'
+  export default {
+    name: 'AccountList',
+    data () {
+      return {
+        accountList: [],
+        currentPage: 1,
+        pageSize: 10,
+        total: 0,
+        isloading: false
+      }
+    },
+    created () {
+      this.getAccountList()
+    },
+    methods: {
+      getRank(a,row){
+        for(let i in  this.accountList){
+          let item = this.accountList[i]
+          if(item.id == row.id){
+            return +i + 1 +a
+          }
+        }
+      },
+      getAccountList () {
+        let that = this
+        that.isloading = true
+        axios.get('/api/token/accountList', {
+          params: {
+            tokenid: 'INT',
+            pageNum: that.$route.params.p,
+            pageSize: that.pageSize
+          }
+        })
+          .then(function(res) {
+            let result = res.data
+            if (result.status === 'success') {
+              that.isloading = false
+              that.total = result.data.total
+              that.currentPage = +that.$route.params.p
+              that.accountList = result.data.accountList
+              that.accountList.forEach(item => {
+                item.weight = +item.balance / Math.pow(10, 9)
+                item.weight = Math.floor(item.weight * 100 * Math.pow(10, 7)) / Math.pow(10, 7) + '%'
+                item.balance = dataFilter(+item.balance, 5) + ' ' + 'INT'
+              })
+            }
+          })
+          .catch(function(err) {
+            alert(err)
+          })
+      },
+      handleCurrentChange (val) {
+        this.currentPage = val
+        this.$router.push(`/blockchain/accountlist/${val}`)
+        this.getAccountList()
+      },
+      handleSizeChange (val) {
+        this.pageSize = val
+        this.getAccountList()
+      },
+      handleClickAddress (val) {
+        this.$router.push({ path: '/blockchain/accountdetail/1', query: {address: val} })
+      }
+    }
+  }
+
+</script>
+
+<style lang="scss">
+  .account-list {
+    width: 1200px;
+    margin: 90px auto;
+    box-shadow: 0px 6px 10px 0px #ccc;
+    background-color: #fff;
+    .el-breadcrumb {
+      padding: 21px 33px;
+      border-bottom: 1px solid #ccc;
+      & .el-breadcrumb__item:first-of-type {
+        & span {
+          margin-left: 30px;
+        }
+      }
+
+      .el-breadcrumb__item:first-of-type {
+        position: relative;
+      }
+      .el-breadcrumb__item:first-of-type:before {
+        content: url('../../../assets/home.png');
+        position: absolute;
+        top: -3px
+      }
+    }
+    .el-table {
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      th {
+        background-color: #f1f1ff;
+        height: 60px !important;
+      }
+      td {
+        border-bottom: none;
+      }
+      .btn-hash {
+        color: #3C31D7;
+        font-weight: 500;
+      }
+      .btn-hash:hover {
+          text-decoration: underline;
+      }
+      .el-table__row:nth-of-type(even) {
+        background-color: #f9f9ff;
+      }
+      .el-loading-spinner .path {
+        stroke: #3C31D7;
+      }
+    }
+    .ep {
+      margin: 30px 0 80px 0;
+      text-align: right;
+      .el-select-dropdown__item {
+        font-size: 12px !important;
+      }
+      .el-pager {
+        margin-top: 3px;
+      }
+      .el-pager li {
+        min-width: 22px !important;
+        height: 22px;
+        line-height: 22px;
+        margin: 0 5px;
+      }
+      .el-pager li:hover {
+        color: #3C31D7;
+      }
+      .el-pager li.active {
+        color: #fff;
+        background-color: #3C31D7;
+        border-radius: 5px;
+      }
+      .el-pager .more::before {
+        line-height: 0px;
+      }
+      .el-select .el-input.is-focus .el-input__inner {
+        border-color: #3C31D7;
+      }
+      .el-input__inner:focus {
+        border-color: #3C31D7;
+        outline: 0;
+      }
+      .el-pagination__sizes .el-input .el-input__inner:hover {
+        border-color: #3C31D7;
+      }
+      .el-input__inner {
+        box-shadow: none;
+      }
+    }
+  }
+</style>

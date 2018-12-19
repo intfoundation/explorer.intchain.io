@@ -1,8 +1,14 @@
-# my-project
+# INT Blockchain Explorer
 
-> A Vue.js project
+> Its frontend is a single page application using vuejs.
 
-## Build Setup
+> Please visit [https://test.explorer.intchain.io/#/](https://test.explorer.intchain.io/#/) to view all data in INT.
+
+## Run the explorer frontend locally
+### Step 1: Install Node.js
+1、Install lastest node.js so you can execute 'npm' command by either downloading zip or installer from [https://nodejs.org/en/download/](https://nodejs.org/en/download/) or via [package manager](https://nodejs.org/en/download/package-manager/)
+
+### Step 2: Build and Run
 
 ``` bash
 # install dependencies
@@ -16,15 +22,10 @@ npm run build
 
 # build for production and view the bundle analyzer report
 npm run build --report
-
-# run unit tests
-npm run unit
-
-# run e2e tests
-npm run e2e
-
-# run all tests
-npm test
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+## License
+[MIT](https://opensource.org/licenses/MIT)
+
+Copyright (c) INT
+

@@ -3,24 +3,34 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-// 注意这里直接引入的是router文件夹
-import VueLazyload from 'vue-lazyload'
+import VueI18n from 'vue-i18n'
 import Element from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css' // 如果不引入样式，则根本没有element的样式，
-// 但是上面不是引入了整个element了吗？为什么还要单独引入，这难道是element的一个bug吗？出现问题的原因还是要去查一下的。
+import 'element-ui/lib/theme-chalk/index.css'
+import lang from 'element-ui/lib/locale/lang/en'
+import locale from 'element-ui/lib/locale'
+
+Vue.use(VueI18n)
+Vue.use(Element)
+
+
+
+// 设置语言
+locale.use(lang)
 
 Vue.config.productionTip = false
 
-Vue.use(VueLazyload)
-Vue.use(Element)
+const i18n = new VueI18n({
+  locale: 'en',  // 语言标识
+  messages: {
+    'en': require('./lang/en') //英文语言包
+  }
+})
 
 /* eslint-disable no-new */
 new Vue({
-  // el: '#app',
+  el: '#app', // 挂载的是index.html中的id，不是App.vue中的id
   router,
-  template: `<App/>`,
-  components: { App } // 这应该是解构赋值的方式，代表一个模块
-}).$mount('#app')
-// mount挂载到 index.html文件，div标签的id
-// import from 引入文件是JS的写法，与通过<script>引入JS文件的方式相比，更符合JS的写法，也更加模块化
-// Vue是项目的依赖，
+  i18n,
+  components: {App}, // 是API文档选项/资源中的一个内容，它是一个对象，也可以写成{App: App}
+  template: '<App/>' // 是一个字符串，也可以写成'<App></App>'
+})
