@@ -1,7 +1,7 @@
 'use strict'
 const utils = require('./utils')
 const webpack = require('webpack')
-const config = require('../config')
+const config = require('../config')  // 可以引入整个文件夹
 const merge = require('webpack-merge')
 const path = require('path')
 const baseWebpackConfig = require('./webpack.base.conf')
@@ -10,7 +10,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
 
-const HOST = process.env.HOST
+const HOST = process.env.HOST // process从哪个里面来的？？？
 const PORT = process.env.PORT && Number(process.env.PORT)
 
 const devWebpackConfig = merge(baseWebpackConfig, {
