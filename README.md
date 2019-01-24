@@ -1,14 +1,8 @@
-# INT Blockchain Explorer
+# web-ui
 
-> Its frontend is a single page application using vuejs.
+> web-ui for new chain
 
-> Please visit [https://test.explorer.intchain.io/#/](https://test.explorer.intchain.io/#/) to view all data in INT.
-
-## Run the explorer frontend locally
-### Step 1: Install Node.js
-1、Install lastest node.js so you can execute 'npm' command by either downloading zip or installer from [https://nodejs.org/en/download/](https://nodejs.org/en/download/) or via [package manager](https://nodejs.org/en/download/package-manager/)
-
-### Step 2: Build and Run
+## Build Setup
 
 ``` bash
 # install dependencies
@@ -24,8 +18,4 @@ npm run build
 npm run build --report
 ```
 
-## License
-[MIT](https://opensource.org/licenses/MIT)
-
-Copyright (c) INT
-
+For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).

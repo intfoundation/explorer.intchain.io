@@ -13,13 +13,13 @@
           </template>
         </el-table-column>
 
-        <el-table-column prop="height" :label="$t('transactionList.height')" align="left">
+        <el-table-column prop="height" :label="$t('transactionList.height')" align="left" width="85">
           <template slot-scope="scope">
             <span type="text" @click="handleClickHeight(scope.row.height)" class="btn-height" style="color: #3C31D7">{{scope.row.height}}</span>
           </template>
         </el-table-column>
 
-        <el-table-column prop="timestamp" :label="$t('transactionList.timestamp')" align="left">
+        <el-table-column prop="timestamp" :label="$t('transactionList.timestamp')" align="left" width="110">
         </el-table-column>
 
         <el-table-column prop="method" :label="$t('transactionList.txtype2')" align="left">
@@ -56,6 +56,7 @@
         :current-page.sync="currentPage"
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
+        :page-size="20"
         :page-sizes="[10, 20, 50, 100]"
         layout="sizes, prev, pager, next, jumper"
         :total="total">
@@ -73,7 +74,7 @@
       return {
         txlist: [],
         currentPage: 1,
-        pageSize: 10,
+        pageSize: 20,
         total: 0,
         isloading: false,
         now: ''
@@ -82,24 +83,9 @@
     created () {
     },
     mounted () {
-      setTimeout(async () => {
-        await this.getServerTime()
-        this.getTxList()
-      }, 0)
+      this.getTxList()
     },
     methods: {
-      async getServerTime () {
-        await axios.get('/api/trans/getTimes')
-          .then((res) => {
-            let result = res.data
-            if (result.status === 'success') {
-              this.now = result.data
-            }
-          })
-          .catch((err) => {
-            console.log(err)
-          })
-      },
       getTxList () {
         let that = this
         that.isloading = true
@@ -122,7 +108,7 @@
                 } else {
                   item.to_address = item.to_address
                 }
-                item.timestamp = formatPassTime(Date.parse(item.timestamp), that.now)
+                item.timestamp = formatPassTime(Date.parse(item.timestamp), result.time)
                 item.value = dataFilter(+item.value, 5)
                 item.value = item.value + ' ' + 'INT'
               })
@@ -206,21 +192,24 @@
       }
       .btn-status {
         cursor: default;
-        padding: 6px 12px;
+        padding: 6px 6px;
         width: 84px;
         span {
           color: #fff;
+          font-size: 13px;
         }
       }
       .btn-height {
         padding: 6px 18px 6px 0;
         color: #3C31D7;
         font-weight: 500;
+        cursor: pointer;
       }
       .btn-height:hover {
         text-decoration: underline;
       }
       .btn-hash {
+        cursor: pointer;
         padding: 6px 18px 6px 0;
         display: inline-block;
         overflow: hidden;
@@ -247,6 +236,9 @@
       }
       .el-loading-spinner .path {
         stroke: #3C31D7;
+      }
+      .cell {
+        padding-right: 0 !important;
       }
     }
     .ep {

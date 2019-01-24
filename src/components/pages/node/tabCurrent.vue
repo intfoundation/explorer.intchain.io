@@ -27,11 +27,11 @@
         <template slot-scope="scope">
           <a
             :href="scope.row.webUrl"
-            v-if="scope.row.webUrl !== '' "
+            v-if="scope.row.webUrl !== null "
             class="format"
-            style="display: block;margin-left: 10px;"
+            style="display: block;margin-left: 10px;cursor: pointer;word-break: normal;"
             target="_blank">{{ scope.row.teamName }}</a>
-          <div v-else style="margin-left: 10px;">{{ scope.row.teamName }}</div>
+          <div v-else style="margin-left: 10px;word-break: normal;">{{ scope.row.teamName }}</div>
         </template>
       </el-table-column>
       <el-table-column
@@ -70,7 +70,7 @@
     <div class="seperator">
       <div>
         <!--<span class="declare">Top<span>13</span> nodes are INT super nodes</span>-->
-        <span class="declare" style="font-size: 16px;">The above</span>
+        <span class="declare" style="font-size: 16px;">The top 13 candidate nodes with the most votes are Thearchy Nodes.</span>
       </div>
       <i class="no">NO</i>
     </div>
@@ -78,11 +78,12 @@
     <el-table
       :data="candidateList.filter( data => !search || data.node.toLowerCase().indexOf(search.toLowerCase()) > -1 )"
       class="candidate"
-      style="border-bottom-right-radius: 4px;border-bottom-left-radius: 4px;">
+      style="border-bottom-right-radius: 4px !important; border-bottom-left-radius: 4px !important;">
       <el-table-column
         :label="$t('account.rank')"
         align="left"
         type="index"
+        :index="index"
         width="70"
       >
       </el-table-column>
@@ -103,11 +104,11 @@
         <template slot-scope="scope">
           <a
             :href="scope.row.webUrl"
-            v-if="scope.row.webUrl !== '' "
+            v-if="scope.row.webUrl !== null "
             class="format"
-            style="display: block;margin-left: 10px;"
+            style="display: block;margin-left: 10px;cursor: pointer;word-break: normal;"
             target="_blank">{{ scope.row.teamName }}</a>
-          <div v-else style="margin-left: 10px;">{{ scope.row.teamName }}</div>
+          <div v-else style="margin-left: 10px;word-break: normal;">{{ scope.row.teamName }}</div>
         </template>
       </el-table-column>
       <el-table-column
@@ -161,7 +162,8 @@
         pageSize: 10,
         isloading: false,
         search: '',
-        totalVotes: null
+        totalVotes: null,
+        index: 14
       }
     },
     created () {
@@ -216,11 +218,12 @@
       }
     }
     .el-table:nth-of-type(1) {
-      border-top-right-radius: 4px;
+      border-top-right-radius: 4px !important;
     }
     .el-table {
       width: 100%;
       border: 1px solid #ccc;
+      border-radius: 0 !important;
       th {
         background-color: #f1f1ff;
         height: 60px !important;

@@ -78,7 +78,7 @@
                 <span>{{$t('transactionList.value')}}</span>
                 <span>{{item.value}}</span>
               </div>
-              <div class="in">
+              <div class="in transactionIn">
                 <span>{{$t('transactionList.txtype')}}</span>
                 <span>{{item.method}}</span>
               </div>
@@ -108,50 +108,31 @@
         refresh: '',
         transactionList: [],
         socket: null,
-        formatPassTime,
-        now: ''
+        formatPassTime
       }
     },
     mounted () {
-      setTimeout(async () => {
-        await this.getServerTime()
-        this.getBlockData()
-        this.getTransactionList()
-        this.getSocket()
-      }, 0)
+      // setTimeout(async () => {
+        // await this.getServerTime()
+      this.getBlockData()
+      this.getTransactionList()
+      this.getSocket()
+      // }, 0)
       // this.refresh = setInterval(()=>{
       //   this.getBlockData();
       //   this.getTransactionList()
       // },10000)
     },
     methods: {
-       async getServerTime () {
-         await axios.get('/api/trans/getTimes')
-           .then((res) => {
-             let result = res.data
-             if (result.status === 'success') {
-               this.now = result.data
-             }
-           })
-           .catch((err) => {
-             console.log(err)
-           })
-       },
-       getSocket () {
-        // await that.getServerTime()
+      getSocket () {
         let that = this
          that.socket = io();
-         that.socket.on('getTime', function(res) {
-           if (res.status === 'success') {
-             that.now = res.data
-           }
-         })
          that.socket.on('transList',function(res){
           if (res.status === 'success') {
             let result = res.data
             that.transactionList = result
             that.transactionList.forEach(item => {
-              item.timestamp = formatPassTime(Date.parse(item.timestamp), that.now)
+              item.timestamp = formatPassTime(Date.parse(item.timestamp), res.time)
               item.value = dataFilter(+item.value, 5) + ' ' + 'INT'
             })
           }
@@ -161,7 +142,7 @@
             let result = res.data
             that.blockList = result
             that.blockList.forEach(item => {
-              item.timestamp = formatPassTime(Date.parse(item.timestamp), that.now)
+              item.timestamp = formatPassTime(Date.parse(item.timestamp), res.time)
               item.reward = dataFilter(Number(item.reward), 5) + ' ' + 'INT'
               item.avg_fee = dataFilter(Number(item.avg_fee), 5) + ' ' + 'INT'
             })
@@ -175,7 +156,7 @@
           if (result.status === 'success') {
             that.blockList = result.data
             that.blockList.forEach(item => {
-              item.timestamp = formatPassTime(Date.parse(item.timestamp), this.now)
+              item.timestamp = formatPassTime(Date.parse(item.timestamp), result.time)
               item.reward = dataFilter(Number(item.reward), 5) + ' ' + 'INT'
               item.avg_fee = dataFilter(Number(item.avg_fee), 5) + ' ' + 'INT'
             })
@@ -192,7 +173,7 @@
           if (result.status === 'success') {
             that.transactionList = result.data
             that.transactionList.forEach(item => {
-              item.timestamp = formatPassTime(Date.parse(item.timestamp), this.now)
+              item.timestamp = formatPassTime(Date.parse(item.timestamp), result.time)
               item.value = dataFilter(+item.value, 5) + ' ' + 'INT'
             })
           }
@@ -205,7 +186,6 @@
       // clearTimeout(this.refresh)
       this.socket.close('transList', function() {})
       this.socket.close('blockList', function() {})
-      this.socket.close('getTime', function() {})
     }
   }
 </script>
@@ -281,6 +261,19 @@
     }
     .in {
       margin-top: 4px;
+    }
+    .transactionIn {
+      & > span:nth-of-type(1) {
+        vertical-align: middle;
+      }
+      & > span:nth-of-type(2) {
+        display: inline-block;
+        width: 137px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        vertical-align: middle;
+      }
     }
     .is {
       margin-top: 12px;

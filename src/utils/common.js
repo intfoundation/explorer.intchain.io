@@ -1,5 +1,5 @@
 const formatPassTime = function (startTime,currentTime) {
-  let time = currentTime - startTime
+  let time = Number(currentTime) - Number(startTime)
   let day = parseInt(time / (1000 * 60 * 60 * 24))
   let hour = parseInt(time / (1000 * 60 * 60))
   let min = parseInt(time / (1000 * 60))
@@ -19,7 +19,7 @@ const formatPassTime = function (startTime,currentTime) {
     return hour>1 ? (hour + " hours ago"):(hour + " hour ago")
   }
   if(min) {
-    return min>1 ? (min + " minutes ago"):(min + " minute ago")
+    return min>1 ? (min + " mins ago"):(min + " min ago")
   }
   if(sec) {
     return sec>1 ? (sec + " secs ago"):(sec + " sec ago")
@@ -40,7 +40,21 @@ const dataFilter = function (data,size) {
   return result
 }
 
+const percentageFilter = function (data, size) {
+  let dataStr = data.toString()
+  if (data === 1) {
+    return '100' + '%';
+  } else if (dataStr.length <= 4) {
+    return (data * 100).toString() + '%';
+  } else {
+    let h = Math.pow(10, size);
+    let m = (Math.floor(data * h) / h) * 100;
+    return m.toString() + '%';
+  }
+}
+
 export {
   formatPassTime,
-  dataFilter
+  dataFilter,
+  percentageFilter
 }

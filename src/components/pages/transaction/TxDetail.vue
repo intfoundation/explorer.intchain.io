@@ -1,6 +1,5 @@
 <template>
-  <div class="trans-details">
-
+  <div class="trans-details" v-if="isvalidHash">
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/' }">{{$t('nav.home')}}</el-breadcrumb-item>
       <el-breadcrumb-item :to="{ path: '/blockchain/txlist/1'}">{{$t('detail.Trade_list')}}</el-breadcrumb-item>
@@ -16,7 +15,12 @@
 
         <div class="trad-list">
           <span class="span-width">{{$t('detail.block_height')}}：</span>
-          <router-link class="format" :to="{ path: '/blockchain/blockdetail', query: {height: transObj.height}}">{{transObj.height}}</router-link>
+          <router-link
+            class="format"
+            :to="{ path: '/blockchain/blockdetail',
+            query: {height: transObj.height}}"
+            v-if="transObj.returnCode !== -1">{{transObj.height}}</router-link>
+          <span v-else>(Pending)</span>
         </div>
 
         <div class="trad-list">
@@ -26,17 +30,27 @@
         </div>
 
         <div class="trad-list">
+          <span class="span-width">{{$t('detail.returnCode')}}：</span>
+          <span>{{transObj.returnCode}}</span>
+        </div>
+
+        <div class="trad-list">
           <span class="span-width">{{$t('detail.Trading_state')}}：</span>
           <span
-            v-bind:class="[transObj.returnCode === 0 ? 'sus' : transObj.returnCode === -1 ? 'pending' : 'fal', 'trade-state']">
-            {{ transObj.returnCode === 0 ? $t('detail.success') : transObj.returnCode === -1 ? $t('detail.pending') : $t('detail.fail')}}
+            v-if="transObj.returnCode !== undefined"
+            class="trade-state"
+            v-bind:class="{'sus': transObj.returnCode === 0, 'pending': transObj.returnCode === -1, 'fal': transObj.returnCode !== 0 && transObj.returnCode !== -1}"
+            >{{ transObj.returnCode === 0 ? $t('detail.success') : transObj.returnCode === -1 ? $t('detail.pending') : $t('detail.fail')}}
           </span>
         </div>
 
         <div class="trad-list">
           <span class="span-width">{{$t('detail.time_stamp')}}：</span>
-          <span>{{transObj.timestamp}}</span>
-          <span style="margin-left: 10px;font-size: 15px;vertical-align: -1px;">({{timer}})</span>
+          <span v-if="transObj.returnCode !== -1">
+            <span>{{transObj.timestamp}}</span>
+            <span v-if="transObj.timestamp" style="margin-left: 10px;font-size: 15px;vertical-align: -1px;">({{timer}})</span>
+          </span>
+          <span v-else>Pending</span>
         </div>
         </div>
 
@@ -50,20 +64,27 @@
       <div class="tab-content">
         <component
           v-bind:is="currentTabComponent"
-          v-bind:input="transObj.input"
+          v-bind:input="input"
           v-bind:logs="transObj.logs">
         </component>
       </div>
     </div>
   </div>
+  <div class="invalidHash" v-else>
+    <div class="middle-p">
+      <i class="err-img"></i>
+      <div>{{$t('err.invalidHash')}}</div>
+    </div>
+  </div>
 </template>
 
 <script>
+  import { BigNumber } from 'bignumber.js';
   import Vue from 'vue'
-  import axios from 'axios';
+  import moment from 'moment'
   import Txtype from './TxType'
   import Request from '../api.js'
-  import { formatPassTime, dataFilter } from '../../../utils/common.js'
+  import { formatPassTime } from '../../../utils/common.js'
   Vue.component('tab-input', {
     props: ['input'],
     template: '<div style="word-break: break-all;">{{input}}</div>'
@@ -84,15 +105,14 @@
         curTab: this.$t('detail.input'),
         hash: '',
         now: '',
-        timer: ''
+        timer: '',
+        input: null,
+        isvalidHash: true
       }
     },
-    mounted() {
-      setTimeout(async () => {
-        await this.getServerTime()
-        this.hash = this.$route.query.hash
-        this.transDetail(this.hash)
-      }, 0)
+    created () {
+      this.hash = this.$route.query.hash
+      this.transDetail(this.hash)
     },
     watch: {
       $route (to) {
@@ -105,25 +125,22 @@
       }
     },
     methods: {
-      async getServerTime () {
-        await axios.get('/api/trans/getTimes')
-          .then((res) => {
-            let result = res.data
-            if (result.status === 'success') {
-              this.now = result.data
-            }
-          })
-          .catch((err) => {
-            console.log(err)
-          })
-      },
        transDetail(hash) {
         try {
           let url = '/api/trans/transDetail'
           Request(url, {hash: hash}).then(res => {
-            this.transObj = res
-            this.timer = this.transObj.timestamp
-            this.transObj.timestamp=formatPassTime(Date.parse(this.transObj.timestamp), this.now)
+            let arr = res.data
+            if (arr.length === 0) {
+              this.isvalidHash = false
+              return
+            }
+            this.transObj = res.data[0]
+            this.timer = moment(new Date(this.transObj.timestamp)).format("YYYY-MM-DD HH:mm Z")
+            this.transObj.timestamp=formatPassTime(Date.parse(this.transObj.timestamp), res.time)
+            this.input = JSON.parse(this.transObj.input)
+            if (this.input.amount) {
+              this.input.amount = new BigNumber(this.input.amount).dividedBy(Math.pow(10, 18)).toString()
+            }
           }, err => {
 
           })
@@ -284,12 +301,37 @@
     padding-top: 25px;
     padding-left: 42px;
     padding-right: 42px;
-    overflow: scroll;
+    overflow: auto;
   }
 
   .span-width {
     display: inline-block;
     width: 220px;
+  }
+  .invalidHash {
+    width: 1200px;
+    margin: 90px auto;
+    box-shadow: 0px 6px 10px 0px #ccc;
+    background-color: #fff;
+    position: relative;
+    .middle-p {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      .err-img {
+        width: 186px;
+        height: 162px;
+        display: inline-block;
+        background-image: url("../../../assets/no-search-outcome.png");
+        background-size: cover;
+      }
+      div {
+        margin-top: 36px;
+        font-size: 18px;
+      }
+    }
+
   }
 
 </style>

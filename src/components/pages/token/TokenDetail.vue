@@ -7,22 +7,27 @@
     </el-breadcrumb>
     <div class="detail-content">
       <div class="overview">
+        <!--token名字-->
         <div>
-          <!--总发行量-->
+          <span class="detail-span">{{$t('token.name2')}}</span>
+          <span>{{tokenDetail.name }}</span>
+          <span style="margin-left: 5px;" v-if="tokenDetail.symbol">({{tokenDetail.symbol}})</span>
+        </div>
+
+        <!--总发行量-->
+        <div>
           <span class="detail-span">{{$t('token.totalsupply')}}</span>
           <span>{{tokenDetail.amount}}</span>
         </div>
-        <!--<div>-->
-          <!--<span class="detail-span">{{$t('token.price2')}}</span>-->
-          <!--&lt;!&ndash;<span></span>&ndash;&gt; 这个数据从coinmarket获取-->
-        <!--</div>-->
+
+        <!--持有账户-->
         <div>
-          <!--持有账户-->
           <span class="detail-span">{{$t('token.holders')}}</span>
           <span>{{tokenDetail.total}}</span>
         </div>
+
+        <!--总交易量-->
         <div>
-          <!--总交易量-->
           <span class="detail-span">{{$t('contract.transactions')}}</span>
           <span>{{transTotal}} txns</span>
         </div>
@@ -153,6 +158,18 @@
                 <span @click="handleClickAddress(scope.row.address)" type="text" class="btn-height">{{scope.row.address}}</span>
               </template>
             </el-table-column>
+            <el-table-column
+              prop="balance"
+              :label="$t('account.balance')"
+              width="200"
+              align="left">
+            </el-table-column>
+            <el-table-column
+              prop="percentage"
+              :label="$t('account.percentage')"
+              width="100"
+              align="left">
+            </el-table-column>
           </el-table>
           <el-pagination
             class="ep"
@@ -169,7 +186,7 @@
 
 <script>
   import axios from 'axios'
-  import { formatPassTime, dataFilter } from '../../../utils/common.js'
+  import { formatPassTime, dataFilter, percentageFilter } from '../../../utils/common.js'
   export default {
     name: '',
     data () {
@@ -191,10 +208,7 @@
     mounted () {
       this.tokenid = this.$route.query.tokenid
       this.getTokenDetail()
-      setTimeout(async () => {
-        await this.getServerTime()
-        this.getTokenTransaction()
-      }, 0)
+      this.getTokenTransaction()
     },
     watch: {
       curTab (val) {
@@ -206,18 +220,6 @@
       }
     },
     methods: {
-      async getServerTime () {
-         await axios.get('/api/trans/getTimes')
-          .then((res) => {
-            let result = res.data
-            if (result.status === 'success') {
-              this.now = result.data
-            }
-          })
-          .catch((err) => {
-            console.log(err)
-          })
-      },
       getTokenDetail () {
         let that = this
         axios.get('/api/token/tokenDetail', {
@@ -257,7 +259,7 @@
               that.pageNum = +that.$route.params.p
               that.transactionsList = result.data
               that.transactionsList.forEach(item => {
-                item.timestamp = formatPassTime(Date.parse(item.timestamp), that.now)
+                item.timestamp = formatPassTime(Date.parse(item.timestamp), result.time)
                 item.value = dataFilter(+item.value, 5)
                 item.fee = dataFilter(+item.fee, 5) + ' ' + 'INT'
               })
@@ -288,10 +290,14 @@
               }
               that.pageNum = +that.$route.params.p
               that.tokenAccountList = result.data.accountList
+              for (let i = 0; i < that.tokenAccountList.length; i++) {
+                that.tokenAccountList[i].percentage = that.tokenAccountList[i].balance / +that.tokenDetail.amount
+                that.tokenAccountList[i].percentage = percentageFilter(that.tokenAccountList[i].percentage, 4)
+              }
             }
           })
           .catch(function (error) {
-            alert(error)
+            throw new Error(error)
           })
       },
       handleCurrentChange (val) {
@@ -422,6 +428,7 @@
           .btn-height {
             color: #3C31D7;
             font-weight: 500;
+            cursor: pointer;
           }
           .btn-height:hover {
             text-decoration: underline;

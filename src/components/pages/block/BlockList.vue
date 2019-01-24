@@ -68,6 +68,7 @@
         @current-change="handleCurrentChange"
         @size-change="handleSizeChange"
         :current-page.sync="currentPage"
+        :page-size="20"
         :page-sizes="[10, 20, 50, 100]"
         layout="sizes, prev, pager, next, jumper"
         :total="total">
@@ -87,30 +88,15 @@
         blocklist: [],
         currentPage: 1,
         total: 0,
-        pageSize: 10,
+        pageSize: 20,
         isloading: false,
         now: ''
       }
     },
     mounted () {
-      setTimeout(async () => {
-        this.getServerTime()
-        this.getBlockList()
-      }, 0)
+      this.getBlockList()
     },
     methods: {
-      async getServerTime () {
-        await axios.get('/api/trans/getTimes')
-          .then((res) => {
-            let result = res.data
-            if (result.status === 'success') {
-              this.now = result.data
-            }
-          })
-          .catch((err) => {
-            console.log(err)
-          })
-      },
       getBlockList () {
         // let that = this
         this.isloading = true
@@ -128,7 +114,7 @@
               this.total = result.total
                this.currentPage = +this.$route.params.p
               this.blocklist.forEach(item => {
-                item.timestamp = formatPassTime(Date.parse(item.timestamp), this.now)
+                item.timestamp = formatPassTime(Date.parse(item.timestamp), result.time)
                 item.avg_fee = dataFilter(+item.avg_fee, 5) + ' ' + 'INT'
                 item.total_fee = dataFilter(+item.total_fee, 5) + ' ' + 'INT'
                 item.reward = dataFilter(+item.reward, 5) + ' ' + 'INT'
@@ -205,11 +191,13 @@
       .btn-height {
         color: #3C31D7;
         font-weight: 500;
+        cursor: pointer;
       }
       .btn-height:hover {
         text-decoration: underline;
       }
       .btn-hash {
+        cursor: pointer;
         display: inline-block;
         overflow: hidden;
         white-space: nowrap;

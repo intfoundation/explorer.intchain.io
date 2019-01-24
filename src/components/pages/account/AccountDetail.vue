@@ -19,7 +19,8 @@
         </div>
         <div>
           <span class="detail-span">{{$t('account.balance2')}}</span>
-          <span>{{accountDetail.balance}}</span>
+          <span v-if="accountDetail.balance !== 'NaN INT' ">{{accountDetail.balance}}</span>
+          <span v-else>0 INT</span>
           <router-link class="inquire" :to="{path: '/blockchain/account/inquire', query: {address: address}}">{{$t('account.inquire')}}</router-link>
         </div>
         <div>
@@ -47,12 +48,12 @@
           </div>
           <el-table
             :data="transactionlist"
-            style="width: 100%"
-            v-loading="isloading">
+            v-loading="isloading"
+            style="width: 100%; border-bottom-right-radius: 4px !important; border-bottom-left-radius: 4px !important;">
             <el-table-column
               prop="hash"
               :label="$t('transactionList.txhash2')"
-              width="170"
+              width="160"
               align="left">
               <template slot-scope="scope">
                 <span class="btn-common">
@@ -64,6 +65,7 @@
             <el-table-column
               prop="height"
               :label="$t('transactionList.height')"
+              width="75"
               align="left">
               <template slot-scope="scope">
                 <span @click="handleClickHeight(scope.row.height)" type="text" class="btn-height" v-if="scope.row.returnCode !== -1">{{ scope.row.height}}</span>
@@ -73,7 +75,7 @@
             <el-table-column
               prop=""
               :label="$t('transactionList.timestamp')"
-              width="120"
+              width="100"
               align="left">
               <template slot-scope="scope">
                 <span>{{ scope.row.returnCode !== -1 ? scope.row.timestamp : 'pending' }}</span>
@@ -89,7 +91,7 @@
               prop="from_address"
               :label="$t('transactionList.from2')"
               align="left"
-              width="170">
+              width="160">
               <template slot-scope="scope">
                 <span
                   @click="handleClickAddress(scope.row.from_address)"
@@ -101,7 +103,8 @@
             </el-table-column>
             <el-table-column
               label=""
-              align="center">
+              align="left"
+              width="70">
               <template slot-scope="scope">
                 <el-button
                   v-if="scope.row.to_address"
@@ -113,9 +116,10 @@
               prop="to_address"
               :label="$t('transactionList.to2')"
               align="left"
-              width="170">
+              width="160">
               <template slot-scope="scope">
                 <span
+                  v-if="scope.row.to_address"
                   @click="handleClickAddress(scope.row.to_address)"
                   type="text"
                   :disabled="scope.row.to_address == accountDetail.address || scope.row.to_address == null"
@@ -155,12 +159,12 @@
           </div>
           <el-table
             :data="tokenTranslist"
-            style="width: 100%"
-            v-loading="isloading">
+            v-loading="isloading"
+            style="width: 100%; border-bottom-right-radius: 4px !important; border-bottom-left-radius: 4px !important;">
             <el-table-column
               prop="hash"
               :label="$t('transactionList.txhash2')"
-              width="170"
+              width="160"
               align="left">
               <template slot-scope="scope">
                 <span class="btn-common">
@@ -172,6 +176,7 @@
             <el-table-column
               prop="height"
               :label="$t('transactionList.height')"
+              width="75"
               align="left">
               <template slot-scope="scope">
                 <span @click="handleClickHeight(scope.row.height)" type="text" class="btn-height" v-if="scope.row.returnCode !== -1">{{scope.row.height}}</span>
@@ -181,7 +186,7 @@
             <el-table-column
               prop="timestamp"
               :label="$t('transactionList.timestamp')"
-              width="120"
+              width="100"
               align="left">
               <template slot-scope="scope">
                 <span>{{ scope.row.returnCode !== -1 ? scope.row.timestamp : 'pending' }}</span>
@@ -197,7 +202,7 @@
               prop="from_address"
               :label="$t('transactionList.from2')"
               align="left"
-              width="170">
+              width="160">
               <template slot-scope="scope">
                 <span
                   @click="handleClickAddress(scope.row.from_address)"
@@ -209,7 +214,7 @@
             </el-table-column>
             <el-table-column
               label=""
-              align="center">
+              align="left">
               <template slot-scope="scope">
                 <el-button
                   v-if="scope.row.to_address"
@@ -221,7 +226,7 @@
               prop="to_address"
               :label="$t('transactionList.to2')"
               align="left"
-              width="170">
+              width="160">
               <template slot-scope="scope">
                 <span
                   @click="handleClickAddress(scope.row.to_address)"
@@ -291,29 +296,15 @@
       $route (to) {
         this.getAccountDetail(to.query.address)
         this.getAccountRecord(to.query.address)
+        this.address = to.query.address
       }
     },
     mounted () {
       this.address = this.$route.query.address
       this.getAccountDetail(this.address)
-      setTimeout(async () => {
-        await this.getServerTime()
-        this.getAccountRecord(this.address)
-      }, 0)
+      this.getAccountRecord(this.address)
     },
     methods: {
-      async getServerTime () {
-        await axios.get('/api/trans/getTimes')
-          .then((res) => {
-            let result = res.data
-            if (result.status === 'success') {
-              this.now = result.data
-            }
-          })
-          .catch((err) => {
-            console.log(err)
-          })
-      },
       getAccountDetail (address) {
         let that = this
         axios.get('/api/wallet/walletDtail', {
@@ -325,9 +316,17 @@
             let result = res.data
             if (result.status === 'success') {
               that.accountDetail = result.data
-              that.accountDetail.balance = dataFilter(+that.accountDetail.balance, 5) + ' ' + 'INT'
-              QRCode.toCanvas(document.getElementById('canvas'), result.data.address, function() {
-              })
+              if (result.data.address) {
+                that.accountDetail.address = that.accountDetail.address
+                that.accountDetail.balance = dataFilter(+that.accountDetail.balance, 5) + ' ' + 'INT'
+                QRCode.toCanvas(document.getElementById('canvas'), result.data.address, function() {
+                })
+              } else {
+                that.accountDetail.address = that.address
+                that.accountDetail.balance = '0' + ' ' + 'INT'
+                QRCode.toCanvas(document.getElementById('canvas'), that.address, function() {
+                })
+              }
             }
           })
           .catch(function(err) {
@@ -357,7 +356,7 @@
               that.tokenTranslist = result.data
               // 这个地方的处理有问题，页面渲染2遍，先是按直接拿过来的数据渲染一遍，然后再按处理过的数据渲染一遍
               that.tokenTranslist.forEach(item => {
-                item.timestamp = formatPassTime(Date.parse(item.timestamp), that.now)
+                item.timestamp = formatPassTime(Date.parse(item.timestamp), result.time)
                 item.value = dataFilter(+item.value, 5) + ' ' + 'token'
                 item.cost = dataFilter(+item.cost, 5) + ' ' + 'INT'
               })
@@ -390,7 +389,7 @@
               that.transactionlist = result.data
               // 这个地方的处理有问题，页面渲染2遍，先是按直接拿过来的数据渲染一遍，然后再按处理过的数据渲染一遍
               that.transactionlist.forEach(item => {
-                item.timestamp = formatPassTime(Date.parse(item.timestamp), that.now)
+                item.timestamp = formatPassTime(Date.parse(item.timestamp), result.time)
                 item.value = dataFilter(+item.value, 5) + ' ' + 'INT'
                 item.cost = dataFilter(+item.cost, 5) + ' ' + 'INT'
               })
@@ -504,6 +503,7 @@
         }
         .el-table {
           border: 1px solid #ccc;
+          border-radius: 0 !important;
           th {
             background-color: #f1f1ff;
             height: 60px !important;
@@ -517,6 +517,7 @@
           .btn-height {
             color: #3C31D7;
             font-weight: 500;
+            cursor: pointer;
           }
           .btn-height:hover {
             text-decoration: underline;
@@ -528,6 +529,7 @@
           .btn-hash {
             color: #3C31D7;
             font-weight: 500;
+            cursor: pointer;
           }
           .btn-hash:hover {
             text-decoration: underline;
@@ -541,13 +543,17 @@
             text-overflow: ellipsis;
           }
           .btn-status {
-            padding: 6px 12px;
+            padding: 6px 6px;
             cursor: default;
             span {
               color: #fff;
               display: inline-block;
               width: 31px;
+              font-size: 12px;
             }
+          }
+          .cell {
+            padding-right: 0 !important;
           }
           .success {
             background: #31D7A8;

@@ -106,6 +106,7 @@
         :current-page.sync="currentPage"
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
+        :page-size="20"
         :page-sizes="[10, 20, 50, 100]"
         layout="sizes, prev, pager, next, jumper"
         :total="total">
@@ -123,7 +124,7 @@
       return {
         transactionlist: [],
         currentPage: 1,
-        pageSize: 10,
+        pageSize: 20,
         total: 0,
         address: '',
         isloading: false,
@@ -134,10 +135,7 @@
       this.address = this.$route.query.address
     },
     mounted () {
-      setTimeout(async () => {
-        await this.getServerTime()
-        this.getAccountRecord()
-      }, 0)
+      this.getAccountRecord()
     },
     methods: {
       async getServerTime () {
@@ -153,7 +151,6 @@
           })
       },
       getAccountRecord () {
-        console.log('---this now', this.now)
         let that = this
         that.isloading = true
         axios.get('/api/trans/searchByAddress', {
@@ -172,8 +169,8 @@
               that.transactionlist = result.data
               // 这个地方的处理有问题，页面渲染2遍，先是按直接拿过来的数据渲染一遍，然后再按处理过的数据渲染一遍
               that.transactionlist.forEach(item => {
-                item.timestamp = formatPassTime(Date.parse(item.timestamp), that.now)
-                item.value = dataFilter(+item.value, 5) + ' ' + 'token'
+                item.timestamp = formatPassTime(Date.parse(item.timestamp), result.time)
+                item.value = dataFilter(+item.value, 5) + ' ' + 'INT'
                 item.fee = dataFilter(+item.fee, 5) + ' ' + 'INT'
               })
             }
@@ -297,6 +294,7 @@
         color: #3C31D7;
         font-weight: 500;
         padding: 6px 18px 6px 0;
+        cursor: pointer;
       }
       .btn-height:hover {
         text-decoration: underline;
@@ -308,6 +306,7 @@
       .btn-hash {
         color: #3C31D7 !important;
         font-weight: 500;
+        cursor: pointer;
       }
       .btn-hash:hover {
         text-decoration: underline;

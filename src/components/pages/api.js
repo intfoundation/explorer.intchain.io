@@ -3,7 +3,7 @@ function request (url, params) {
   return axios.get(url, {params}
     ).then( res => {
     if (res.data.status === "success") {
-      let result = res.data.data[0]
+      let result = res.data
       return result
     }
   }).catch (err => {

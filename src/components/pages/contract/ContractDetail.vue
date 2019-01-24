@@ -25,7 +25,7 @@
         </div>
         <div>
           <span class="detail-span">{{$t('contract.creator')}}</span>
-          <router-link :to="{path: '/blockchain/accountdetail', query: {address: tokenDetail.caller} }" class="detail-address"> {{tokenDetail.caller}} </router-link>
+          <router-link :to="{path: '/blockchain/accountdetail/1', query: {address: tokenDetail.caller} }" class="detail-address"> {{tokenDetail.caller}} </router-link>
           <span>{{$t('contract.atTxn')}}</span>
           <router-link :to="{path: '/blockchain/txdetail', query: {hash: tokenDetail.hash} }" class="detail-address">{{ tokenDetail.hash }}</router-link>
         </div>
@@ -116,6 +116,7 @@
             class="ep"
             :current-page.sync="pageNum"
             @current-change="handleCurrentChange"
+            :page-size="20"
             :page-sizes="[10, 20, 50, 100]"
             layout="prev, pager, next"
             :total="transTotal">
@@ -142,7 +143,7 @@
         transTotal: 0,
         accountTotal: 0,
         pageNum: 1,
-        pageSize: 10,
+        pageSize: 20,
         tabs: this.$t("transactionList.transactionListTitle"),
         isloading: false,
         address: '',
@@ -160,26 +161,11 @@
     },
     mounted () {
       this.contract = this.$route.query.contract
-      setTimeout(async () => {
-        await this.getServerTime()
-        this.getTokenTransaction()
-      })
+      this.getTokenTransaction()
       this.getTokenDetail()
 
     },
     methods: {
-      async getServerTime () {
-        await axios.get('/api/trans/getTimes')
-          .then((res) => {
-            let result = res.data
-            if (result.status === 'success') {
-              this.now = result.data
-            }
-          })
-          .catch((err) => {
-            console.log(err)
-          })
-      },
       getTokenDetail () {
         let that = this
         axios.get('/api/token/tokenDetail', {
@@ -191,7 +177,6 @@
             let result = res.data
             if (result.status === 'success') {
               if (JSON.stringify(result.data) === '{}') {
-                console.log('404')
                 that.$router.push('/404')
               } else {
                 that.tokenDetail = result.data
@@ -200,7 +185,7 @@
             }
           })
           .catch(function (error) {
-            alert(error)
+            console.log(error)
           })
       },
       getTokenTransaction () {
@@ -225,19 +210,19 @@
               that.pageNum = +that.$route.params.p
               that.transactionsList = that.result.data
               that.transactionsList.forEach(item => {
-                item.timestamp = formatPassTime(Date.parse(item.timestamp), that.now)
+                item.timestamp = formatPassTime(Date.parse(item.timestamp), that.result.time)
                 item.value = dataFilter(+item.value, 5) + ' ' + 'INT'
                 item.fee = dataFilter(+item.fee, 5) + ' ' + 'INT'
               })
             }
           })
           .catch(function (error) {
-            alert(error)
+            console.log(error)
           })
       },
       handleCurrentChange (val) {
         this.pageNum = val
-        this.$router.push( {path: `/blockchain/contract/${val}`, query: {contract: contract}} )
+        this.$router.push( {path: `/blockchain/contract/${val}`, query: {contract: this.contract}} )
         this.getTokenTransaction()
       },
       handleClickHeight (val) {
@@ -361,6 +346,7 @@
             padding: 6px 18px 6px 0;
             color: #3C31D7;
             font-weight: 500;
+            cursor: pointer;
           }
           .btn-height:hover {
             text-decoration: underline;
@@ -375,6 +361,7 @@
           .btn-hash {
             color: #3C31D7;
             font-weight: 500;
+            cursor: pointer;
           }
           .btn-hash:hover {
             text-decoration: underline;

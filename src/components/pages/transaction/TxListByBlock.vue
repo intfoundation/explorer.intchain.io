@@ -93,6 +93,7 @@
         current-page.sync="currentPage"
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
+        :page-size="20"
         :page-sizes="[10, 20, 50, 100]"
         layout="sizes, prev, pager, next, jumper"
         :total="total">
@@ -110,7 +111,7 @@
       return {
         oneBlockList: [],
         currentPage: 1,
-        pageSize: 10,
+        pageSize: 20,
         total: 0,
         height: 0,
         isloading: false,
@@ -119,24 +120,9 @@
     },
     mounted () {
       this.height = this.$route.query.height
-      setTimeout(async () => {
-        await this.getServerTime()
-        this.getTxList()
-      }, 0)
+      this.getTxList()
     },
     methods: {
-      async getServerTime () {
-        await axios.get('/api/trans/getTimes')
-          .then((res) => {
-            let result = res.data
-            if (result.status === 'success') {
-              this.now = result.data
-            }
-          })
-          .catch((err) => {
-            console.log(err)
-          })
-      },
       getTxList () {
         let that = this
         that.isloading = true
@@ -154,7 +140,7 @@
               that.oneBlockList = result.data
               that.total = result.total
               that.oneBlockList.forEach(item => {
-                item.timestamp = formatPassTime(Date.parse(item.timestamp), that.now)
+                item.timestamp = formatPassTime(Date.parse(item.timestamp), result.time)
                 item.value = dataFilter(+item.value, 5)
                 item.value = item.value + ' ' + 'INT'
               })
@@ -271,11 +257,13 @@
       .btn-height {
         color: #3C31D7;
         font-weight: 500;
+        cursor: pointer;
       }
       .btn-height:hover {
         text-decoration: underline;
       }
       .btn-hash {
+        cursor: pointer;
         display: inline-block;
         overflow: hidden;
         white-space: nowrap;

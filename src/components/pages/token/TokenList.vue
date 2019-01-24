@@ -44,9 +44,10 @@
         </el-table>
         <el-pagination
           class="ep"
-          current-page.sync="currentPage"
+          :current-page.sync="currentPage"
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
+          :page-size="20"
           :page-sizes="[10, 20, 50, 100]"
           layout="sizes, prev, pager, next, jumper"
           :total="total">
@@ -64,7 +65,7 @@
       return {
         tokenlist: [],
         currentPage: 1,
-        pageSize: 10,
+        pageSize: 20,
         total: 0,
         isloading: false
       }
@@ -82,7 +83,7 @@
         axios.get('/api/token/tokenList', {
           params: {
             pageNum: that.$route.params.p,
-            pageSize: 10
+            pageSize: that.pageSize
           }
         })
           .then(function(res) {
@@ -204,6 +205,7 @@
     .btn-height {
       color: #3C31D7;
       font-weight: 500;
+      cursor: pointer;
     }
     .btn-height:hover {
       text-decoration: underline;

@@ -22,7 +22,14 @@
         </el-table-column>
         <el-table-column prop="balance" :label="$t('account.balance')" align="center"></el-table-column>
       </el-table>
-      <el-pagination class="ep" current-page.sync="currentPage" @size-change="handleSizeChange" @current-change="handleCurrentChange" :page-sizes="[10, 20, 50, 100]" layout="sizes, prev, pager, next, jumper" :total="total">
+      <el-pagination
+        class="ep"
+        current-page.sync="currentPage"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :page-size="20"
+        :page-sizes="[10, 20, 50, 100]"
+        layout="sizes, prev, pager, next, jumper" :total="total">
       </el-pagination>
     </div>
   </div>
@@ -36,7 +43,7 @@
         otherTokenList: [],
         currentPage: 1,
         total: 0,
-        pageSize: 10,
+        pageSize: 20,
         address: '',
         searchContent: '',
         isloading: false
@@ -67,6 +74,7 @@
               that.isloading = false
               that.otherTokenList = result.data.tokenList
               that.total = result.data.total
+              that.searchContent = ''
             }
           })
           .catch(function(error) {
@@ -145,6 +153,7 @@
       .btn-height {
         color: #3C31D7;
         font-weight: 500;
+        cursor: pointer;
       }
       .btn-height:hover {
         text-decoration: underline;

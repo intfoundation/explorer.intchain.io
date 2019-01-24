@@ -9,6 +9,7 @@ const BlockDetail = resolve => require(['@/components/pages/block/BlockDetail'],
 
 // 搜索无结果
 const Error = resolve => require(['@/components/pages/error/404'], resolve);
+const invalidHash = resolve => require(['@/components/pages/error/InvalidHash'], resolve);
 
 // 账户
 const AccountList = resolve => require(['@/components/pages/account/AccountList'], resolve);
@@ -133,9 +134,14 @@ const router = new Router({
           component: BlockProducer
         },
         {
-          path: '/404',
+          path: '/search',
           component: Error,
           name: 'Error'
+        },
+        {
+          path: '/invalidHash',
+          component: invalidHash,
+          name: 'invalidHash'
         }
       ]
     }

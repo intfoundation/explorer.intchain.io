@@ -22,6 +22,7 @@
         <el-table-column
           prop="address"
           :label="$t('account.address')"
+          width="400"
           align="left">
           <template slot-scope="scope">
             <span @click="handleClickAddress(scope.row.address)" type="text" class="btn-hash">{{scope.row.address}}</span>
@@ -35,7 +36,11 @@
         <el-table-column
           prop="weight"
           :label="$t('account.weight')"
-          width="150"
+          align="left">
+        </el-table-column>
+        <el-table-column
+          prop="txCount"
+          :label="$t('blocksList.txns2')"
           align="left">
         </el-table-column>
       </el-table>
@@ -44,6 +49,7 @@
         current-page.sync="currentPage"
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
+        :page-size="20"
         :page-sizes="[10, 20, 50, 100]"
         layout="sizes, prev, pager, next, jumper"
         :total="total">
@@ -61,7 +67,7 @@
       return {
         accountList: [],
         currentPage: 1,
-        pageSize: 10,
+        pageSize: 20,
         total: 0,
         isloading: false
       }
@@ -161,6 +167,7 @@
       .btn-hash {
         color: #3C31D7;
         font-weight: 500;
+        cursor: pointer;
       }
       .btn-hash:hover {
           text-decoration: underline;

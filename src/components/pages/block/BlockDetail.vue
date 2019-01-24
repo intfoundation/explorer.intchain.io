@@ -55,6 +55,7 @@
 
 <script>
   import axios from 'axios'
+  import moment from 'moment'
   import { formatPassTime, dataFilter } from '../../../utils/common.js'
   export default {
     name: 'BlockDetail',
@@ -67,11 +68,8 @@
       }
     },
     mounted () {
-      setTimeout(async () => {
-        await this.getServerTime()
-        this.height = this.$route.query.height
-        this.getBlockDetail(this.height)
-      }, 0)
+      this.height = this.$route.query.height
+      this.getBlockDetail(this.height)
     },
     watch: {
       $route (to) {
@@ -79,22 +77,6 @@
       }
     },
     methods: {
-      async getServerTime () {
-        // let that = this
-        await axios.get('/api/trans/getTimes')
-          .then(res => {
-            let result = res.data
-            if (result.status === 'success') {
-               this.now = result.data
-            }
-          })
-          .catch((err) => {
-            console.log(err)
-          })
-      },
-      back () {
-        this.$router.go(-1)
-      },
       getBlockDetail (h) {
         let that = this
         axios.get('/api/block/blockDetail', {
@@ -106,8 +88,8 @@
             let result = res.data
             if (result.status === 'success') {
               that.blockdetail = result.data[0]
-              that.timer = that.blockdetail.timestamp
-              that.blockdetail.timestamp = formatPassTime(Date.parse(that.blockdetail.timestamp), that.now)
+              that.timer = moment(new Date(that.blockdetail.timestamp)).format("YYYY-MM-DD HH:mm Z")
+              that.blockdetail.timestamp = formatPassTime(Date.parse(that.blockdetail.timestamp), result.time)
               that.blockdetail.avg_fee = dataFilter(+that.blockdetail.avg_fee, 5) + ' ' + 'INT'
               that.blockdetail.totalFee = dataFilter(+that.blockdetail.totalFee, 5) + ' ' + 'INT'
               that.blockdetail.reward = dataFilter(+that.blockdetail.reward, 5) + ' ' + 'INT'

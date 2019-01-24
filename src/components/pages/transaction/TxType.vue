@@ -15,34 +15,47 @@
            v-if="transObj.method !== 'vote'
            && transObj.method !== 'unmortgage'
            && transObj.method !== 'mortgage'
-           && transObj.method !== 'register'">
+           && transObj.method !== 'register'
+           && transObj.method !== 'freezeAccount'">
         <span class="span-width">{{$t('transactionList.to')}}</span>
         <div style="display: inline-block;" v-if="inputs&&inputs.tokenid">
           <span>{{$t('contract.contract')}}</span>
           <router-link
             :to="{ path: '/blockchain/contract/1', query: {contract: tokenid}}"
             class="format">{{tokenid}}</router-link>
-          <span v-if="transObj.tokenName !== null ">&nbsp;({{transObj.tokenName}})</span>
+          <!--在pending状态下没有tokenName字段，在fail状态下，tokenName返回null-->
+          <span v-if="transObj.tokenName">&nbsp;({{transObj.tokenName}})</span>
+
+          <span v-else-if="transObj.tokenName === null">(Fail)</span>
+          <span v-else>(Pending)</span>
         </div>
-        <router-link
+        <!--contract单独处理，关于锁仓的-->
+        <div style="display: inline-block;" v-else-if="inputs&&inputs.contractid">
+          <span>{{$t('contract.contract')}}</span>
+          <router-link
+            :to="{ path: '/blockchain/accountdetail/1', query: {address: contractid}}"
+            class="format">{{contractid}}</router-link>
+        </div>
+
+          <router-link
           v-else
           :to="{ path: '/blockchain/accountdetail/1', query: {address: transObj.to_address}}"
           class="format">{{transObj.to_address}}</router-link>
-      </div>
+       </div>
 
       <div class="trad-list" v-if="transObj.method === 'vote'">
-      <span class="span-width" style="vertical-align: top;">{{$t('detail.Node_name')}}：</span>
-      <div style="display: inline-block;">
-      <router-link
-        style="margin-bottom: 10px; cursor: pointer;"
-        tag="div"
-        v-for="(item, index) in node"
-        :key="index" v-if="index <= maxIndex"
-        :to="{ path: '/blockchain/accountdetail/1', query: {address: item}}"
-        class="format" >{{item}}</router-link>
-      <span v-if="node.length > 5 && (maxIndex !== node.length - 1)" @click="more" style="cursor: pointer;">{{$t('blocksList.viewMore')}}</span>
-      <span v-if="node.length > 5 && (maxIndex === node.length - 1)" @click="less" style="cursor: pointer;">{{$t('detail.less')}}</span>
-      </div>
+        <span class="span-width" style="vertical-align: top;">{{$t('detail.Node_name')}}：</span>
+        <div style="display: inline-block;">
+        <router-link
+          style="margin-bottom: 10px; cursor: pointer;"
+          tag="div"
+          v-for="(item, index) in node"
+          :key="index" v-if="index <= maxIndex"
+          :to="{ path: '/blockchain/accountdetail/1', query: {address: item}}"
+          class="format" >{{item}}</router-link>
+          <span v-if="node.length > 5 && (maxIndex !== node.length - 1)" @click="more" style="cursor: pointer;">{{$t('blocksList.viewMore')}}</span>
+          <span v-if="node.length > 5 && (maxIndex === node.length - 1)" @click="less" style="cursor: pointer;">{{$t('detail.less')}}</span>
+        </div>
       </div>
 
       <!--tokens transferred-->
@@ -84,17 +97,20 @@
           class="format obc">{{inputs.freezeAddress}}</router-link>
 
 
-        <span>{{$t('transactionList.for2')}}</span>
-        <span>{{JSON.parse(transObj.input).amount}}</span>
-        <router-link
+        <span v-if="transObj.method !== 'transferOwnership' && transObj.method !== 'freezeAccount' ">
+          <span>{{$t('transactionList.for2')}}</span>
+          <span>{{JSON.parse(transObj.input).amount / Math.pow(10, 18)}}</span>
+          <router-link
           :to="{ path: '/blockchain/tokendetail/1', query: {tokenid: inputs.tokenid}}"
           class="format">{{transObj.tokenSymbol}}</router-link>
+        </span>
+
       </div>
 
       <!--value值-->
       <div class="trad-list">
         <span class="span-width">{{$t('transactionList.value')}}</span>
-        <span>{{dataFilter(+transObj.value, 5)}}</span>
+        <span>{{transObj.value}}</span>
       </div>
 
       <!--gas limit值-->
@@ -106,21 +122,21 @@
       <!--gas used by transaction-->
       <div class="trad-list">
         <span class="span-width">{{$t('transactionList.gasUsed')}}</span>
-        <span v-if="transObj.returnCode !== -1">{{parseInt(transObj.cost/transObj.price)}}</span>
-        <span v-else>-</span>
+        <span v-if="transObj.returnCode !== -1" v-show="transObj.price !== undefined">{{parseInt(transObj.cost/transObj.price)}}</span>
+        <span v-else>Pending</span>
       </div>
 
       <!--gas price-->
       <div class="trad-list">
         <span class="span-width">{{$t('transactionList.gasPrice')}}</span>
-        <span>{{transObj.price}} INT</span>
+        <span v-show="transObj.price !== undefined">{{transObj.price}} INT</span>
       </div>
 
       <!--actual tx cost-->
       <div class="trad-list">
         <span class="span-width">{{$t('transactionList.actualTxCost')}}</span>
-        <span v-if="transObj.returnCode !== -1">{{dataFilter(+transObj.cost, 5)}} INT</span>
-        <span v-else>-</span>
+        <span v-if="transObj.returnCode !== -1" v-show="transObj.cost !== undefined">{{dataFilter(+transObj.cost, 5)}} INT</span>
+        <span v-else>Pending</span>
       </div>
 
       <!--nonce-->
@@ -128,7 +144,6 @@
         <span class="span-width">{{$t('transactionList.nounce')}}</span>
         <span>{{transObj.nonce}}</span>
       </div>
-
     </div>
   </div>
 </template>
@@ -167,13 +182,17 @@
       node () {
         if (JSON.stringify(this.transObj) !== '{}') {
           let node = JSON.parse(this.transObj.input.replace(/'/g,`"`))
-          console.log('--+++=', node.candidates)
           return node.candidates
         }
       },
       tokenid () {
         if (JSON.stringify(this.transObj) !== '{}') {
           return JSON.parse(this.transObj.input.replace(/'/g,`"`)).tokenid
+        }
+      },
+      contractid () {
+        if (JSON.stringify(this.transObj) !== '{}') {
+          return JSON.parse(this.transObj.input.replace(/'/g,`"`)).contractid
         }
       }
     },

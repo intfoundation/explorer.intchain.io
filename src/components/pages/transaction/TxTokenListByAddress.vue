@@ -104,6 +104,7 @@
         current-page.sync="currentPage"
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
+        :page-size="20"
         :page-sizes="[10, 20, 50, 100]"
         layout="sizes, prev, pager, next, jumper"
         :total="totalToken">
@@ -121,7 +122,7 @@
       return {
         tokenTranslist: [],
         currentPage: 1,
-        pageSize: 10,
+        pageSize: 20,
         totalToken: 0,
         address: '',
         isloading: false,
@@ -132,24 +133,9 @@
       this.address = this.$route.query.address
     },
     mounted () {
-      setTimeout(async () => {
-        await this.getServerTime()
-        this.getTokenRecord()
-      }, 0)
+      this.getTokenRecord()
     },
     methods: {
-      async getServerTime () {
-        await axios.get('/api/trans/getTimes')
-          .then((res) => {
-            let result = res.data
-            if (result.status === 'success') {
-              this.now = result.data
-            }
-          })
-          .catch((err) => {
-            console.log(err)
-          })
-      },
       getTokenRecord () {
         let that = this
         that.isloading = true
@@ -169,7 +155,7 @@
               that.tokenTranslist = result.data
               // 这个地方的处理有问题，页面渲染2遍，先是按直接拿过来的数据渲染一遍，然后再按处理过的数据渲染一遍
               that.tokenTranslist.forEach(item => {
-                item.timestamp = formatPassTime(Date.parse(item.timestamp), that.now)
+                item.timestamp = formatPassTime(Date.parse(item.timestamp), result.time)
                 item.value = dataFilter(+item.value, 5) + ' ' + 'token'
                 item.fee = dataFilter(+item.fee, 5) + ' ' + 'INT'
               })
@@ -293,6 +279,7 @@
       .btn-height {
         color: #3C31D7;
         font-weight: 500;
+        cursor: pointer;
       }
       .btn-height:hover {
         text-decoration: underline;
@@ -304,6 +291,7 @@
       .btn-hash {
         color: #3C31D7;
         font-weight: 500;
+        cursor: pointer;
       }
       .btn-hash:hover {
         text-decoration: underline;

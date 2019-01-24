@@ -36,6 +36,7 @@
               :href="item.url"
               v-for="(item, index) in guidelist"
               :key="index"
+              target="_blank"
               class="chain-dropdown-i">{{item.name}}</a>
           </div>
         </div>
@@ -47,9 +48,9 @@
         <input
           type="text"
           :placeholder="$t('nav.placeholder')"
-          v-model="searchContent">
-        <span @click="search"><i class="search-icon"></i></span>
+          v-model="searchContent"><span @click="search"><i class="search-icon"></i></span>
       </div>
+
     </div>
   </div>
 </template>
@@ -103,9 +104,20 @@ export default {
       try {
           axios.get(url).then(
           function(result) {
+            if (result.data.isValidAddress) {
+              if (result.data.data.type === 'tokenid') {
+                that.$router.push({path: '/blockchain/tokendetail/1', query: {tokenid: that.searchContent}})
+                that.searchContent = ''
+                return
+              } else {
+                that.$router.push({path: '/blockchain/accountdetail/1', query: {address: that.searchContent}})
+                that.searchContent = ''
+                return
+              }
+            }
             let str = JSON.stringify(result.data.data)
             if (str === '{}') {
-              that.$router.push('/404')
+              that.$router.push({ path: '/search', query: {q: that.searchContent}} )
               that.searchContent = ''
               return
             } else {
@@ -235,28 +247,28 @@ export default {
         height: 52px;
         line-height: 52px;
         float: right;
-        position: relative;
         & input {
-          width: 330px;
+          width: 280px;
           box-sizing: border-box;
           height: 37px;
           padding-left: 10px;
-          border-radius: 4px;
+          border-top-left-radius: 4px;
+          border-bottom-left-radius: 4px;
           border: 1px solid #ccc;
+          border-right: none !important;
           outline: none;
+          vertical-align: middle;
         }
         & span {
           display: inline-block;
           width: 53px;
-          height: 36px;
+          height: 37px;
           line-height: 3;
           background-color: #3A3CDA;
-          position: absolute;
-          right: 0;
-          top: 8px;
           text-align: center;
           border-bottom-right-radius: 4px;
           border-top-right-radius: 4px;
+          vertical-align: middle;
         }
         .search-icon {
           background-image: url("../../assets/search.png");

@@ -34,6 +34,7 @@
         :current-page.sync="currentPage"
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
+        :page-size="20"
         :page-sizes="[10, 20, 50, 100]"
         layout="sizes, prev, pager, next, jumper"
         :total="accountTotal">
@@ -51,7 +52,7 @@
       return {
         tokenAccountList: [],
         currentPage: 1,
-        pageSize: 10,
+        pageSize: 20,
         accountTotal: 0,
         tokenid: '',
         isloading: false
@@ -192,6 +193,7 @@
       .btn-col {
         color: #3C31D7;
         font-weight: 500;
+        cursor: pointer;
       }
       .btn-col:hover {
         text-decoration: underline;

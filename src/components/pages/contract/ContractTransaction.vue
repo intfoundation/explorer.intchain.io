@@ -79,7 +79,15 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-pagination class="ep" :current-page.sync="currentPage" @size-change="handleSizeChange" @current-change="handleCurrentChange" :page-sizes="[10, 20, 50, 100]" layout="sizes, prev, pager, next, jumper" :total="transTotal"></el-pagination>
+      <el-pagination
+        class="ep"
+        :current-page.sync="currentPage"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :page-size="20"
+        :page-sizes="[10, 20, 50, 100]"
+        layout="sizes, prev, pager, next, jumper"
+        :total="transTotal"></el-pagination>
     </div>
   </div>
 </template>
@@ -93,7 +101,7 @@
       return {
         transactionsList: [],
         currentPage: 1,
-        pageSize: 10,
+        pageSize: 20,
         transTotal: 0,
         contract: '',
         isloading: false,
@@ -104,24 +112,9 @@
       this.contract = this.$route.query.contract
     },
     mounted () {
-      setTimeout(async () => {
-        await this.getServerTime()
-        this.getTokenTransaction()
-      })
+      this.getTokenTransaction()
     },
     methods: {
-      async getServerTime () {
-        await axios.get('/api/trans/getTimes')
-          .then((res) => {
-            let result = res.data
-            if (result.status === 'success') {
-              this.now = result.data
-            }
-          })
-          .catch((err) => {
-            console.log(err)
-          })
-      },
       getTokenTransaction () {
         let that = this
         that.isloading = true
@@ -140,7 +133,7 @@
               that.transactionsList = result.data
               that.currentPage = +that.$route.params.p
               that.transactionsList.forEach(item => {
-                item.timestamp = formatPassTime(Date.parse(item.timestamp), that.now)
+                item.timestamp = formatPassTime(Date.parse(item.timestamp), result.time)
                 item.value = dataFilter(+item.value, 5) + ' ' + 'token'
                 item.cost = dataFilter(+item.cost, 5) + ' ' + 'INT'
               })
@@ -169,7 +162,7 @@
         this.$router.push({path: '/blockchain/accountdetail', query: {address: val}})
       },
       cross () {
-        this.$router.push({path: '/blockchain/txlist'})
+        this.$router.push({path: '/blockchain/txlist/1'})
       }
     }
   }
@@ -261,6 +254,7 @@
       .btn-height {
         color: #3C31D7;
         font-weight: 500;
+        cursor: pointer;
       }
       .btn-height:hover {
         text-decoration: underline;
