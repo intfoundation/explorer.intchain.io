@@ -34,118 +34,124 @@ const AccountListByToken = resolve => require(['@/components/pages/token/Account
 // 超级节点
 const BlockProducer = resolve => require(['@/components/pages/node/Node'], resolve)
 
+//公投
+const referendum = resolve => require(['@/components/pages/referendum'], resolve)
+
+
 Vue.use(Router)
 const router = new Router({
-  routes: [
-    {
-      path: '/',
-      // name: 'Layout',
-      component: Layout,
-      children: [
-        {
-          path: '',
-          name: 'HomePage',
-          component: HomePage,
-          meta: []
-        },
-        {
-          path: '/blockchain/txdetail',
-          name: 'TxDetail',
-          component: TxDetail,
-        },
-        {
-          path: '/blockchain/txlist/:p',
-          name: 'TxList',
-          component: TxList
-        },
-        {
-          path: '/blockchain/txlist/byBlock/:p',
-          name: 'TxListByBlock',
-          component: TxListByBlock
-        },
-        {
-          path: '/blockchain/blocklist/:p',
-          name: 'BlockList',
-          component: BlockList
-        },
-        {
-          path: '/blockchain/blockdetail',
-          name: 'BlockDetail',
-          component: BlockDetail
-        },
-        {
-          path: '/blockchain/accountlist/:p',
-          name: 'AccountList',
-          component: AccountList
-        },
-        {
-          path: '/blockchain/accountdetail/:p',
-          name: 'AccountDetail',
-          component: AccountDetail
-        },
-        {
-          path: '/blockchain/account/inquire',
-          name: 'InquireToken',
-          component: InquireToken
-        },
-        {
-          path: '/blockchain/contract/:p',
-          name: 'ContractDetail',
-          component: ContractDetail
-        },
-        {
-          path: '/blockchain/contract/transactions/:p',
-          name: 'ContractTransaction',
-          component: ContractTransaction
-        },
-        {
-          path: '/blockchain/tokenlist/:p',
-          name: 'TokenList',
-          component: TokenList
-        },
-        {
-          path: '/blockchain/tokendetail/:p',
-          name: 'TokenDetail',
-          component: TokenDetail
-        },
-        {
-          path: '/blockchain/txlist/byAddress/:p',
-          name: 'TxListByAddress',
-          component: TxListByAddress
-        },
-        {
-          path: '/blockchain/tx/tokenlist/byAddress/:p',
-          name: 'TxTokenListByAddress',
-          component: TxTokenListByAddress
-        },
-        {
-          path: '/blockchain/txlist/byToken/:p',
-          name: 'TxListByToken',
-          component: TxListByToken
-        },
-        {
-          path: '/blockchain/accountlist/byToken/:p',
-          name: 'AccountListByToken',
-          component: AccountListByToken
-        },
-        {
-          path: '/node',
-          name: 'BlockProducer',
-          component: BlockProducer
-        },
-        {
-          path: '/search',
-          component: Error,
-          name: 'Error'
-        },
-        {
-          path: '/invalidHash',
-          component: invalidHash,
-          name: 'invalidHash'
-        }
-      ]
-    }
-  ]
+    routes: [{
+        path: '/',
+        // name: 'Layout',
+        component: Layout,
+        children: [{
+                path: '',
+                name: 'HomePage',
+                component: HomePage,
+                meta: []
+            },
+            {
+                path: '/blockchain/txdetail',
+                name: 'TxDetail',
+                component: TxDetail,
+            },
+            {
+                path: '/blockchain/txlist/:p',
+                name: 'TxList',
+                component: TxList
+            },
+            {
+                path: '/blockchain/txlist/byBlock/:p',
+                name: 'TxListByBlock',
+                component: TxListByBlock
+            },
+            {
+                path: '/blockchain/blocklist/:p',
+                name: 'BlockList',
+                component: BlockList
+            },
+            {
+                path: '/blockchain/blockdetail',
+                name: 'BlockDetail',
+                component: BlockDetail
+            },
+            {
+                path: '/blockchain/accountlist/:p',
+                name: 'AccountList',
+                component: AccountList
+            },
+            {
+                path: '/blockchain/accountdetail/:p',
+                name: 'AccountDetail',
+                component: AccountDetail
+            },
+            {
+                path: '/blockchain/account/inquire',
+                name: 'InquireToken',
+                component: InquireToken
+            },
+            {
+                path: '/blockchain/contract/:p',
+                name: 'ContractDetail',
+                component: ContractDetail
+            },
+            {
+                path: '/blockchain/contract/transactions/:p',
+                name: 'ContractTransaction',
+                component: ContractTransaction
+            },
+            {
+                path: '/blockchain/tokenlist/:p',
+                name: 'TokenList',
+                component: TokenList
+            },
+            {
+                path: '/blockchain/tokendetail/:p',
+                name: 'TokenDetail',
+                component: TokenDetail
+            },
+            {
+                path: '/blockchain/txlist/byAddress/:p',
+                name: 'TxListByAddress',
+                component: TxListByAddress
+            },
+            {
+                path: '/blockchain/tx/tokenlist/byAddress/:p',
+                name: 'TxTokenListByAddress',
+                component: TxTokenListByAddress
+            },
+            {
+                path: '/blockchain/txlist/byToken/:p',
+                name: 'TxListByToken',
+                component: TxListByToken
+            },
+            {
+                path: '/blockchain/accountlist/byToken/:p',
+                name: 'AccountListByToken',
+                component: AccountListByToken
+            },
+            {
+                path: '/node',
+                name: 'BlockProducer',
+                component: BlockProducer
+            },
+            {
+                path: '/search',
+                component: Error,
+                name: 'Error'
+            },
+            {
+                path: '/invalidHash',
+                component: invalidHash,
+                name: 'invalidHash'
+            },
+            {
+                path: '/referendum',
+                component: referendum,
+                name: 'referendum'
+            }
+        ]
+    }]
 })
 
 export default router

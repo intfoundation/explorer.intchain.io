@@ -19,14 +19,26 @@
         </div>
         <div>
           <span class="detail-span">{{$t('account.balance2')}}</span>
-          <span v-if="accountDetail.balance !== 'NaN INT' ">{{accountDetail.balance}}</span>
-          <span v-else>0 INT</span>
+          <span>{{accountDetail.balance}}</span>
           <router-link class="inquire" :to="{path: '/blockchain/account/inquire', query: {address: address}}">{{$t('account.inquire')}}</router-link>
         </div>
+
+        <div>
+          <span class="detail-span">{{$t('account.votes')}}</span>
+          <span v-if="accountDetail.stake">{{accountDetail.stake}}</span>
+          <span v-else>0</span>
+        </div>
+
         <div>
           <span class="detail-span">{{$t('contract.transactions')}}</span>
           <span>{{accountDetail.total}} txns</span>
         </div>
+
+        <div>
+          <span class="detail-span">{{$t('account.CTime')}}</span>
+          <span>{{accountDetail.createTime}}</span>
+        </div>
+
         <div>
           <span class="detail-span">{{$t('account.qrcode')}}</span>
           <canvas id="canvas"></canvas>
@@ -268,6 +280,7 @@
   import axios from 'axios'
   import QRCode from 'qrcode'
   import { formatPassTime, dataFilter } from '../../../utils/common.js'
+  import {changeTime} from "../../../utils/common";
   export default {
     data () {
       return {
@@ -327,6 +340,7 @@
                 QRCode.toCanvas(document.getElementById('canvas'), that.address, function() {
                 })
               }
+              that.accountDetail.createTime = that.accountDetail.createTime? changeTime (that.accountDetail.createTime) + ' (+08:00)' : '/';
             }
           })
           .catch(function(err) {

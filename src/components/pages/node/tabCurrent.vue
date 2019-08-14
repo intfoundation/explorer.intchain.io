@@ -1,14 +1,13 @@
 <template>
   <div class="candidate-node">
     <el-table
-      :data="superlist.filter( data => !search || data.node.toLowerCase().indexOf(search.toLowerCase()) > -1 )"
+      :data="superlist.filter( data => !search || data.node.toLowerCase().indexOf(search.toLowerCase()) > -1 || (data.teamName && data.teamName.toLowerCase().indexOf(search.toLowerCase()) > -1))"
       v-loading="isloading">
       <el-table-column
         :label="$t('account.rank')"
         align="left"
         type="index"
-        width="70"
-        >
+        width="60">
       </el-table-column>
       <el-table-column
         prop=""
@@ -16,7 +15,7 @@
         align="left"
         width="370">
         <template slot-scope="scope">
-          <span style="margin-left: 10px;">{{ scope.row.node }}</span>
+          <span>{{ scope.row.node }}</span>
         </template>
       </el-table-column>
 
@@ -27,7 +26,7 @@
         <template slot-scope="scope">
           <a
             :href="scope.row.webUrl"
-            v-if="scope.row.webUrl !== null "
+            v-if="scope.row.webUrl !== null"
             class="format"
             style="display: block;margin-left: 10px;cursor: pointer;word-break: normal;"
             target="_blank">{{ scope.row.teamName }}</a>
@@ -51,11 +50,20 @@
       </el-table-column>
       <el-table-column
         prop="vote"
-        width="120"
+        width="100"
         :label="$t('node.count')"
         align="left">
       </el-table-column>
       <el-table-column
+        prop=""
+        :label="$t('node.nodeReward')"
+        width="160"
+        align="left">
+        <template slot-scope="scope">
+          <span>{{ scope.row.reward==0?scope.row.reward:scope.row.reward.toFixed(4) }} INT</span>
+        </template>
+      </el-table-column>
+      <!-- <el-table-column
         align="right"
         class-name="slot-input"
         width="250">
@@ -64,7 +72,7 @@
             v-model="search"
             :placeholder="$t('node.placeholder')"/>
         </template>
-      </el-table-column>
+      </el-table-column> -->
     </el-table>
 
     <div class="seperator">
@@ -76,7 +84,7 @@
     </div>
 
     <el-table
-      :data="candidateList.filter( data => !search || data.node.toLowerCase().indexOf(search.toLowerCase()) > -1 )"
+      :data="candidateList.filter( data => !search || data.node.toLowerCase().indexOf(search.toLowerCase()) > -1 || (data.teamName && data.teamName.toLowerCase().indexOf(search.toLowerCase()) > -1))"
       class="candidate"
       style="border-bottom-right-radius: 4px !important; border-bottom-left-radius: 4px !important;">
       <el-table-column
@@ -84,7 +92,7 @@
         align="left"
         type="index"
         :index="index"
-        width="70"
+        width="60"
       >
       </el-table-column>
       <el-table-column
@@ -93,7 +101,7 @@
         align="left"
         width="370">
         <template slot-scope="scope">
-          <span style="margin-left: 10px;">{{ scope.row.node }}</span>
+          <span>{{ scope.row.node }}</span>
         </template>
       </el-table-column>
 
@@ -104,7 +112,7 @@
         <template slot-scope="scope">
           <a
             :href="scope.row.webUrl"
-            v-if="scope.row.webUrl !== null "
+            v-if="scope.row.webUrl !== null"
             class="format"
             style="display: block;margin-left: 10px;cursor: pointer;word-break: normal;"
             target="_blank">{{ scope.row.teamName }}</a>
@@ -129,10 +137,19 @@
       <el-table-column
         prop="vote"
         :label="$t('node.count')"
-        width="120"
+        width="100"
         align="left">
       </el-table-column>
       <el-table-column
+        prop=""
+        :label="$t('node.count')"
+        width="160"
+        align="left">
+        <template slot-scope="scope">
+          <span>{{ scope.row.reward==0?scope.row.reward:scope.row.reward.toFixed(4) }} INT</span>
+        </template>
+      </el-table-column>
+      <!-- <el-table-column
         align="right"
         class-name="slot-input"
         width="250">
@@ -141,7 +158,7 @@
             v-model="search"
             :placeholder="$t('node.placeholder')"/>
         </template>
-      </el-table-column>
+      </el-table-column> -->
     </el-table>
   </div>
 </template>
@@ -161,14 +178,20 @@
         // total: nodelist.length,
         pageSize: 10,
         isloading: false,
-        search: '',
+        // search: '',
         totalVotes: null,
         index: 14
+      }
+    },
+    props: {
+      search: {
+        type: String
       }
     },
     created () {
       this.getCandidateNode()
     },
+
     methods: {
       getCandidateNode () {
         let that = this
@@ -181,18 +204,25 @@
               that.totalVotes = result.totalVote
               let nodelist = result.data
               for(let i in nodelist) {
-                nodelist[i].weight = ((nodelist[i].vote / that.totalVotes) * 100).toFixed(2) + '%'
+                nodelist[i].weight = ((nodelist[i].vote / that.totalVotes) * 100).toFixed(2) + '%';
                 if (nodelist[i].weight === '0.00%') {
-                  nodelist[i].weight = '0%'
+                  nodelist[i].weight = '--'
                 }
-                nodelist[i].vote = Math.round(nodelist[i].vote)
+                if (i > 99) {
+                  nodelist[i].weight = '--'
+                }
+                nodelist[i].vote = Math.round(nodelist[i].vote);
                 if (nodelist[i].country === null) {
                   nodelist[i].country = '-'
                 }
                 if (nodelist[i].city === null) {
                   nodelist[i].city = '-'
                 }
-                nodelist[i].region = nodelist[i].country + '/' + nodelist[i].city
+                nodelist[i].region = nodelist[i].country + '/' + nodelist[i].city;
+                if (nodelist[i].webUrl === '') {
+                  nodelist[i].webUrl = null
+                }
+                nodelist[i].reward = nodelist[i].reward.toFixed(4)/8640*1000;
               }
               that.superlist = nodelist.slice(0, 13)
               that.candidateList = nodelist.slice(13)
@@ -217,13 +247,11 @@
         display: none;
       }
     }
-    .el-table:nth-of-type(1) {
-      border-top-right-radius: 4px !important;
-    }
     .el-table {
       width: 100%;
       border: 1px solid #ccc;
       border-radius: 0 !important;
+      transform: translateY(-1px);
       th {
         background-color: #f1f1ff;
         height: 60px !important;

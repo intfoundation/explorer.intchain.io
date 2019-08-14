@@ -3,50 +3,51 @@
     <!--面包屑-->
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/' }">{{$t('nav.home')}}</el-breadcrumb-item>
-      <el-breadcrumb-item to="">{{$t('node.nodes')}}</el-breadcrumb-item>
+      <el-breadcrumb-item to="">{{$t('referendum.referendum')}}</el-breadcrumb-item>
     </el-breadcrumb>
     <div class="node-content">
       <div>
-        <span class="tabs" v-for="item in tabs" :class="{'tab-active': curTab === item.id}" @click="switchTab(item)">{{item.name}}</span>
-        <div class="common-inline-block row-input" @keyup.enter="search">
-          <input type="text" :placeholder="$t('node.search')" v-model="search">
+        <span class="tabs" :key="item.id" v-for="item in tabs" :class="{'tab-active': curTab === item.id}" @click="switchTab(item)">{{item.name}}</span>
+        <div v-show="curTab==='proposal'" class="common-inline-block row-input">
+          <input type="text" :placeholder="$t('referendum.search')" v-model="searchProposal">
+        </div>
+        <div v-show="curTab==='opinion'" class="common-inline-block row-input">
+          <input type="text" :placeholder="$t('referendum.search')" v-model="searchOpinion">
         </div>
       </div>
       <div>
-        <component v-bind:is="currentComponent" v-bind:search="search"></component>
+        <proposal v-show="curTab==='proposal'" :search="searchProposal"></proposal>
+        <opinion v-show="curTab==='opinion'" :search="searchOpinion"></opinion>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-  import tabPlan from './tabPlan'
-  import tabCandidate from './tabCandidate'
-  import tabCurrent from './tabCurrent'
+  import opinion from './opinion'
+  import proposal from './proposal'
   export default {
     components: {
-      tabPlan,
+      opinion,
       // tabCandidate,
-      tabCurrent
+      proposal
     },
     data () {
       return {
-        curTab: 'tabCurrent',
+        curTab: 'proposal',
         tabs: [
           {
-            id: 'tabCurrent',
-            name: this.$t('node.list')
+            id: 'proposal',
+            name: this.$t('referendum.proposal')
           },
           {
-            id: 'tabPlan',
-            name: this.$t('node.plan')
+            id: 'opinion',
+            name: this.$t('referendum.opinion')
           }
-          // {
-          //   id: 'tabCandidate',
-          //   name: '候选节点'
-          // },
         ],
-        search: ''
+        searchProposal: '',
+        searchOpinion:'',
+
       }
     },
     computed: {

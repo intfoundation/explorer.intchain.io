@@ -81,6 +81,10 @@ export default {
         {
           name: this.$t('nav.blockchain.account'),
           url: '/blockchain/accountlist/1'
+        },
+        {
+          name: this.$t('nav.blockchain.referendum'),
+          url: '/referendum'
         }
       ],
       guidelist: [
@@ -95,10 +99,15 @@ export default {
     }
   },
   methods: {
+    strTrim(str) {
+      str = str+""
+      return str.replace(/(^\s*)|(\s*$)/g, "");
+    },
     highlight (index) {
       this.curNav = index
     },
      search () {
+      this.searchContent = this.strTrim(this.searchContent);
       let that = this
       let url = '/api/trans/search?param=' + that.searchContent.replace(/\s+/g,"")
       try {

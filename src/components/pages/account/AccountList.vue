@@ -12,7 +12,7 @@
         <el-table-column
           prop=""
           :label="$t('account.rank')"
-          width="150"
+          width="65"
           align="left">
           <template slot-scope="scope">
             <span>{{getRank((currentPage-1)*pageSize,scope.row)}}</span>
@@ -22,16 +22,31 @@
         <el-table-column
           prop="address"
           :label="$t('account.address')"
-          width="400"
+          width="345"
           align="left">
           <template slot-scope="scope">
             <span @click="handleClickAddress(scope.row.address)" type="text" class="btn-hash">{{scope.row.address}}</span>
           </template>
         </el-table-column>
         <el-table-column
+          prop="createTime"
+          :label="$t('account.createTime')"
+          width="170"
+          align="left">
+        </el-table-column>
+        <el-table-column
           prop="balance"
           :label="$t('account.balance')"
           align="left">
+        </el-table-column>
+        <el-table-column
+          prop=""
+          :label="$t('account.voted')"
+          width="100"
+          align="left">
+           <template slot-scope="scope">
+            <span>{{scope.row.hasVoteNode==1?0:scope.row.stake}}</span>
+          </template>
         </el-table-column>
         <el-table-column
           prop="weight"
@@ -41,6 +56,12 @@
         <el-table-column
           prop="txCount"
           :label="$t('blocksList.txns2')"
+          width="70"
+          align="left">
+        </el-table-column>
+        <el-table-column
+          prop="reward"
+          :label="$t('blocksList.accountReward')"
           align="left">
         </el-table-column>
       </el-table>
@@ -61,6 +82,7 @@
 <script>
   import axios from 'axios'
   import { dataFilter } from '../../../utils/common.js'
+  import {changeTime} from "../../../utils/common";
   export default {
     name: 'AccountList',
     data () {
@@ -69,6 +91,7 @@
         currentPage: 1,
         pageSize: 20,
         total: 0,
+        totalVote:0,
         isloading: false
       }
     },
@@ -86,6 +109,7 @@
       },
       getAccountList () {
         let that = this
+        let time
         that.isloading = true
         axios.get('/api/token/accountList', {
           params: {
@@ -99,12 +123,18 @@
             if (result.status === 'success') {
               that.isloading = false
               that.total = result.data.total
+              that.totalVote = result.data.totalVote
               that.currentPage = +that.$route.params.p
               that.accountList = result.data.accountList
               that.accountList.forEach(item => {
-                item.weight = +item.balance / Math.pow(10, 9)
+                item.createTime = changeTime(item.createTime);
+                item.weight = (+item.balance+item.stake) / Math.pow(10, 9)
                 item.weight = Math.floor(item.weight * 100 * Math.pow(10, 7)) / Math.pow(10, 7) + '%'
                 item.balance = dataFilter(+item.balance, 5) + ' ' + 'INT'
+                item.reward = 0
+                if(item.hasVoteNode == 2){
+                  item.reward = (item.stake/that.totalVote*10958.903424000002).toFixed(4) + " INT"
+                }
               })
             }
           })
@@ -130,6 +160,9 @@
 </script>
 
 <style lang="scss">
+  .el-table .cell {
+    white-space: pre-line!important;
+  }
   .account-list {
     width: 1200px;
     margin: 90px auto;
