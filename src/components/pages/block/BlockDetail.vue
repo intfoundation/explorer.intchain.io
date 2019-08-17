@@ -68,12 +68,13 @@
       }
     },
     mounted () {
-      this.height = this.$route.query.height
+      this.height = this.$route.query.height;
       this.getBlockDetail(this.height)
     },
     watch: {
       $route (to) {
-        this.getBlockDetail(to.query.height)
+        this.getBlockDetail(to.query.height);
+        // console.log(this.height);
       }
     },
     methods: {
@@ -109,7 +110,8 @@
           })
           let outcome = result.data
           if (outcome.status === 'success') {
-            let h = outcome.data.data[0].height
+            let h = outcome.data.data[0].height;
+            that.height = h;
             that.$router.push({path: '/blockchain/blockdetail', query: {height: h}})
             that.getBlockDetail(h)
           }

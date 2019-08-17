@@ -6,8 +6,10 @@
       <el-table-column
         :label="$t('account.rank')"
         align="left"
-        type="index"
         width="60">
+        <template slot-scope="scope">
+          <span>{{ scope.row.index }}</span>
+        </template>
       </el-table-column>
       <el-table-column
         prop=""
@@ -90,10 +92,10 @@
       <el-table-column
         :label="$t('account.rank')"
         align="left"
-        type="index"
-        :index="index"
-        width="60"
-      >
+        width="60">
+        <template slot-scope="scope">
+          <span>{{ scope.row.index }}</span>
+        </template>
       </el-table-column>
       <el-table-column
         prop=""
@@ -204,6 +206,7 @@
               that.totalVotes = result.totalVote
               let nodelist = result.data
               for(let i in nodelist) {
+                nodelist[i].index = +i + 1;
                 nodelist[i].weight = ((nodelist[i].vote / that.totalVotes) * 100).toFixed(2) + '%';
                 if (nodelist[i].weight === '0.00%') {
                   nodelist[i].weight = '--'
