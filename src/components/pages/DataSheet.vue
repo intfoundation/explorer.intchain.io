@@ -134,11 +134,11 @@
         })
           .then(function(res){
             if (res.status === 200) {
-              let obj = res.data.data.quotes.USD
-              that.int.price = obj.price
-              that.int.volume_24h = obj.volume_24h
-              that.int.percent_change_24h = obj.percent_change_24h
-              that.int.market_cap = obj.market_cap
+              let obj = res.data.data.quotes.USD;
+              that.int.price = obj.price;
+              that.int.volume_24h = obj.volume_24h;
+              that.int.percent_change_24h = obj.percent_change_24h;
+              that.int.market_cap = obj.price * 433000000;
             }
           })
           .catch(function(error) {
