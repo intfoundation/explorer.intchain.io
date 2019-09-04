@@ -120,7 +120,7 @@
       }
     },
     created() {
-      this.coinMarket()
+      this.coinMarket();
     },
     mounted () {
       this.transactionHistory()
@@ -128,22 +128,16 @@
     methods: {
       coinMarket () {
         let that = this
-        axios({
-          type: 'get',
-          url: 'https://api.coinmarketcap.com/v2/ticker/2399/'
-        })
-          .then(function(res){
-            if (res.status === 200) {
-              let obj = res.data.data.quotes.USD;
-              that.int.price = obj.price;
-              that.int.volume_24h = obj.volume_24h;
-              that.int.percent_change_24h = obj.percent_change_24h;
-              that.int.market_cap = obj.price * 433000000;
-            }
-          })
-          .catch(function(error) {
-            console.log(error)
-          })
+        axios.all([axios.get('https://api.coinmarketcap.com/v2/ticker/2399/'),axios.get('https://explorer.intchain.io/api/market')]).then(axios.spread((res1,res2) => {
+          if (res1.status === 200 && res2.status === 200) {
+            let obj = res1.data.data.quotes.USD;
+            let circulat = res2.data.circulating_supply;
+            that.int.price = obj.price;
+            that.int.volume_24h = obj.volume_24h;
+            that.int.percent_change_24h = obj.percent_change_24h;
+            that.int.market_cap = obj.price * circulat;
+          }
+        }))
       },
       transactionHistory () {
         let that = this
