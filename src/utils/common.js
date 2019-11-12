@@ -41,12 +41,12 @@ const dataFilter = function (data,size) {
 }
 
 const percentageFilter = function (data, size) {
-  let dataStr = data.toString()
+  // let dataStr = data.toString()
   if (data === 1) {
     return '100' + '%';
-  } else if (dataStr.length <= 4) {
+  } /*else if (dataStr.length <= 4) {
     return (data * 100).toString() + '%';
-  } else {
+  }*/ else {
     let h = Math.pow(10, size);
     let m = (Math.floor(data * h) / h) * 100;
     return m.toString() + '%';
