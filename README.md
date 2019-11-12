@@ -1,6 +1,6 @@
 # explorer.intchain.io
 
-> explorer.intchain.io for  INTChain
+> explorer for  INTChain
 
 ## Build Setup
 
