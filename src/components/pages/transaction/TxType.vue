@@ -110,7 +110,8 @@
       <!--value值-->
       <div class="trad-list">
         <span class="span-width">{{$t('transactionList.value')}}</span>
-        <span>{{transObj.value}}</span>
+        <span v-if="!transObj.amount">{{transObj.value}}</span>
+        <span v-if="transObj.amount">{{transObj.amount}}</span>
       </div>
 
       <!--gas limit值-->

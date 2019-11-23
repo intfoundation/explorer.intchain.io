@@ -85,6 +85,7 @@
   import Txtype from './TxType'
   import Request from '../api.js'
   import { formatPassTime } from '../../../utils/common.js'
+  import { dataFilter } from "../../../utils/common";
   Vue.component('tab-input', {
     props: ['input'],
     template: '<div style="word-break: break-all;">{{input}}</div>'
@@ -137,9 +138,10 @@
             this.transObj = res.data[0]
             this.timer = moment(new Date(this.transObj.timestamp)).format("YYYY-MM-DD HH:mm Z")
             this.transObj.timestamp=formatPassTime(Date.parse(this.transObj.timestamp), res.time)
-            this.input = JSON.parse(this.transObj.input)
-            if (this.input.amount) {
-              this.input.amount = new BigNumber(this.input.amount).dividedBy(Math.pow(10, 18)).toString()
+            this.input = JSON.parse(this.transObj.input);
+            if (this.transObj.method === 'transferTokenTo') {
+              this.input.amount = new BigNumber(this.input.amount).dividedBy(Math.pow(10, 18)).toString();
+              this.transObj.amount = dataFilter(+this.input.amount,5) + ' ' + this.transObj.tokenSymbol;
             }
           }, err => {
 

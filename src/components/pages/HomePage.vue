@@ -76,7 +76,8 @@
               </div>
               <div class="il">
                 <span>{{$t('transactionList.value')}}</span>
-                <span>{{item.value}}</span>
+                <span v-if="item.amount">{{item.amount}}</span>
+                <span v-if="!item.amount">{{item.value}}</span>
               </div>
               <div class="in transactionIn">
                 <span>{{$t('transactionList.txtype')}}</span>
@@ -93,6 +94,7 @@
 </template>
 
 <script>
+  import { BigNumber } from 'bignumber.js';
   import axios from 'axios'
   import DataSheet from './DataSheet'
   import io from 'socket.io-client'
@@ -173,6 +175,11 @@
           if (result.status === 'success') {
             that.transactionList = result.data
             that.transactionList.forEach(item => {
+              if (item.method === 'transferTokenTo') {
+                let input = JSON.parse(item.input);
+                item.amount = new BigNumber(input.amount).dividedBy(Math.pow(10, 18)).toString();
+                item.amount = dataFilter(+item.amount, 5) + ' ' + item.tokenSymbol;
+              }
               item.timestamp = formatPassTime(Date.parse(item.timestamp), result.time)
               item.value = dataFilter(+item.value, 5) + ' ' + 'INT'
             })

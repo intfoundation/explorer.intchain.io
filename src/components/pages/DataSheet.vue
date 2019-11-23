@@ -52,18 +52,18 @@
               color: '#656665'
             }
           },
-          // legend: {
-          //   orient: 'vertical', // 'vertical'
-          //   right: 100,
-          //   top: 20,
-          //   bottom: 20,
-          //   data: [
-          //     {
-          //       name: 'transaction',
-          //       // icon: 'circle' // 如果不写就默认，默认的圆形外面有两条短横线
-          //     },
-          //   ]
-          // },
+          legend: {
+            orient: 'vertical', // 'vertical'
+            right: 100,
+            top: 20,
+            bottom: 20,
+            data: [
+              {
+                name: 'transaction',
+                // icon: 'circle' // 如果不写就默认，默认的圆形外面有两条短横线
+              },
+            ]
+          },
           tooltip: {
             trigger: 'axis' // tooltip出现悬浮的解释框
           },
