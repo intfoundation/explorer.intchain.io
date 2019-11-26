@@ -140,11 +140,10 @@
                   {{scope.row.to_address}}</span>
               </template>
             </el-table-column>
-            <el-table-column :label="$t('transactionList.value2')" align="left">
-              <template slot-scope="scope">
-                <span v-if="scope.row.method === 'transferTokenTo'">{{scope.row.amount}}</span>
-                <span v-else>{{scope.row.value}}</span>
-              </template>
+            <el-table-column
+              prop="value"
+              :label="$t('transactionList.value2')"
+              align="left">
             </el-table-column>
             <el-table-column
               prop=""
@@ -404,11 +403,6 @@
               that.transactionlist = result.data
               // 这个地方的处理有问题，页面渲染2遍，先是按直接拿过来的数据渲染一遍，然后再按处理过的数据渲染一遍
               that.transactionlist.forEach(item => {
-                if (item.method === 'transferTokenTo') {
-                  let input = JSON.parse(item.input);
-                  item.amount = new BigNumber(input.amount).dividedBy(Math.pow(10, 18)).toString();
-                  item.amount = dataFilter(+item.amount, 5) + ' ' + item.tokenSymbol;
-                }
                 item.timestamp = formatPassTime(Date.parse(item.timestamp), result.time)
                 item.value = dataFilter(+item.value, 5) + ' ' + 'INT'
                 item.cost = dataFilter(+item.cost, 5) + ' ' + 'INT'

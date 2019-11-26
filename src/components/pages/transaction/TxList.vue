@@ -7,7 +7,7 @@
     <div style="padding: 40px 44px;">
       <el-table :data="txlist" v-loading="isloading">
 
-        <el-table-column :label="$t('transactionList.txhash2')" width="170" align="left">
+        <el-table-column prop="hash" :label="$t('transactionList.txhash2')" width="170" align="left">
           <template slot-scope="scope">
             <span type="text" @click="handleClicktxHash(scope.row.hash)" class="btn-hash" style="color: #3C31D7">{{scope.row.hash}}</span>
           </template>
@@ -37,13 +37,7 @@
           </template>
         </el-table-column>
 
-<!--        <el-table-column prop="value" :label="$t('transactionList.value2')" align="left">-->
-<!--        </el-table-column>-->
-        <el-table-column :label="$t('transactionList.value2')" align="left">
-          <template slot-scope="scope">
-            <span v-if="scope.row.method === 'transferTokenTo'">{{scope.row.amount}}</span>
-            <span v-else>{{scope.row.value}}</span>
-          </template>
+        <el-table-column prop="value" :label="$t('transactionList.value2')" align="left">
         </el-table-column>
 
         <el-table-column prop="returnCode" :label="$t('transactionList.status')" align="left">
@@ -72,7 +66,6 @@
 </template>
 
 <script>
-  import { BigNumber } from 'bignumber.js';
   import axios from 'axios'
   import { formatPassTime, dataFilter } from '../../../utils/common.js'
   export default {
@@ -110,18 +103,14 @@
               that.total = result.total
               that.currentPage = +that.$route.params.p
               that.txlist.forEach(item => {
-                if (item.method === 'transferTokenTo') {
-                  item.to_address = item.tokenid;
-                  let input = JSON.parse(item.input);
-                  item.amount = new BigNumber(input.amount).dividedBy(Math.pow(10, 18)).toString();
-                  item.amount = dataFilter(+item.amount, 5) + ' ' + item.tokenSymbol;
+                if (item.method == 'transferTokenTo') {
+                  item.to_address = item.tokenid
                 } else {
-                  item.to_address = item.to_address;
+                  item.to_address = item.to_address
                 }
-                item.timestamp = formatPassTime(Date.parse(item.timestamp), result.time);
-                item.value = dataFilter(+item.value, 5);
+                item.timestamp = formatPassTime(Date.parse(item.timestamp), result.time)
+                item.value = dataFilter(+item.value, 5)
                 item.value = item.value + ' ' + 'INT'
-
               })
             }
           })
