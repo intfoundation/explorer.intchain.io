@@ -68,6 +68,7 @@
             <el-table-column
               prop="height"
               :label="$t('transactionList.height')"
+              width="100"
               align="left">
               <template slot-scope="scope">
                 <span @click="handleClickHeight(scope.row.height)" type="text" class="btn-height" v-if="scope.row.returnCode !== -1">{{scope.row.height}}</span>
@@ -85,6 +86,7 @@
             <el-table-column
               prop="method"
               :label="$t('transactionList.txtype2')"
+              width="120"
               align="left">
             </el-table-column>
             <el-table-column
@@ -111,8 +113,9 @@
               </template>
             </el-table-column>
             <el-table-column
-              prop="value"
+              prop="amount"
               :label="$t('transactionList.value2')"
+              width="150"
               align="left">
             </el-table-column>
             <el-table-column
@@ -185,7 +188,8 @@
 </template>
 
 <script>
-  import axios from 'axios'
+  import axios from 'axios';
+  import { BigNumber } from 'bignumber.js';
   import { formatPassTime, dataFilter, percentageFilter } from '../../../utils/common.js'
   export default {
     name: '',
@@ -259,6 +263,9 @@
               that.pageNum = +that.$route.params.p
               that.transactionsList = result.data
               that.transactionsList.forEach(item => {
+                let input = JSON.parse(item.input);
+                item.amount = new BigNumber(input.amount).dividedBy(Math.pow(10, 18)).toString();
+                item.amount = dataFilter(+item.amount, 4) + ' ' + item.tokenSymbol;
                 item.timestamp = formatPassTime(Date.parse(item.timestamp), result.time)
                 item.value = dataFilter(+item.value, 5)
                 item.fee = dataFilter(+item.fee, 5) + ' ' + 'INT'
