@@ -147,14 +147,12 @@
             v-loading="isloading"
             style="width: 100%">
             <el-table-column
-              prop=""
-              type="index"
+              prop="index"
               :label="$t('account.rank')"
               width="200"
               align="left">
             </el-table-column>
             <el-table-column
-              prop=""
               :label="$t('account.address')"
               align="left">
               <template slot-scope="scope">
@@ -176,7 +174,7 @@
           </el-table>
           <el-pagination
             class="ep"
-            :current-page.sync="pageNum"
+            :current-page.sync="holdNum"
             @current-change="handleCurrentChange"
             layout="prev, pager, next"
             :total="accountTotal">
@@ -202,6 +200,7 @@
         transTotal: 0,
         accountTotal: 0,
         pageNum: 1,
+        holdNum: 1,
         pageSize: 10,
         curTab: 0,
         tabs: [this.$t('transactionList.transactionListTitle'), this.$t('token.holders2')],
@@ -282,7 +281,7 @@
         axios.get('/api/token/accountList', {
           params: {
             tokenid: that.tokenid,
-            pageNum: that.$route.params.p,
+            pageNum: that.holdNum,
             pageSize: that.pageSize
           }
         })
@@ -298,7 +297,12 @@
               that.pageNum = +that.$route.params.p
               that.tokenAccountList = result.data.accountList
               for (let i = 0; i < that.tokenAccountList.length; i++) {
-                that.tokenAccountList[i].percentage = that.tokenAccountList[i].balance / +that.tokenDetail.amount
+                if (that.holdNum == 1 ) {
+                  that.tokenAccountList[i].index = i + 1;
+                } else {
+                  that.tokenAccountList[i].index = (that.holdNum-1)*10 + 1 + i;
+                }
+                that.tokenAccountList[i].percentage = dataFilter(that.tokenAccountList[i].balance / +that.tokenDetail.amount,4);
                 that.tokenAccountList[i].percentage = percentageFilter(that.tokenAccountList[i].percentage, 4)
               }
             }
@@ -308,14 +312,14 @@
           })
       },
       handleCurrentChange (val) {
-        this.pageNum = val
+        this.holdNum = val;
         // this.$router.push( {path: `/blockchain/tokendetail/${val}`, query: {tokeid: this.tokenid}} )
-        this.getTokenTransaction()
+        this.getTokenAccount()
       },
       handleAccountChange (val) {
         this.pageNum = val
         this.$router.push( {path: `/blockchain/tokendetail/${val}`, query: {tokenid: this.tokenid}} )
-        this.getTokenAccount()
+        this.getTokenTransaction()
       },
       handleClickHeight (val) {
         this.$router.push({path: '/blockchain/blockdetail', query: {height: val}})
