@@ -401,10 +401,10 @@
           border-top-right-radius: 4px;
         }
         .tabs:hover {
-          background-color: #f9f9ff;
+          background-color: #f1f1ff;
         }
         .tab-active {
-          background-color: #f9f9ff;
+          background-color: #f1f1ff;
         }
         .delare {
           border-top: 1px solid #ccc;
