@@ -26,6 +26,7 @@ module.exports = {
         guide: 'User Guide',
         community: 'Community',
         placeholder: 'Search by Height/Hash/Address/Token',
+        addrPlaceholder: 'Search by Address',
         blockchain: {
             name: 'Blockchain',
             block: 'Blocks',
@@ -86,6 +87,7 @@ module.exports = {
         qrcode: 'Address QR Code: ',
         address2: 'Address: ',
         balance2: 'Balance: ',
+        token2: 'Token: ',
         token: 'Token Txns',
         accounts: 'Accounts',
         inquire: 'Inquire about other token',
@@ -163,7 +165,9 @@ module.exports = {
         name: 'Token Name',
         name2: 'Token Name: ',
         id: 'Token ID',
-        percentage: 'Percentage'
+        percentage: 'Percentage',
+        website: 'Official Site',
+        profiles: 'Social Profiles'
     },
     node: {
         search: 'Search by Candidates or Team',

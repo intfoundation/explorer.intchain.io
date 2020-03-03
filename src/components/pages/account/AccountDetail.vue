@@ -12,7 +12,7 @@
     <div class="detail-content">
 
       <!--地址的概要信息-->
-      <div class="overview">
+      <div class="overview" v-loading="infoLoad">
         <div>
           <span class="detail-span">{{$t('account.address2')}}</span>
           <span>{{accountDetail.address}}</span>
@@ -20,7 +20,20 @@
         <div>
           <span class="detail-span">{{$t('account.balance2')}}</span>
           <span>{{accountDetail.balance}}</span>
-          <router-link class="inquire" :to="{path: '/blockchain/account/inquire', query: {address: address}}">{{$t('account.inquire')}}</router-link>
+<!--          <router-link class="inquire" :to="{path: '/blockchain/account/inquire', query: {address: address}}">{{$t('account.inquire')}}</router-link>-->
+        </div>
+
+        <div>
+          <span class="detail-span" style="vertical-align: middle">{{$t('account.token2')}}</span>
+          <div class="token-down">
+            <div class="t-num" @click="tokenHeight"><span>{{tokenNum}}</span><i :class="{'t-deg' : showToken}"></i></div>
+            <div class="t-down" ref="down">
+              <router-link tag="div" :to="{path: '/blockchain/tokendetail/1', query: {tokenid: item.tokenid}}" class="t-li" v-for="(item,index) in otherTokenList" :key="index">
+                <div class="tl-l"><img :src="item.logoUrl" alt="" v-if="item.logoUrl"><img v-if="!item.logoUrl" src="../../../assets/token-logo.png" alt=""><span>{{item.symbol}}</span></div>
+                <div class="tl-r"><span>{{item.balance}}</span></div>
+              </router-link>
+            </div>
+          </div>
         </div>
 
         <div>
@@ -284,14 +297,18 @@
         accountDetail: {},
         transactionlist: [],
         tokenTranslist: [],
+        otherTokenList: [],
         address: '',
         currentPage: 1,
         pageSize: 10,
         totalTrans: 0,
         totalToken: 0,
+        tokenNum: 0,
         curTab: 0,
         tabs: [this.$t('transactionList.transactionListTitle'), this.$t('account.token')],
         isloading: false,
+        infoLoad: false,
+        showToken: false,
         now: ''
       }
     },
@@ -311,12 +328,39 @@
     },
     mounted () {
       this.address = this.$route.query.address
-      this.getAccountDetail(this.address)
+      this.getAccountDetail(this.address);
       this.getAccountRecord(this.address)
+      this.getOtherToken();
     },
     methods: {
+      getOtherToken () {
+        let that = this
+        axios.get('/api/wallet/walletList', {
+          params: {
+            address: that.address,
+            tokenid: that.searchContent,
+            pageNum: that.currentPage,
+            pageSize: 1000000,
+          }
+        })
+          .then(function(res) {
+            let result = res.data
+            if (result.status === 'success') {
+              that.otherTokenList = result.data.tokenList;
+              that.tokenNum = that.otherTokenList.length;
+            }
+          })
+          .catch(function(error) {
+            console.log(error)
+          })
+      },
+      tokenHeight() {
+        this.showToken = !this.showToken;
+        this.$refs.down.style.height = this.showToken ? 50 + (this.tokenNum - 1) * 51 + 'px' : 0 ;
+      },
       getAccountDetail (address) {
         let that = this
+        that.infoLoad = true;
         axios.get('/api/wallet/walletDtail', {
           params: {
             address: address
@@ -325,19 +369,24 @@
           .then(function(res) {
             let result = res.data
             if (result.status === 'success') {
-              that.accountDetail = result.data
-              if (result.data.address) {
-                that.accountDetail.address = that.accountDetail.address
-                that.accountDetail.balance = dataFilter(+that.accountDetail.balance, 5) + ' ' + 'INT'
-                QRCode.toCanvas(document.getElementById('canvas'), result.data.address, function() {
-                })
+              that.accountDetail = result.data;
+              if (result.data.contract) {
+                that.$router.push({path: '/blockchain/contract/1', query: {contract: result.data.address}})
               } else {
-                that.accountDetail.address = that.address
-                that.accountDetail.balance = '0' + ' ' + 'INT'
-                QRCode.toCanvas(document.getElementById('canvas'), that.address, function() {
-                })
+                if (result.data.address) {
+                  // that.accountDetail.address = that.accountDetail.address
+                  that.accountDetail.balance = dataFilter(+that.accountDetail.balance, 5) + ' ' + 'INT'
+                  QRCode.toCanvas(document.getElementById('canvas'), result.data.address, function() {
+                  })
+                } else {
+                  that.accountDetail.address = that.address
+                  that.accountDetail.balance = '0' + ' ' + 'INT'
+                  QRCode.toCanvas(document.getElementById('canvas'), that.address, function() {
+                  })
+                }
+                that.infoLoad = false;
+                that.accountDetail.createTime = that.accountDetail.createTime? changeTime (that.accountDetail.createTime) + ' (+08:00)' : '/';
               }
-              that.accountDetail.createTime = that.accountDetail.createTime? changeTime (that.accountDetail.createTime) + ' (+08:00)' : '/';
             }
           })
           .catch(function(err) {
@@ -615,3 +664,109 @@
     }
   }
 </style>
+
+<style scoped>
+  .token-down {
+    width: 350px;
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+  }
+
+  .token-down .t-num {
+    padding: 2px 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: all 0.3s;
+  }
+
+  .t-num > span {
+    display: inline-block;
+    font-size: 14px;
+    color: #3C31D7;
+    font-weight: 700;
+  }
+
+  .t-num i {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    position: absolute;
+    right: 16px;
+    top: 6px;
+    border: 1px solid;
+    border-color: #ccc;
+    border-top: 0;
+    border-left: 0;
+    transform: rotate(45deg);
+    transition: all 0.3s;
+  }
+
+  .token-down .t-down {
+    position: absolute;
+    top: 35px;
+    left: 0;
+    width: calc(100% - 10px);
+    height: 0;
+    background-color: #fff;
+    padding: 0 5px;
+    border-radius: 5px;
+    box-shadow: 0 2px 7px rgba(0,0,0,.2);
+    transition: all 0.3s;
+    overflow: hidden;
+  }
+
+  .token-down .t-down .t-li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: calc(100% - 20px);
+    border-bottom: 1px solid #ededed;
+    padding: 10px;
+    cursor: pointer;
+  }
+
+  .token-down .t-down .t-li:last-of-type {
+    border-bottom: 0;
+  }
+
+  .token-down .t-down .t-li:hover {
+    background-color: #f7f7f7;
+  }
+
+  .t-down .t-li .tl-l {
+    font-size: 0;
+  }
+
+  .t-li .tl-l img {
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+  }
+
+  .t-li .tl-l span {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 14px;
+    margin-left: 5px;
+  }
+
+  .t-li .tl-r {
+    font-size: 14px;
+  }
+
+  .token-down:hover .t-num {
+    border: 1px solid #3C31D7;
+  }
+
+  .token-down:hover .t-num i {
+    border-color: #3C31D7;
+  }
+
+  .token-down .t-num .t-deg {
+    top: 12px;
+    transform: rotate(225deg);
+  }
+
+</style>
+

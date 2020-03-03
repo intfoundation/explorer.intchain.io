@@ -48,8 +48,8 @@ const percentageFilter = function (data, size) {
     return (data * 100).toString() + '%';
   }*/ else {
     let h = Math.pow(10, size);
-    let m = (Math.floor(data * h) / h) * 100;
-    return m.toString() + '%';
+    let m = (Math.round(data * h) / h);
+    return m
   }
 }
 

@@ -21,7 +21,7 @@
           <template slot-scope="scope">
             <span class="btn-common">
               <i class="txfail" v-if="scope.row.returnCode !== 0 && scope.row.returnCode !== -1"></i>
-              <span @click="handleClickHash(scope.row.hash)" type="text" class="btn-height">{{scope.row.hash}}</span>
+              <span @click="handleClicktxHash(scope.row.hash)" type="text" class="btn-height">{{scope.row.hash}}</span>
             </span>
           </template>
         </el-table-column>
@@ -54,7 +54,7 @@
           align="left"
           width="170">
           <template slot-scope="scope">
-            <span @click="handleClickHeight(scope.row.from_address)" type="text" class="btn-height btn-common">{{scope.row.from_address}}</span>
+            <span @click="handleClickAddress(scope.row.from_address)" type="text" class="btn-height btn-common">{{scope.row.from_address}}</span>
           </template>
         </el-table-column>
         <el-table-column
@@ -63,7 +63,7 @@
           align="left"
           width="170">
           <template slot-scope="scope">
-            <span @click="handleClickHeight(scope.row.to_address)" type="text" class="btn-height btn-common">{{scope.row.to_address}}</span>
+            <span @click="handleClickAddress(scope.row.to_address)" type="text" class="btn-height btn-common">{{scope.row.to_address}}</span>
           </template>
         </el-table-column>
         <el-table-column
@@ -152,7 +152,7 @@
       },
       handleCurrentChange (val) {
         this.currentPage = val
-        this.$router.push( {path: `/blockchain/txlist/byToken/${val}`, query: {tokenid: tokenid} } )
+        this.$router.push( {path: `/blockchain/txlist/byToken/${val}`, query: {tokenid: this.tokenid} } )
         this.getAccountRecord()
       },
       handleSizeChange(val) {
@@ -165,8 +165,11 @@
       handleClicktxHash (val) {
         this.$router.push({path: '/blockchain/txdetail', query: {hash: val}})
       },
+      handleClickAddress (val) {
+        this.$router.push({path: '/blockchain/accountdetail/1', query: {address: val}})
+      },
       cross () {
-        this.$router.push({path: '/blockchain/txlist'})
+        this.$router.push({path: '/blockchain/txlist/1'})
       }
     }
   }

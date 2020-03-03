@@ -10,20 +10,20 @@
           :data="tokenlist"
           v-loading="isloading">
           <el-table-column
+            prop=""
+            :label="$t('token.name')"
+            align="left">
+            <template slot-scope="scope">
+              <img :src="scope.row.logoUrl" class="tokenImg" alt="" v-if="scope.row.logoUrl"><img src="../../../assets/token-logo.png" class="tokenImg" alt="" v-if="!scope.row.logoUrl"><span type="text" class="tokenName">{{getTokenName(scope.row.name, scope.row.symbol)}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column
             prop="tokenid"
             :label="$t('token.id')"
             align="left"
           >
             <template slot-scope="scope">
               <span @click="handleClickTokenId(scope.row.tokenid)" type="text" class="btn-height">{{scope.row.tokenid}}</span>
-            </template>
-          </el-table-column>
-          <el-table-column
-            prop=""
-            :label="$t('token.name')"
-            align="left">
-            <template slot-scope="scope">
-              <span type="text" class="tokenName">{{getTokenName(scope.row.name, scope.row.symbol)}}</span>
             </template>
           </el-table-column>
           <el-table-column
@@ -87,12 +87,12 @@
           }
         })
           .then(function(res) {
-            let result = res.data
+            let result = res.data;
             if (result.status === 'success') {
-              that.isloading = false
-              that.tokenlist = result.data.accountList
-              that.total = result.data.total
-              that.currentPage = +that.$route.params.p
+              that.isloading = false;
+              that.tokenlist = result.data.accountList;
+              that.total = result.data.total;
+              that.currentPage = +that.$route.params.p;
             }
           })
           .catch(function(error) {
@@ -213,9 +213,18 @@
     .el-loading-spinner .path {
       stroke: #3C31D7;
     }
+    .tokenImg {
+      width: 30px;
+      height: 30px;
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 8px;
+    }
     .tokenName {
+      display: inline-block;
       cursor: default;
       color: #606266;
+      vertical-align: middle;
     }
   }
 </style>

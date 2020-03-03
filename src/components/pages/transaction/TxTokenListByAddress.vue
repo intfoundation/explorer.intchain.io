@@ -86,7 +86,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="value"
+          prop="amount"
           :label="$t('transactionList.value2')"
           align="left">
         </el-table-column>
@@ -115,6 +115,7 @@
 
 <script>
   import axios from 'axios'
+  import { BigNumber } from 'bignumber.js';
   import { formatPassTime, dataFilter } from '../../../utils/common.js'
   export default {
     name: 'TotalTransList',
@@ -155,6 +156,9 @@
               that.tokenTranslist = result.data
               // 这个地方的处理有问题，页面渲染2遍，先是按直接拿过来的数据渲染一遍，然后再按处理过的数据渲染一遍
               that.tokenTranslist.forEach(item => {
+                let input = JSON.parse(item.input);
+                item.amount = new BigNumber(input.amount).dividedBy(Math.pow(10, 18)).toString();
+                item.amount = dataFilter(+item.amount, 4) + ' ' + item.tokenSymbol;
                 item.timestamp = formatPassTime(Date.parse(item.timestamp), result.time)
                 item.value = dataFilter(+item.value, 5) + ' ' + 'token'
                 item.fee = dataFilter(+item.fee, 5) + ' ' + 'INT'
@@ -167,7 +171,7 @@
       },
       handleCurrentChange (val) {
         this.currentPage = val
-        this.$router.push({path: `/blockchain/tx/tokenlist/byAddress/${val}`, query: { address: address}})
+        this.$router.push({path: `/blockchain/tx/tokenlist/byAddress/${val}`, query: { address: this.address}})
         this.getTokenRecord()
       },
       handleSizeChange(val) {

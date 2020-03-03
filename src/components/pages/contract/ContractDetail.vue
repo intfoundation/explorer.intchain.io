@@ -9,6 +9,11 @@
       <!--智能合同的详情-->
       <div class="overview">
         <div>
+          <!--Token名称-->
+          <span class="detail-span">{{$t('account.token2')}}</span>
+          <router-link class="detail-address" :to="{ path: '/blockchain/tokendetail/1', query: {tokenid: tokenDetail.tokenid}}">{{tokenDetail.name}}({{tokenDetail.symbol}})</router-link>
+        </div>
+        <div>
           <!--总发行量-->
           <span class="detail-span">{{$t('token.totalsupply')}}</span>
           <span>{{tokenDetail.amount}}</span>

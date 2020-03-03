@@ -36,6 +36,28 @@
           <router-link class="click-span" :to="{path: '/blockchain/contract/1', query: {contract: tokenDetail.tokenid}}">{{tokenDetail.tokenid}}</router-link>
         </div>
 
+        <!--website-->
+        <div>
+          <span class="detail-span">{{$t('token.website')}}</span>
+          <a :href="tokenDetail.web" target="_blank">{{tokenDetail.web}}</a>
+        </div>
+
+        <!--profiles-->
+        <div>
+          <span class="detail-span">{{$t('token.profiles')}}</span>
+          <span>
+            <el-tooltip content="Top center" :placement="tokenDetail.telegram">
+              <a :href="tokenDetail.telegram" target="_blank" class="a-link a-tel"></a>
+            </el-tooltip>
+            <el-tooltip content="Top center" :placement="tokenDetail.twitter">
+              <a :href="tokenDetail.twitter" target="_blank" class="a-link a-twi"></a>
+            </el-tooltip>
+            <el-tooltip content="Top center" placement="top">
+              <a :href="tokenDetail.weibo" target="_blank" class="a-link a-wei"></a>
+            </el-tooltip>
+          </span>
+        </div>
+
       </div>
 
       <div class="record">
@@ -47,7 +69,17 @@
         <div v-if="curTab === 0" key="key1">
           <div class="delare">
             <span>{{$t('transactionList.latest')}}&nbsp;{{transTotal > 50 ? 50 : transTotal}}&nbsp;{{$t('transactionList.txns')}}</span>
-            <router-link :to="{path: '/blockchain/txlist/byToken/1', query: { tokenid: tokenid}}" v-if="transTotal >= 50">{{$t('blocksList.viewMore')}}</router-link>
+            <div class="crumb-spe" v-if="crossShow">
+              <span>{{$t('account.address')}}: {{content}}</span>
+              <i class="cross" @click="cross"></i>
+            </div>
+            <div class="common-inline-block iv" @keyup.enter="search">
+              <input
+                type="text"
+                :placeholder="$t('nav.addrPlaceholder')"
+                v-model="searchContent"><span @click="search"><i class="search-icon"></i></span>
+              <router-link :to="{path: '/blockchain/txlist/byToken/1', query: { tokenid: tokenid}}" v-if="transTotal >= 50">{{$t('blocksList.viewMore')}}</router-link>
+            </div>
           </div>
           <el-table
             :data="transactionsList"
@@ -205,20 +237,23 @@
         curTab: 0,
         tabs: [this.$t('transactionList.transactionListTitle'), this.$t('token.holders2')],
         isloading: false,
-        now: ''
+        now: '',
+        searchContent: '',
+        content: '',
+        crossShow: false
       }
     },
     mounted () {
-      this.tokenid = this.$route.query.tokenid
-      this.getTokenDetail()
-      this.getTokenTransaction()
+      this.tokenid = this.$route.query.tokenid;
+      this.getTokenDetail();
+      this.getTokenTransaction('')
     },
     watch: {
       curTab (val) {
         if (val === 1) {
           this.getTokenAccount()
         } else {
-          this.getTokenTransaction()
+          this.getTokenTransaction(this.content);
         }
       }
     },
@@ -231,7 +266,7 @@
           }
         })
           .then(function (res) {
-            let result = res.data
+            let result = res.data;
             if (result.status === 'success') {
               that.tokenDetail = result.data
             }
@@ -240,14 +275,15 @@
             alert(error)
           })
       },
-      getTokenTransaction () {
+      getTokenTransaction (addr) {
         let that = this
         that.isloading = true
         axios.get('/api/trans/searchByTokenid', {
           params: {
             tokenid: that.tokenid,
             pageNum: that.$route.params.p,
-            pageSize: that.pageSize
+            pageSize: that.pageSize,
+            address: addr,
           }
         })
           .then(function (res) {
@@ -274,6 +310,21 @@
           .catch(function (error) {
             alert(error)
           })
+      },
+      strTrim(str) {
+        str = str+""
+        return str.replace(/(^\s*)|(\s*$)/g, "");
+      },
+      search () {
+        this.crossShow = true;
+        this.content = this.strTrim(this.searchContent);
+        this.getTokenTransaction(this.content);
+      },
+      cross() {
+        this.crossShow = false;
+        this.content = '';
+        this.searchContent = '';
+        this.getTokenTransaction('');
       },
       getTokenAccount () {
         let that = this
@@ -303,7 +354,8 @@
                   that.tokenAccountList[i].index = (that.holdNum-1)*10 + 1 + i;
                 }
                 that.tokenAccountList[i].percentage = dataFilter(that.tokenAccountList[i].balance / +that.tokenDetail.amount,4);
-                that.tokenAccountList[i].percentage = percentageFilter(that.tokenAccountList[i].percentage, 4)
+                console.log(that.tokenAccountList[i].percentage);
+                that.tokenAccountList[i].percentage = new BigNumber(that.tokenAccountList[i].percentage).times(100).toNumber() + '%';
               }
             }
           })
@@ -376,6 +428,40 @@
             width: 110px;
             font-size: 15px;
           }
+          a.a-link{
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            vertical-align: middle;
+            background-repeat: no-repeat;
+            background-position: center;
+            -webkit-background-size: contain;
+            background-size: contain;
+          }
+          .a-tel {
+            background-image: url("../../../assets/telegram-no.png") ;
+          }
+          .a-tel:hover {
+            background-image: url("../../../assets/telegram-yes.png");
+          }
+          .a-twi {
+            background-image: url('../../../assets/twitter-no.png');
+          }
+          .a-twi:hover {
+            background-image: url('../../../assets/twitter-yes.png');
+          }
+          .a-wei {
+            background-image: url('../../../assets/weibo-no.png');
+          }
+          .a-twi:hover {
+            background-image: url('../../../assets/weibo-yes.png');
+          }
+        }
+        a {
+          text-decoration: none;
+        }
+        a:hover {
+          text-decoration: underline;
         }
       }
       .click-span {
@@ -403,10 +489,12 @@
         .tabs:hover {
           background-color: #f1f1ff;
         }
+
         .tab-active {
           background-color: #f1f1ff;
         }
         .delare {
+          position: relative;
           border-top: 1px solid #ccc;
           border-left: 1px solid #ccc;
           border-right: 1px solid #ccc;
@@ -415,9 +503,73 @@
           font-weight: 500;
           background-color: #f9f9ff;
           & a {
-            float: right;
             text-decoration: none;
             color: #999;
+            vertical-align: sub;
+            margin-left: 10px;
+          }
+        }
+        .crumb-spe {
+          display: inline-block;
+          background-color: #f1f1ff;
+          height: 26px;
+          line-height: 26px;
+          margin-top: -4px;
+          text-align: left;
+          padding: 0 10px;
+          border-radius: 3px;
+          & > span {
+            font-size: 12px;
+          }
+          .cross {
+            background-image: url("../../../assets/cross.png");
+            background-size: cover;
+            width: 16px;
+            height: 16px;
+            display: inline-block;
+            margin: 5px 0;
+            float: right;
+            cursor: pointer;
+            margin-left: 30px;
+          }
+        }
+        .iv {
+          position: absolute;
+          top: 1px;
+          right: 27px;
+          height: 52px;
+          line-height: 52px;
+          & input {
+            width: 280px;
+            box-sizing: border-box;
+            height: 37px;
+            padding-left: 10px;
+            border-top-left-radius: 4px;
+            border-bottom-left-radius: 4px;
+            border: 1px solid #ccc;
+            border-right: none !important;
+            outline: none;
+            vertical-align: middle;
+          }
+
+          & span {
+            display: inline-block;
+            width: 53px;
+            height: 37px;
+            line-height: 3;
+            background-color: #3A3CDA;
+            text-align: center;
+            border-bottom-right-radius: 4px;
+            border-top-right-radius: 4px;
+            vertical-align: middle;
+          }
+
+          .search-icon {
+            background-image: url("../../../assets/search.png");
+            background-size: cover;
+            display: inline-block;
+            width: 24px;
+            height: 22px;
           }
         }
         .el-table {
@@ -489,5 +641,9 @@
         }
       }
     }
+  }
+  .common-inline-block {
+    display: inline-block;
+    cursor: pointer;
   }
 </style>

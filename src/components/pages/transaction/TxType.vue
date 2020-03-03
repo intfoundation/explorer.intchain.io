@@ -99,7 +99,7 @@
 
         <span v-if="transObj.method !== 'transferOwnership' && transObj.method !== 'freezeAccount' ">
           <span>{{$t('transactionList.for2')}}</span>
-          <span>{{JSON.parse(transObj.input).amount / Math.pow(10, 18)}}</span>
+          <span>{{transObj.jsonInput.amount}}</span>
           <router-link
           :to="{ path: '/blockchain/tokendetail/1', query: {tokenid: inputs.tokenid}}"
           class="format">{{transObj.tokenSymbol}}</router-link>
@@ -149,6 +149,7 @@
 </template>
 
 <script>
+  import { BigNumber } from 'bignumber.js';
   import { dataFilter } from '../../../utils/common.js'
   export default {
     name: '',
@@ -160,6 +161,7 @@
     },
     data() {
       return {
+        amount: 0,
         maxIndex: 4,
         dataFilter,
         isContract: false,
@@ -171,7 +173,7 @@
         if (item === this.transObj.method) {
           this.isContract = true
         }
-      })
+      });
     },
     computed: {
       inputs () {

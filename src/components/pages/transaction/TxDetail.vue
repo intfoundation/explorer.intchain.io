@@ -137,10 +137,11 @@
             this.transObj = res.data[0]
             this.timer = moment(new Date(this.transObj.timestamp)).format("YYYY-MM-DD HH:mm Z")
             this.transObj.timestamp=formatPassTime(Date.parse(this.transObj.timestamp), res.time)
-            this.input = JSON.parse(this.transObj.input)
+            this.input = JSON.parse(this.transObj.input);
             if (this.input.amount) {
               this.input.amount = new BigNumber(this.input.amount).dividedBy(Math.pow(10, 18)).toString()
             }
+            this.transObj.jsonInput = this.input;
           }, err => {
 
           })

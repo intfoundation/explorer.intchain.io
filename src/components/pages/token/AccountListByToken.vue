@@ -90,7 +90,7 @@
       },
       handleCurrentChange (val) {
         this.currentPage = val
-        this.$router.push( {path: `/blockchain/accountlist/byToken/${val}`, query: {tokenid: tokenid} } )
+        this.$router.push( {path: `/blockchain/accountlist/byToken/${val}`, query: {tokenid: this.tokenid} } )
         this.getTokenAccount()
       },
       handleSizeChange(val) {
