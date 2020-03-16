@@ -172,7 +172,9 @@
         <div v-if="curTab === 1" key="key2">
           <div class="delare">
             <span>{{$t('transactionList.latest')}}&nbsp;{{accountTotal > 50 ? 50 : accountTotal}}&nbsp;{{$t('transactionList.holders')}}</span>
-            <router-link :to="{path: '/blockchain/accountlist/byToken/1', query: { tokenid: tokenid}}" v-if="accountTotal >= 50">{{$t('blocksList.viewMore')}}</router-link>
+            <div class="common-inline-block iv">
+              <router-link :to="{path: '/blockchain/accountlist/byToken/1', query: { tokenid: tokenid}}" v-if="accountTotal >= 50">{{$t('blocksList.viewMore')}}</router-link>
+            </div>
           </div>
           <el-table
             :data="tokenAccountList"
@@ -354,7 +356,6 @@
                   that.tokenAccountList[i].index = (that.holdNum-1)*10 + 1 + i;
                 }
                 that.tokenAccountList[i].percentage = dataFilter(that.tokenAccountList[i].balance / +that.tokenDetail.amount,4);
-                console.log(that.tokenAccountList[i].percentage);
                 that.tokenAccountList[i].percentage = new BigNumber(that.tokenAccountList[i].percentage).times(100).toNumber() + '%';
               }
             }
@@ -453,7 +454,7 @@
           .a-wei {
             background-image: url('../../../assets/weibo-no.png');
           }
-          .a-twi:hover {
+          .a-wei:hover {
             background-image: url('../../../assets/weibo-yes.png');
           }
         }

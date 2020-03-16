@@ -14,9 +14,8 @@
         v-loading="isloading"
         style="width: 100%">
         <el-table-column
-          prop=""
+          prop="index"
           :label="$t('account.rank')"
-          type="index"
           width="200"
           align="left">
         </el-table-column>
@@ -27,6 +26,18 @@
           <template slot-scope="scope">
             <span @click="handleClickAddress(scope.row.address)" type="text" class="btn-col">{{scope.row.address}}</span>
           </template>
+        </el-table-column>
+        <el-table-column
+          prop="balance"
+          :label="$t('account.balance')"
+          width="200"
+          align="left">
+        </el-table-column>
+        <el-table-column
+          prop="percentage"
+          :label="$t('account.percentage')"
+          width="100"
+          align="left">
         </el-table-column>
       </el-table>
       <el-pagination
@@ -45,12 +56,14 @@
 
 <script>
   import axios from 'axios'
-  import { formatPassTime, dataFilter } from '../../../utils/common.js'
+  import { BigNumber } from 'bignumber.js';
+  import { formatPassTime, dataFilter,percentageFilter } from '../../../utils/common.js'
   export default {
     name: 'TotalTransList',
     data () {
       return {
         tokenAccountList: [],
+        tokenAmount: 1,
         currentPage: 1,
         pageSize: 20,
         accountTotal: 0,
@@ -62,9 +75,29 @@
       this.tokenid = this.$route.query.tokenid
     },
     mounted () {
-      this.getTokenAccount()
+      this.getTokenDetail();
+      // this.getTokenAccount()
     },
     methods: {
+      getTokenDetail () {
+        let that = this
+        axios.get('/api/token/tokenDetail', {
+          params: {
+            tokenid: that.tokenid
+          }
+        })
+          .then(function (res) {
+            let result = res.data;
+            if (result.status === 'success') {
+              that.tokenAmount = result.data.amount;
+              console.log(that.tokenAmount);
+              that.getTokenAccount();
+            }
+          })
+          .catch(function (error) {
+            alert(error)
+          })
+      },
       getTokenAccount () {
         let that = this
         that.isloading = true
@@ -82,6 +115,15 @@
               that.accountTotal = result.data.total
               that.currentPage = +that.$route.params.p
               that.tokenAccountList = result.data.accountList
+              for (let i = 0; i < that.tokenAccountList.length; i++) {
+                if (that.currentPage == 1 ) {
+                  that.tokenAccountList[i].index = i + 1;
+                } else {
+                  that.tokenAccountList[i].index = (that.currentPage-1)*that.pageSize + 1 + i;
+                }
+                that.tokenAccountList[i].percentage = dataFilter(that.tokenAccountList[i].balance / +that.tokenAmount,4);
+                that.tokenAccountList[i].percentage = new BigNumber(that.tokenAccountList[i].percentage).times(100).toNumber() + '%';
+              }
             }
           })
           .catch(function (error) {

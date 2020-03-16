@@ -185,7 +185,7 @@
         this.$router.push({path: '/blockchain/txdetail', query: {hash: val}})
       },
       handleClickAddress (val) {
-        this.$router.push({path: '/blockchain/accountdetail', query: {address: val}})
+        this.$router.push({path: '/blockchain/accountdetail/1', query: {address: val}})
       },
       cross () {
         this.$router.push({path: '/blockchain/txlist/1'})
