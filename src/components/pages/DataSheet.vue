@@ -30,6 +30,7 @@
 </template>
 
 <script>
+  import { dataFilter } from '../../utils/common.js'
   import axios from 'axios'
   import echarts from 'echarts'
   export default {
@@ -127,17 +128,14 @@
     },
     methods: {
       coinMarket () {
-        let that = this
-        axios.all([axios.get('https://api.coinmarketcap.com/v2/ticker/2399/'),axios.get('https://explorer.intchain.io/api/market')]).then(axios.spread((res1,res2) => {
-          if (res1.status === 200 && res2.status === 200) {
-            let obj = res1.data.data.quotes.USD;
-            let circulat = res2.data.circulating_supply;
-            that.int.price = obj.price;
-            that.int.volume_24h = obj.volume_24h;
-            that.int.percent_change_24h = obj.percent_change_24h;
-            that.int.market_cap = obj.price * circulat;
-          }
-        }))
+        let that = this;
+        axios.get('/api/intInfo').then(res1 => {
+          let obj = res1.data;
+          that.int.price = obj.intPrice;
+          that.int.volume_24h = dataFilter(obj.volumeDay * obj.intPrice,4);
+          that.int.percent_change_24h = obj.changeDay;
+          that.int.market_cap = dataFilter(obj.marketCap,4);
+        })
       },
       transactionHistory () {
         let that = this
