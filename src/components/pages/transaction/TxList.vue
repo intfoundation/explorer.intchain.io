@@ -9,13 +9,13 @@
 
         <el-table-column prop="hash" :label="$t('transactionList.txhash2')" width="170" align="left">
           <template slot-scope="scope">
-            <span type="text" @click="handleClicktxHash(scope.row.hash)" class="btn-hash" style="color: #3C31D7">{{scope.row.hash}}</span>
+            <span type="text" @click="handleClicktxHash(scope.row.hash)" class="btn-hash" style="color: #1f80c1">{{scope.row.hash}}</span>
           </template>
         </el-table-column>
 
         <el-table-column prop="height" :label="$t('transactionList.height')" align="left" width="85">
           <template slot-scope="scope">
-            <span type="text" @click="handleClickHeight(scope.row.height)" class="btn-height" style="color: #3C31D7">{{scope.row.height}}</span>
+            <span type="text" @click="handleClickHeight(scope.row.height)" class="btn-height" style="color: #1f80c1">{{scope.row.height}}</span>
           </template>
         </el-table-column>
 
@@ -27,13 +27,13 @@
 
         <el-table-column prop="from_address" :label="$t('transactionList.from2')" width="170" align="left">
           <template slot-scope="scope">
-            <span type="text" @click="handleClickFrom(scope.row.from_address)" class="btn-hash" style="color: #3C31D7">{{scope.row.from_address}}</span>
+            <span type="text" @click="handleClickFrom(scope.row.from_address)" class="btn-hash" style="color: #1f80c1">{{scope.row.from_address}}</span>
           </template>
         </el-table-column>
 
         <el-table-column prop="to_address" :label="$t('transactionList.to2')" width="170" align="left">
           <template slot-scope="scope">
-            <span type="text" @click="handleClickTo(scope.row, scope.row.to_address)" class="btn-hash" style="color: #3C31D7" v-if="scope.row.to_address">{{scope.row.to_address}}</span>
+            <span type="text" @click="handleClickTo(scope.row, scope.row.to_address)" class="btn-hash" style="color: #1f80c1" v-if="scope.row.to_address">{{scope.row.to_address}}</span>
           </template>
         </el-table-column>
 
@@ -156,37 +156,25 @@
     .el-breadcrumb {
       padding: 21px 33px;
       border-bottom: 1px solid #ccc;
-      & .el-breadcrumb__item:first-of-type {
-        & span {
-          margin-left: 30px;
-        }
-      }
+       
 
       .el-breadcrumb__item:first-of-type {
         position: relative;
-      }
-      .el-breadcrumb__item:first-of-type:before {
-        display: inline-block;
-        content: url('../../../assets/home.png');
-        width: 19px;
-        height: 19px;
-        position: absolute;
-        top: -3px;
       }
     }
     .el-table {
       width: 100%;
       border: 1px solid #ccc;
-      border-radius: 4px;
+      border-radius: 0px;
       th {
-        background-color: #f1f1ff;
+        background-color: #f1f1f1;
         height: 60px !important;
       }
       td {
         border-bottom: none;
       }
       .el-button {
-        padding: 6px 18px;
+        padding: 6px 18px 7px;
         outline: none;
         cursor: pointer;
       }
@@ -200,8 +188,8 @@
         }
       }
       .btn-height {
-        padding: 6px 18px 6px 0;
-        color: #3C31D7;
+        padding: 6px 18px 7px 0;
+        color: #1f80c1;
         font-weight: 500;
         cursor: pointer;
       }
@@ -216,26 +204,26 @@
         white-space: nowrap;
         width: 152px;
         text-overflow: ellipsis;
-        color: #3C31D7;
+        color: #1f80c1;
         font-weight: 500;
       }
       .btn-hash:hover {
         text-decoration: underline;
       }
       .success {
-        background: #31D7A8;
+        background: #2ebf54;
       }
       .fail {
-        background: #D7316F;
+        background: #dc4056;
       }
       .pending {
         background: #E4BE33;
       }
       .el-table__row:nth-of-type(even) {
-        background-color: #f9f9ff;
+        background-color: #f8f8f8;
       }
       .el-loading-spinner .path {
-        stroke: #3C31D7;
+        stroke: #1f80c1;
       }
       .cell {
         padding-right: 0 !important;
@@ -257,25 +245,25 @@
         margin: 0 5px;
       }
       .el-pager li:hover {
-        color: #3C31D7;
+        color: #1f80c1;
       }
       .el-pager li.active {
         color: #fff;
-        background-color: #3C31D7;
-        border-radius: 5px;
+        background-color: #1f80c1;
+        border-radius: 0px;
       }
       .el-pager .more::before {
         line-height: 0px;
       }
       .el-select .el-input.is-focus .el-input__inner {
-        border-color: #3C31D7;
+        border-color: #1f80c1;
       }
       .el-input__inner:focus {
-        border-color: #3C31D7;
+        border-color: #1f80c1;
         outline: 0;
       }
       .el-pagination__sizes .el-input .el-input__inner:hover {
-        border-color: #3C31D7;
+        border-color: #1f80c1;
       }
       .el-input__inner {
         box-shadow: none;

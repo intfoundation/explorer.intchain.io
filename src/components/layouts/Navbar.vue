@@ -166,9 +166,9 @@ export default {
 
 <style lang="scss">
   .nav-container {
-    box-shadow: 0px 6px 10px 0px #ddd;
-    background-color: #fff;
-    height: 72px;
+    box-shadow: 0px 0px 6px 0px #ccc;
+    background-color: #171921;
+    height: 70px;
     .nav-panel {
       text-align: left;
       padding: 10px 0px;
@@ -187,7 +187,7 @@ export default {
         margin-left: 40px;
         & a {
           margin-right: 30px;
-          color: #666666;
+          color: #ffffff;
           text-decoration: none;
           font-weight: 500;
           span {
@@ -195,9 +195,8 @@ export default {
           }
         }
         .pgy:hover {
-          color: #3C31D7;
+          color: #d31515;
           padding-bottom: 2px;
-          border-bottom: 2px solid #3C31D7;
         }
         .vg {
           position: relative;
@@ -211,7 +210,8 @@ export default {
             width: 110px;
             top: 45px;
             box-shadow: 0px 6px 10px 0px #ccc;
-            background-color: #fff;
+            background-color: #171921;
+            color: #fff;
             padding: 10px 15px;
             left: -16px;
             font-size: 14px;
@@ -224,7 +224,7 @@ export default {
               margin-top: 8px;
             }
             .chain-dropdown-i:hover {
-              color: #3EC2FF;
+              color: #d31515;
             }
           }
           .triangle {
@@ -233,36 +233,33 @@ export default {
             height: 0;
             border-width: 7px 7px 0;
             border-style: solid;
-            border-color: #999 transparent transparent;
+            border-color: #ffffff transparent transparent;
             margin-left: 8px;
             vertical-align: middle;
           }
         }
         .nav-active {
-          color: #3C31D7;
+          color: #d31515;
           padding-bottom: 2px;
-          border-bottom: 2px solid #3C31D7;
         }
         .triangle-active {
-          border-color: #3C31D7 transparent transparent !important;
+          border-color: #ffffff transparent transparent !important;
         }
       }
       .help:hover {
-        color: #3C31D7;
+        color: #d31515;
         padding-bottom: 2px;
-        border-bottom: 2px solid #3C31D7;
+        border-bottom: 2px solid #d31515;
       }
       .iv {
         height: 52px;
-        line-height: 52px;
+        line-height: 48px;
         float: right;
         & input {
           width: 280px;
           box-sizing: border-box;
           height: 37px;
           padding-left: 10px;
-          border-top-left-radius: 4px;
-          border-bottom-left-radius: 4px;
           border: 1px solid #ccc;
           border-right: none !important;
           outline: none;
@@ -273,18 +270,18 @@ export default {
           width: 53px;
           height: 37px;
           line-height: 3;
-          background-color: #3A3CDA;
+          background-color: #1f80c1;
           text-align: center;
-          border-bottom-right-radius: 4px;
-          border-top-right-radius: 4px;
           vertical-align: middle;
         }
         .search-icon {
           background-image: url("../../assets/search.png");
           background-size: cover;
           display: inline-block;
-          width: 24px;
-          height: 22px;
+          width: 18px;
+          height: 16px;
+          position: relative;
+          top: -3px;
         }
       }
     }

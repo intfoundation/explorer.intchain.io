@@ -52,7 +52,7 @@
         margin: 20px 0;
       }
       button {
-        background-color: #3A3CDA;
+        background-color: #1f80c1;
         color: #fff;
         padding: 8px 16px;
         border-radius: 3px;

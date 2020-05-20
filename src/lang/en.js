@@ -1,7 +1,7 @@
 module.exports = {
     blocksList: {
         blocksListTitle: 'Blocks',
-        viewMore: 'View More > ',
+        viewMore: 'View More',
         height: 'Height: ',
         miner: 'Miner: ',
         reward: 'Block Reward: ',
@@ -133,7 +133,7 @@ module.exports = {
         Voting_mortgage: 'Voting mortgage',
         Transfer_accounts: 'Transfer accounts',
         Contact_us: 'Contact Us',
-        link: 'link',
+        link: 'Links',
         wechat: "WeChat",
         micro_blog: 'Weibo',
         Subscription: 'Subscription',

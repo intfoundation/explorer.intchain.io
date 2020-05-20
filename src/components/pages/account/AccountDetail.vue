@@ -499,11 +499,11 @@
       text-align: left;
       .overview {
         border: 1px solid #ccc;
-        border-radius: 4px;
+        border-radius: 0px;
         padding: 35px 56px;
         margin-bottom: 56px;
         .inquire {
-          color: #3C31D7;
+          color: #1f80c1;
           text-decoration: none;
           margin-left: 30px;
           font-weight: 500;
@@ -545,10 +545,10 @@
           border-top-right-radius: 4px;
         }
         .tabs:hover {
-          background-color: #f1f1ff;
+          background-color: #f1f1f1;
         }
         .tab-active {
-          background-color: #f1f1ff;
+          background-color: #f1f1f1;
         }
         .delare {
           border-top: 1px solid #ccc;
@@ -557,7 +557,7 @@
           padding: 18px 26px;
           border-top-right-radius: 4px;
           font-weight: 500;
-          background-color: #f9f9ff;
+          background-color: #f8f8f8;
           & a {
             float: right;
             text-decoration: none;
@@ -568,17 +568,17 @@
           border: 1px solid #ccc;
           border-radius: 0 !important;
           th {
-            background-color: #f1f1ff;
+            background-color: #f1f1f1;
             height: 60px !important;
           }
           td {
             border-bottom: none;
           }
           .el-table__row:nth-of-type(even) {
-            background-color: #f9f9ff;
+            background-color: #f8f8f8;
           }
           .btn-height {
-            color: #3C31D7;
+            color: #1f80c1;
             font-weight: 500;
             cursor: pointer;
           }
@@ -586,11 +586,11 @@
             text-decoration: underline;
           }
           .plain-btn {
-            color: #606266;
+            color: #222222;
             cursor: default;
           }
           .btn-hash {
-            color: #3C31D7;
+            color: #1f80c1;
             font-weight: 500;
             cursor: pointer;
           }
@@ -619,13 +619,13 @@
             padding-right: 0 !important;
           }
           .success {
-            background: #31D7A8;
+            background: #2ebf54;
           }
           .fail {
-            background: #D7316F;
+            background: #dc4056;
           }
           .el-loading-spinner .path {
-            stroke: #3C31D7;
+            stroke: #1f80c1;
           }
           .cur {
             cursor: default;
@@ -652,11 +652,11 @@
             margin: 0 5px;
           }
           .el-pager li:hover {
-            color: #3C31D7;
+            color: #1f80c1;
           }
           .el-pager li.active {
             color: #fff;
-            background-color: #3C31D7;
+            background-color: #1f80c1;
             border-radius: 5px;
           }
         }
@@ -683,7 +683,7 @@
   .t-num > span {
     display: inline-block;
     font-size: 14px;
-    color: #3C31D7;
+    color: #1f80c1;
     font-weight: 700;
   }
 
@@ -756,11 +756,11 @@
   }
 
   .token-down:hover .t-num {
-    border: 1px solid #3C31D7;
+    border: 1px solid #1f80c1;
   }
 
   .token-down:hover .t-num i {
-    border-color: #3C31D7;
+    border-color: #1f80c1;
   }
 
   .token-down .t-num .t-deg {

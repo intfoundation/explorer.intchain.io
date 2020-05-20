@@ -66,25 +66,15 @@
 <style lang="scss">
   .node {
     width: 1200px;
-    box-shadow: 0px 6px 10px 0px #ccc;
+    box-shadow: 0px 2px 4px 0px #ccc;
     background-color: #fff;
     .el-breadcrumb {
       padding: 21px 33px;
       border-bottom: 1px solid #ccc;
-      & .el-breadcrumb__item:first-of-type {
-        & span {
-          margin-left: 30px;
-        }
-      }
+       
 
       .el-breadcrumb__item:first-of-type {
         position: relative;
-      }
-      .el-breadcrumb__item:first-of-type:before {
-        display: inline-block;
-        content: url('../../../assets/home.png');
-        position: absolute;
-        top: -3px
       }
     }
     .node-content {
@@ -105,7 +95,7 @@
             box-sizing: border-box;
             height: 37px;
             padding-left: 10px;
-            border-radius: 4px;
+            border-radius: 0px;
             border: 1px solid #ccc;
             outline: none;
           }
@@ -126,10 +116,10 @@
           border-right: 1px solid #ccc;
         }
         .tabs:hover {
-          background-color: #f9f9ff;
+          background-color: #f8f8f8;
         }
         .tab-active {
-          background-color: #f9f9ff;
+          background-color: #f8f8f8;
         }
       }
     }

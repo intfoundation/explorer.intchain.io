@@ -2,13 +2,13 @@
   <div class="charts">
     <div style="display: inline-block;">
       <div class="int-st" style="width: 545px;">
-        <div class="text">14 Days INT Transaction History</div>
+        <div class="text">14 Day Transaction History</div>
       </div>
       <div ref="echarts" class="echarts"></div>
     </div>
     <div class="int">
       <div class="int-st">
-        <div class="text">INT</div>
+        <div class="text">INT Metrics</div>
       </div>
       <div class="price">$ {{int.price}}</div>
       <div class="val">
@@ -113,7 +113,7 @@
               position: [50, 50]
             },
             itemStyle: {
-              color: '#3C31D7', // 线的颜色
+              color: '#1f80c1', // 线的颜色
               borderWidth: 5 // 线的宽度
             }
           }]
@@ -166,7 +166,7 @@
 <style lang="scss">
   .charts {
     width: 1200px;
-    box-shadow: 0px 6px 10px 0px #ccc;
+    box-shadow: 0px 2px 4px 0px #ccc;
     background-color: #fff;
     height: 400px;
     margin: 0 auto;
@@ -183,24 +183,25 @@
       width: 545px;
       float: right;
       .price {
-        padding: 27px 0px 78px 16px;
-        font-size: 56px;
+        padding: 27px 0px 28px 16px;
+        font-size: 40px;
         text-align: left;
         border-bottom: 1px solid #ccc;
+        font-weight: 700;
       }
       .val {
-        padding: 22px 0px 22px 32px;
+        padding: 22px 20px;
         text-align: left;
-        color: #666;
+        color: #222222;
         font-weight: 500;
         div:not(:first-child) {
           margin-top: 10px;
         }
         .positive {
-          color: #31D7A8;
+          color: #2ebf54;
         }
         .negative {
-          color: #D7316F;
+          color: #dc4056;
         }
       }
     }
@@ -211,8 +212,8 @@
       border-bottom: 1px solid #ccc;
       padding-bottom: 22px;
       .text {
-        font-size: 22px;
-        font-weight: 500;
+        font-size: 18px;
+        font-weight: 700;
         text-align: left;
       }
     }

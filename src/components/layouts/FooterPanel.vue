@@ -80,8 +80,8 @@
 <style lang="scss">
   .footer-panel {
     height: 320px;
-    color: #A5A5AD;
-    background-color: #49494D;
+    color: #ffffff;
+    background: radial-gradient(circle,#272b38 0,#171928 100%);
     .footer-content {
       margin: 0 auto;
       width: 1200px;
@@ -117,9 +117,9 @@
       position: relative;
       text-decoration: none;
       .link{
-        font-size: 15px;
+        font-size: 14px;
         text-decoration:none;
-        color:#A5A5AD;
+        color:#ffffff;
       }
       .link:hover {
         color: #fff;
@@ -135,10 +135,11 @@
   }
   .rmb {
     display: inline-block;
-    width: 32px;
-    height: 32px;
+    width: 20px;
+    height: 20px;
     background-size: cover;
     vertical-align: middle;
+    margin-right: 6px;
   }
   .twitter{
     background-image: url("../../assets/twitter.png");

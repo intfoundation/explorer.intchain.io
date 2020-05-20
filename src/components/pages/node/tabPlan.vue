@@ -161,7 +161,7 @@
   .node-plan {
     border: 1px solid #ccc;
     padding: 22px 33px 48px 33px;
-    background-color: #f9f9ff;
+    background-color: #f8f8f8;
     border-top-right-radius: 4px;
     border-bottom-right-radius: 4px;
     border-bottom-left-radius: 4px;
@@ -195,9 +195,9 @@
       .el-table {
         width: 100%;
         border: 1px solid #ccc;
-        border-radius: 4px;
+        border-radius: 0px;
         th {
-          background-color: #f9f9ff;
+          background-color: #f8f8f8;
           height: 62px;
         }
         td {
@@ -208,7 +208,7 @@
           word-break: break-word;
         }
         .el-table__row:nth-of-type(even) {
-          background-color: #f9f9ff;
+          background-color: #f8f8f8;
         }
       }
     }
@@ -216,7 +216,7 @@
       text-align: right;
       margin-top: 12px;
       & > a {
-        color: #2c3e50;
+        color: #222222;
         text-decoration: none;
       }
       & > a:hover {

@@ -47,12 +47,12 @@
         <span class="span-width" style="vertical-align: top;">{{$t('detail.Node_name')}}：</span>
         <div style="display: inline-block;">
         <router-link
-          style="margin-bottom: 10px; cursor: pointer;"
+          style="margin-bottom: 4px; cursor: pointer;"
           tag="div"
           v-for="(item, index) in node"
           :key="index" v-if="index <= maxIndex"
           :to="{ path: '/blockchain/accountdetail/1', query: {address: item}}"
-          class="format" >{{item}}</router-link>
+          class="format">{{item}}</router-link>
           <span v-if="node.length > 5 && (maxIndex !== node.length - 1)" @click="more" style="cursor: pointer;">{{$t('blocksList.viewMore')}}</span>
           <span v-if="node.length > 5 && (maxIndex === node.length - 1)" @click="less" style="cursor: pointer;">{{$t('detail.less')}}</span>
         </div>
@@ -213,8 +213,8 @@
   .txtype {
     .txtype-detail {
       border: 1px solid #CCCCCC;
-      border-radius: 4px;
-      font-size: 15px;
+      border-radius: 0px;
+      font-size: 14px;
       margin-bottom: 30px;
       padding: 35px 56px;
       .trad-list:not(:first-of-type) {
@@ -225,7 +225,7 @@
         width: 220px;
       }
       .format{
-        color:#372fd2;
+        color:#1f80c1;
         text-decoration: none;
       }
 

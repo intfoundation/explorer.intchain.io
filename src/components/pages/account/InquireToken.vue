@@ -105,25 +105,15 @@
     .el-breadcrumb {
       padding: 21px 33px;
       border-bottom: 1px solid #ccc;
-      & .el-breadcrumb__item:first-of-type {
-        & span {
-          margin-left: 30px;
-        }
-      }
+       
 
       .el-breadcrumb__item:first-of-type {
         position: relative;
       }
-      .el-breadcrumb__item:first-of-type:before {
-        display: inline-block;
-        content: url('../../../assets/home.png');
-        position: absolute;
-        top: -3px
-      }
     }
     .vmp {
       overflow: hidden;
-      background-color: #f9f9ff;
+      background-color: #f8f8f8;
       border-top: 1px solid #ccc;
       border-left: 1px solid #ccc;
       border-right: 1px solid #ccc;
@@ -139,19 +129,19 @@
       border-bottom: 1px solid #ccc;
       border-bottom-left-radius: 4px;
       border-bottom-right-radius: 4px;
-      /*border-radius: 4px;*/
+      /*border-radius: 0px;*/
       th {
-        background-color: #f1f1ff;
+        background-color: #f1f1f1;
         height: 60px !important;
       }
       td {
         border-bottom: none;
       }
       .el-table__row:nth-of-type(even) {
-        background-color: #f9f9ff;
+        background-color: #f8f8f8;
       }
       .btn-height {
-        color: #3C31D7;
+        color: #1f80c1;
         font-weight: 500;
         cursor: pointer;
       }
@@ -159,7 +149,7 @@
         text-decoration: underline;
       }
       .el-loading-spinner .path {
-        stroke: #3C31D7;
+        stroke: #1f80c1;
       }
     }
     .ep {
@@ -178,25 +168,25 @@
         margin: 0 5px;
       }
       .el-pager li:hover {
-        color: #3C31D7;
+        color: #1f80c1;
       }
       .el-pager li.active {
         color: #fff;
-        background-color: #3C31D7;
+        background-color: #1f80c1;
         border-radius: 5px;
       }
       .el-pager .more::before {
         line-height: 0px;
       }
       .el-select .el-input.is-focus .el-input__inner {
-        border-color: #3C31D7;
+        border-color: #1f80c1;
       }
       .el-input__inner:focus {
-        border-color: #3C31D7;
+        border-color: #1f80c1;
         outline: 0;
       }
       .el-pagination__sizes .el-input .el-input__inner:hover {
-        border-color: #3C31D7;
+        border-color: #1f80c1;
       }
       .el-input__inner {
         box-shadow: none;
@@ -212,7 +202,7 @@
         box-sizing: border-box;
         height: 37px;
         padding-left: 10px;
-        border-radius: 4px;
+        border-radius: 0px;
         border: 1px solid #ccc;
         outline: none;
       }

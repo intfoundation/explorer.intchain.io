@@ -24,7 +24,7 @@
     background-color: #f9f9f9;
     .main {
       min-height: 800px;
-      margin: 72px auto 120px auto;
+      margin: 40px auto 120px auto;
     }
   }
 </style>

@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div class="explorer-title">INT Explorer</div>
     <DataSheet ref="DataSheet"/>
     <div class="home-page">
     <p id="time"></p>
@@ -9,9 +10,9 @@
           <span>{{$t('blocksList.blocksListTitle')}}</span>
           <router-link to="/blockchain/blocklist/1">{{$t('blocksList.viewMore')}}</router-link>
         </div>
-        <div class="common-list-item block-item" v-for="item in blockList">
+        <div class="common-list-item block-item" v-for="item in blockList" :key="item.height">
           <div class="common-height common-title">
-            <span style="color: #3C31D7;font-size: 18px;">{{$t('blocksList.height')}}</span>
+            <span style="font-size: 14px;">{{$t('blocksList.height')}}&nbsp;</span>
             <router-link :to="{ path: '/blockchain/blockdetail', query: { height: item.height }}">{{item.height}}</router-link>
           </div>
           <div class="im">
@@ -20,8 +21,8 @@
                 <span>{{$t('blocksList.miner')}}</span>
                 <router-link :to="{ path: '/blockchain/accountdetail/1', query: {address: item.creator}}" class="format">{{item.creator}}</router-link>
               </div>
-              <div class="in">
-                <span>{{$t('blocksList.txns')}}</span>
+              <div class="in" style="display: inline-flex; align-items: center;">
+                <span>{{$t('blocksList.txns')}}&nbsp;</span>
                 <router-link :to="{ path: '/blockchain/txlist/byBlock/1', query: {height: item.height}}" class="format">{{item.transfer_num}}</router-link>
               </div>
             </div>
@@ -34,7 +35,7 @@
                 <span>{{$t('blocksList.avgGasPrice')}}</span>
                 <span>{{item.avg_fee}}</span>
               </div>
-              <div class="is">{{item.timestamp}}</div>
+              <div class="is" style="font-size: 12px;">{{item.timestamp}}</div>
             </div>
           </div>
         </div>
@@ -46,24 +47,24 @@
           <span>{{$t('transactionList.transactionListTitle')}}</span>
           <router-link to="/blockchain/txlist/1">{{$t('blocksList.viewMore')}}</router-link>
         </div>
-        <div class="common-list-item" v-for="item in transactionList" style="box-sizing: border-box;height: 160px;">
+        <div class="common-list-item" v-for="item in transactionList" :key="item.hash" style="box-sizing: border-box;height: 160px;">
           <div class="iu">
 
             <!--交易左侧部分-->
             <div class="left ia">
-              <div class="common-title" style="color: #3C31D7">
-                <span style="font-size: 18px;vertical-align: middle">{{$t('transactionList.txHash')}}</span>
+              <div class="common-title">
+                <span style="font-size: 14px;vertical-align: middle">{{$t('transactionList.txHash')}}&nbsp;</span> 
                 <router-link
                   class="txtitle"
                   :to="{ path: '/blockchain/txdetail', query: { hash: item.hash }}">
                   {{item.hash}}</router-link>
               </div>
               <div class="il">
-                <span>{{$t('transactionList.from')}}</span>
+                <span>{{$t('transactionList.from')}}&nbsp;</span>
                 <router-link :to="{ path: '/blockchain/accountdetail/1', query: { address: item.from_address }}" class="txtitle format">{{item.from_address}}</router-link>
               </div>
-              <div class="in">
-                <span>{{$t('transactionList.to')}}</span>
+              <div class="in" style="display: inline-flex; align-items: center;">
+                <span>{{$t('transactionList.to')}}&nbsp;</span>
                 <router-link :to="{ path: '/blockchain/accountdetail/1', query: { address: item.to_address }}" class="txtitle format">{{item.to_address}}</router-link>
               </div>
             </div>
@@ -71,18 +72,18 @@
             <!--交易右侧部分-->
             <div class="it" style="display: inline-block">
               <div class="tx-right-text">
-                <span style="font-size: 18px;">{{$t('blocksList.height')}}</span>
-                <span style="font-size: 18px;">{{item.height}}</span>
+                <span style="font-size: 14px;">{{$t('blocksList.height')}}</span>
+                <span style="font-size: 14px;">{{item.height}}</span>
               </div>
               <div class="il">
-                <span>{{$t('transactionList.value')}}</span>
+                <span>{{$t('transactionList.value')}}&nbsp;</span>
                 <span>{{item.value}}</span>
               </div>
               <div class="in transactionIn">
                 <span>{{$t('transactionList.txtype')}}</span>
                 <span>{{item.method}}</span>
               </div>
-              <div style="margin-top: 10px">{{item.timestamp}}</div>
+              <div style="margin-top: 8px;font-size: 12px;">{{item.timestamp}}</div>
             </div>
           </div>
         </div>
@@ -191,6 +192,28 @@
 </script>
 
 <style lang="scss" scoped>
+  .explorer-title {
+    width: 1200px;
+    margin: 0 auto 40px;
+    text-align: left;
+    font-size: 30px;
+    font-weight: 700;
+
+    position: relative;
+    display: inline-block;
+    padding-bottom: 10px;
+
+    &::after {
+      content: '';
+      display: block;
+      width: 120px;
+      height: 2px;
+      background: #d31515;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
+  }
   .home-page {
     width: 1200px;
     margin: 50px auto;
@@ -205,8 +228,8 @@
         box-sizing: border-box;
         height: 160px;
         .im {
-          margin-top: 10px;
-          color: #666;
+          margin-top: 6px;
+          color: #222222;
           .blocks-left {
             vertical-align: top;
             & div:first-child {
@@ -236,26 +259,31 @@
         vertical-align: text-top;
       }
       .iu {
-        color: #666;
+        color: #222222;
         overflow: hidden;
+        
         & div span:nth-of-type(odd) {
           font-weight: 500;
-          font-size: 15px;
+          font-size: 14px;
         }
         & div span:nth-of-type(even) {
-          font-size: 15px;
+          font-size: 14px;
         }
         .ia {
           vertical-align: top;
         }
         .tx-right-text {
-          font-size: 18px;
+          font-size: 16px;
         }
         .il {
-          margin-top: 10px;
+          margin-top: 6px;
+          display: inline-flex;
+          align-items: center;
         }
         .it {
           margin-left: 15px;
+          display: inline-flex;
+          align-items: center;
         }
       }
     }
@@ -276,20 +304,23 @@
       }
     }
     .is {
-      margin-top: 12px;
-      color: #999;
+      margin-top: 6px;
+      color: #222222;
     }
     .common-list {
       width: 574px;
       display: inline-block;
-      box-shadow: 0px 6px 10px 0px #ccc;
-      border-radius: 4px;
+      box-shadow: 0px 2px 4px 0px #ccc;
       background-color: #fff;
       .common-left-right {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         border-bottom: 1px solid #ccc;
-        padding: 22px 18px;
+        padding: 22px 16px;
         box-sizing: border-box;
         text-align: left;
+        font-size: 14px;
         & > span {
           font-size: 22px;
           font-weight: 500;
@@ -299,20 +330,26 @@
           text-decoration: none;
           height: 30px;
           line-height: 30px;
-          color: #666;
+          color: #1f80c1;
         }
       }
       .common-list-item {
         padding: 22px 0px;
-        margin: 0 18px;
+        margin: 0 16px;
         text-align: left;
         border-bottom: 1px solid #e5e5e5;
+
+        &:last-child {
+          border-bottom: 0;
+        }
         .common-title {
+          display: flex;
+          align-items: center;
           font-weight: 500;
           & > a {
             text-decoration: none;
-            color: #3C31D7;
-            font-size: 18px;
+            color: #1f80c1;
+            font-size: 14px;
           }
           & > a:hover {
             text-decoration: underline;
@@ -326,9 +363,9 @@
           float: right;
         }
         .format {
-          color: #3C31D7;
+          color: #1f80c1;
           font-weight: 500;
-          font-size: 15px;
+          font-size: 14px;
           text-decoration: none;
         }
         .format:hover {
