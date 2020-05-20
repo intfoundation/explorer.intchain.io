@@ -62,13 +62,18 @@
 
       </div>
     </div>
-      <div style="font-size: 14px; display:inline-block;">Copyright © 2018 INT</div>
+      <div style="font-size: 14px; display:inline-block;">Copyright © {{ year }} INT</div>
   </div>
 </template>
 
 <script>
   export default {
-    name: 'FooterPanel'
+    name: 'FooterPanel',
+    data() {
+      return {
+        year: '2019 - ' + (new Date()).getFullYear()
+      }
+    }
   }
 </script>
 
