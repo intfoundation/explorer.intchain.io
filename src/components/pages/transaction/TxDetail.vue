@@ -206,12 +206,13 @@
     .trade-state {
       display: inline-block;
       width: 62px;
-      height: 24px;
-      border-radius: 0px;
+      height: 26px;
+      border-radius: 3px;
       font-size: 12px;
       color: #FFFFFF;
       text-align: center;
-      line-height: 24px;
+      line-height: 26px;
+      font-weight: 700;
     }
 
     .trad-list:not(:first-of-type) {

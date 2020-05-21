@@ -236,7 +236,7 @@
         text-decoration: underline;
       }
       .success {
-        background: #2ebf54;
+        background: #3fcf64;
       }
       .fail {
         background: #dc4056;

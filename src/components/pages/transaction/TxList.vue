@@ -181,10 +181,10 @@
       .btn-status {
         cursor: default;
         padding: 6px 6px 7px;
-        width: 84px;
+        width: 74px;
         span {
           color: #fff;
-          font-size: 13px;
+          font-size: 12px;
         }
       }
       .btn-height {
@@ -211,7 +211,7 @@
         text-decoration: underline;
       }
       .success {
-        background: #2ebf54;
+        background: #3fcf64;
       }
       .fail {
         background: #dc4056;

@@ -81,7 +81,7 @@
   .footer-panel {
     height: 320px;
     color: #ffffff;
-    background: radial-gradient(circle,#272b38 0,#171928 100%);
+    background: #171928;
     .footer-content {
       margin: 0 auto;
       width: 1200px;
@@ -99,7 +99,7 @@
     .footer-left {
       display: inline-block;
       width:740px;
-      margin-bottom:40px;
+      margin-bottom: 60px;
     }
     .footer-right {
       display: inline-block;
@@ -109,11 +109,11 @@
     }
     .isc {
       display: inline-block;
-      width: 140px;
-      line-height: 36px;
+      width: 134px;
+      line-height: 29px;
       vertical-align: middle;
       font-weight: normal;
-      padding-bottom: 18px;
+      padding-bottom: 5px;
       position: relative;
       text-decoration: none;
       .link{
