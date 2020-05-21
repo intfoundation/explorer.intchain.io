@@ -79,7 +79,7 @@
 
     <div class="seperator">
       <div>
-        <span class="declare" style="font-size: 14px;">The top 13 candidate nodes are Thearchy Validator Nodes.</span>
+        <span class="declare" style="font-size: 14px;">The top 13 candidate nodes are Thearchy Validator Nodes</span>
       </div>
     </div>
 

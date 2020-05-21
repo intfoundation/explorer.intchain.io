@@ -7,7 +7,7 @@
     </el-breadcrumb>
     <div class="node-content">
       <div>
-        <span class="tabs" v-for="item in tabs" :class="{'tab-active': curTab === item.id}" @click="switchTab(item)">{{item.name}}</span>
+        <span class="tabs" v-for="item in tabs" :key="item.id" :class="{'tab-active': curTab === item.id}" @click="switchTab(item)">{{item.name}}</span>
         <div class="common-inline-block row-input" @keyup.enter="search">
           <input type="text" :placeholder="$t('node.search')" v-model="search">
         </div>
