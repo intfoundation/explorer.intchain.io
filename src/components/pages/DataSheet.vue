@@ -105,7 +105,7 @@
             }
           },
           series: [{
-            name: 'transaction', // 这个name必须与legend data中的name一致
+            // name: 'transaction', // 这个name必须与legend data中的name一致
             data: [],
             type: 'line',
             smooth: true,
@@ -114,7 +114,7 @@
             },
             itemStyle: {
               color: '#1f80c1', // 线的颜色
-              borderWidth: 5 // 线的宽度
+              borderWidth: 1 // 线的宽度
             }
           }]
         }

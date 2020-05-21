@@ -11,12 +11,12 @@
           <router-link to="/blockchain/blocklist/1">{{$t('blocksList.viewMore')}}</router-link>
         </div>
         <div class="common-list-item block-item" v-for="item in blockList" :key="item.height">
-          <div class="common-height common-title">
-            <span style="font-size: 14px;">{{$t('blocksList.height')}}&nbsp;</span>
-            <router-link :to="{ path: '/blockchain/blockdetail', query: { height: item.height }}">{{item.height}}</router-link>
-          </div>
           <div class="im">
-            <div class="left blocks-left">
+            <div class="left blocks-left" style="width: 360px;">
+              <div class="common-height common-title">
+                <span style="font-size: 14px;">{{$t('blocksList.height')}}&nbsp;</span>
+                <router-link :to="{ path: '/blockchain/blockdetail', query: { height: item.height }}">{{item.height}}</router-link>
+              </div>
               <div>
                 <span>{{$t('blocksList.miner')}}</span>
                 <router-link :to="{ path: '/blockchain/accountdetail/1', query: {address: item.creator}}" class="format">{{item.creator}}</router-link>
@@ -26,7 +26,7 @@
                 <router-link :to="{ path: '/blockchain/txlist/byBlock/1', query: {height: item.height}}" class="format">{{item.transfer_num}}</router-link>
               </div>
             </div>
-            <div style="display: inline-block;margin-left: 15px;">
+            <div style="display: inline-block;margin-left: 14px;">
               <div>
                 <span>{{$t('blocksList.reward')}}</span>
                 <span>{{item.reward}}</span>
@@ -60,10 +60,11 @@
                   {{item.hash}}</router-link>
               </div>
               <div class="il">
-                <span>{{$t('transactionList.from')}}&nbsp;</span>
+                <span v-if="item.method !== 'createToken' && item.method !== 'register' && item.method !== 'mortgage' && item.method !== 'vote' && item.method !== 'unmortgage'">{{$t('transactionList.from')}}&nbsp;</span>
+                <span v-if="item.method == 'createToken' || item.method == 'register' || item.method == 'mortgage' || item.method == 'vote' || item.method == 'unmortgage'">{{$t('transactionList.by')}}&nbsp;</span>
                 <router-link :to="{ path: '/blockchain/accountdetail/1', query: { address: item.from_address }}" class="txtitle format">{{item.from_address}}</router-link>
               </div>
-              <div class="in" style="display: inline-flex; align-items: center;">
+              <div class="in" style="display: inline-flex; align-items: center;" v-if="item.method !== 'mortgage' && item.method !== 'vote' && item.method !== 'unmortgage'">
                 <span>{{$t('transactionList.to')}}&nbsp;</span>
                 <router-link :to="{ path: '/blockchain/accountdetail/1', query: { address: item.to_address }}" class="txtitle format">{{item.to_address}}</router-link>
               </div>
@@ -241,10 +242,10 @@
           }
           & div span:nth-child(odd) {
             font-weight: 500;
-            font-size: 15px;
+            font-size: 14px;
           }
           & div span:nth-child(even) {
-            font-size: 15px;
+            font-size: 14px;
           }
         }
       }
@@ -281,7 +282,7 @@
           align-items: center;
         }
         .it {
-          margin-left: 15px;
+          margin-left: 14px;
           display: inline-flex;
           align-items: center;
         }

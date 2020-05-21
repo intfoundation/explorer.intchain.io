@@ -43,6 +43,7 @@ module.exports = {
         transactionListTitle: 'Transactions',
         txHash: 'TxHash: ',
         from: 'From: ',
+        by: 'By: ',
         to: 'To: ',
         txReceiptStatus: 'TxReceiptStatus: ',
         value: 'Value: ',
