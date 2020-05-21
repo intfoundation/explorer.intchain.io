@@ -26,7 +26,7 @@
                 <router-link :to="{ path: '/blockchain/txlist/byBlock/1', query: {height: item.height}}" class="format">{{item.transfer_num}}</router-link>
               </div>
             </div>
-            <div style="display: inline-block;margin-left: 14px; float: right; margin-right: 30px;">
+            <div class="block-rewards">
               <div>
                 <span>{{$t('blocksList.reward')}}</span>
                 <span>{{item.reward}}</span>
@@ -78,7 +78,7 @@
               </div>
               <div class="il">
                 <span>{{$t('transactionList.value')}}&nbsp;</span>
-                <span>{{item.value}}</span>
+                <span class="value">{{item.value}}</span>
               </div>
               <div class="in transactionIn">
                 <span>{{$t('transactionList.txtype')}}</span>
@@ -199,7 +199,6 @@
     text-align: left;
     font-size: 30px;
     font-weight: 700;
-
     position: relative;
     display: inline-block;
     padding-bottom: 10px;
@@ -233,6 +232,13 @@
           padding-left: 8px;
         }
       }
+      .block-rewards {
+        display: inline-block;
+        margin-left: 14px; 
+        position: absolute;
+        right: 20px;
+        top: 20px;
+      }
       .block-item {
         padding: 28px 0px;
         margin: 0 24px;
@@ -241,7 +247,7 @@
         box-sizing: border-box;
         height: 140px;
         .im {
-          // margin-top: 6px;
+          
           color: #222222;
           .blocks-left {
             vertical-align: top;
@@ -289,19 +295,26 @@
           font-size: 16px;
         }
         .il {
-          // margin-top: 6px;
           display: inline-flex;
           align-items: center;
+        }
+        .value {
+          display: inline-block;
+          width: 140px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          vertical-align: middle;
         }
         .it {
           margin-left: 14px;
           display: inline-flex;
           align-items: center;
+          position: absolute;
+          right: 0;
+          top: 20px;
         }
       }
-    }
-    .in {
-      // margin-top: 4px;
     }
     .transactionIn {
       & > span:nth-of-type(1) {
@@ -357,7 +370,7 @@
         margin: 0 16px;
         text-align: left;
         border-bottom: 1px solid #e5e5e5;
-
+        position: relative;
         &:last-child {
           border-bottom: 0;
         }
