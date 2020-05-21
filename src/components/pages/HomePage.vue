@@ -17,16 +17,16 @@
                 <span style="font-size: 14px;">{{$t('blocksList.height')}}&nbsp;</span>
                 <router-link :to="{ path: '/blockchain/blockdetail', query: { height: item.height }}">{{item.height}}</router-link>
               </div>
-              <div>
+              <div class="miner">
                 <span>{{$t('blocksList.miner')}}</span>
-                <router-link :to="{ path: '/blockchain/accountdetail/1', query: {address: item.creator}}" class="format">{{item.creator}}</router-link>
+                <router-link :to="{ path: '/blockchain/accountdetail/1', query: {address: item.creator}}" class="format miner-address">{{item.creator}}</router-link>
               </div>
               <div class="in" style="display: inline-flex; align-items: center;">
                 <span>{{$t('blocksList.txns')}}&nbsp;</span>
                 <router-link :to="{ path: '/blockchain/txlist/byBlock/1', query: {height: item.height}}" class="format">{{item.transfer_num}}</router-link>
               </div>
             </div>
-            <div style="display: inline-block;margin-left: 14px;">
+            <div style="display: inline-block;margin-left: 14px; float: right; margin-right: 30px;">
               <div>
                 <span>{{$t('blocksList.reward')}}</span>
                 <span>{{item.reward}}</span>
@@ -35,7 +35,7 @@
                 <span>{{$t('blocksList.avgGasPrice')}}</span>
                 <span>{{item.avg_fee}}</span>
               </div>
-              <div class="is" style="font-size: 12px;">{{item.timestamp}}</div>
+              <div class="is">{{item.timestamp}}</div>
             </div>
           </div>
         </div>
@@ -84,7 +84,7 @@
                 <span>{{$t('transactionList.txtype')}}</span>
                 <span>{{item.method}}</span>
               </div>
-              <div style="margin-top: 8px;font-size: 12px;">{{item.timestamp}}</div>
+              <div class="timestamp">{{item.timestamp}}</div>
             </div>
           </div>
         </div>
@@ -221,6 +221,18 @@
     .blocks-list{
       vertical-align: top;
       margin-right: 42px;
+      .miner {
+        display: flex;
+        align-items: center;
+        &-address {
+          width: 300px;
+          display: inline-block;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          padding-left: 8px;
+        }
+      }
       .block-item {
         padding: 28px 0px;
         margin: 0 24px;
@@ -229,7 +241,7 @@
         box-sizing: border-box;
         height: 140px;
         .im {
-          margin-top: 6px;
+          // margin-top: 6px;
           color: #222222;
           .blocks-left {
             vertical-align: top;
@@ -252,7 +264,7 @@
     }
     .transaction-list {
       .txtitle {
-        width: 220px;
+        width: 250px;
         display: inline-block;
         overflow: hidden;
         white-space: nowrap;
@@ -277,7 +289,7 @@
           font-size: 16px;
         }
         .il {
-          margin-top: 6px;
+          // margin-top: 6px;
           display: inline-flex;
           align-items: center;
         }
@@ -289,7 +301,7 @@
       }
     }
     .in {
-      margin-top: 4px;
+      // margin-top: 4px;
     }
     .transactionIn {
       & > span:nth-of-type(1) {
@@ -306,7 +318,13 @@
     }
     .is {
       margin-top: 6px;
-      color: #222222;
+      color: #777;
+      font-size: 12px;
+    }
+    .timestamp {
+      margin-top: 8px;
+      font-size: 12px;
+      color: #777;
     }
     .common-list {
       width: 574px;
