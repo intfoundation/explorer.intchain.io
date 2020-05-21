@@ -212,7 +212,7 @@
 <style lang="scss">
   .txtype {
     .txtype-detail {
-      border: 1px solid #CCCCCC;
+      border: 1px solid #ddd;
       border-radius: 0px;
       font-size: 14px;
       margin-bottom: 30px;

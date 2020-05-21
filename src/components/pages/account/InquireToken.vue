@@ -100,11 +100,11 @@
   .blocklist {
     width: 1200px;
     margin: 90px auto;
-    box-shadow: 0px 6px 10px 0px #ccc;
+    border: 1px solid #ddd;
     background-color: #fff;
     .el-breadcrumb {
       padding: 21px 33px;
-      border-bottom: 1px solid #ccc;
+      border-bottom: 1px solid #ddd;
        
 
       .el-breadcrumb__item:first-of-type {
@@ -114,9 +114,9 @@
     .vmp {
       overflow: hidden;
       background-color: #f8f8f8;
-      border-top: 1px solid #ccc;
-      border-left: 1px solid #ccc;
-      border-right: 1px solid #ccc;
+      border-top: 1px solid #ddd;
+      border-left: 1px solid #ddd;
+      border-right: 1px solid #ddd;
       padding: 0 33px;
       box-sizing: border-box;
       height: 62px;
@@ -124,11 +124,11 @@
     }
     .el-table {
       width: 100%;
-      border-left: 1px solid #ccc;
-      border-right: 1px solid #ccc;
-      border-bottom: 1px solid #ccc;
-      border-bottom-left-radius: 4px;
-      border-bottom-right-radius: 4px;
+      border-left: 1px solid #ddd;
+      border-right: 1px solid #ddd;
+      border-bottom: 1px solid #ddd;
+      border-bottom-left-radius: 0px;
+      border-bottom-right-radius: 0px;
       /*border-radius: 0px;*/
       th {
         background-color: #f1f1f1;
@@ -203,7 +203,7 @@
         height: 37px;
         padding-left: 10px;
         border-radius: 0px;
-        border: 1px solid #ccc;
+        border: 1px solid #ddd;
         outline: none;
       }
       & span {
@@ -215,15 +215,15 @@
         right: 0;
         top: 8px;
         text-align: center;
-        border-bottom-right-radius: 4px;
-        border-top-right-radius: 4px;
+        border-bottom-right-radius: 0px;
+        border-top-right-radius: 0px;
       }
       .search-icon {
         background-image: url("../../../assets/pure-search.png");
         background-size: cover;
         display: inline-block;
-        width: 24px;
-        height: 22px;
+        width: 18px;
+        height: 16px;
       }
     }
   }

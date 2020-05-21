@@ -209,7 +209,7 @@ export default {
             position: absolute;
             width: 110px;
             top: 45px;
-            box-shadow: 0px 6px 10px 0px #ccc;
+            box-shadow: 0px 2px 4px 0px #ccc;
             background-color: #171921;
             color: #fff;
             padding: 10px 15px;

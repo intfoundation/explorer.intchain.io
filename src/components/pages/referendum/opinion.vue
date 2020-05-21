@@ -110,12 +110,12 @@
 
 <style lang="scss">
  .opinion{
-    border: 1px solid #ccc;
+    border: 1px solid #ddd;
     padding:30px 40px;
  }
  .o-line{
      height:5px;
-     border-bottom: 1px solid #ccc;
+     border-bottom: 1px solid #ddd;
  }
 
   .r-hash {

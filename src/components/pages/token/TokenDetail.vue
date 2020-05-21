@@ -390,11 +390,11 @@
 <style lang="scss">
   .token-detail {
     width: 1200px;
-    box-shadow: 0px 6px 10px 0px #ccc;
+    border: 1px solid #ddd;
     background-color: #fff;
     .el-breadcrumb {
       padding: 21px 33px;
-      border-bottom: 1px solid #ccc;
+      border-bottom: 1px solid #ddd;
        
 
       .el-breadcrumb__item:first-of-type {
@@ -405,8 +405,9 @@
       margin: 40px 44px;
       padding-bottom: 40px;
       text-align: left;
+      font-size: 15px;
       .overview {
-        border: 1px solid #ccc;
+        border: 1px solid #ddd;
         border-radius: 0px;
         padding: 35px 56px;
         margin-bottom: 56px;
@@ -466,16 +467,16 @@
         .tabs {
           display: inline-block;
           padding: 14px 48px;
-          border-top: 1px solid #ccc;
-          border-left: 1px solid #ccc;
+          border-top: 1px solid #ddd;
+          border-left: 1px solid #ddd;
           cursor: pointer;
         }
         .tabs:nth-of-type(1) {
-          border-top-left-radius: 4px;
+          border-top-left-radius: 0px;
         }
         .tabs:nth-of-type(2) {
-          border-right: 1px solid #ccc;
-          border-top-right-radius: 4px;
+          border-right: 1px solid #ddd;
+          border-top-right-radius: 0px;
         }
         .tabs:hover {
           background-color: #f1f1f1;
@@ -486,11 +487,11 @@
         }
         .delare {
           position: relative;
-          border-top: 1px solid #ccc;
-          border-left: 1px solid #ccc;
-          border-right: 1px solid #ccc;
+          border-top: 1px solid #ddd;
+          border-left: 1px solid #ddd;
+          border-right: 1px solid #ddd;
           padding: 18px 26px;
-          border-top-right-radius: 4px;
+          border-top-right-radius: 0px;
           font-weight: 500;
           background-color: #f8f8f8;
           & a {
@@ -535,9 +536,9 @@
             box-sizing: border-box;
             height: 37px;
             padding-left: 10px;
-            border-top-left-radius: 4px;
-            border-bottom-left-radius: 4px;
-            border: 1px solid #ccc;
+            border-top-left-radius: 0px;
+            border-bottom-left-radius: 0px;
+            border: 1px solid #ddd;
             border-right: none !important;
             outline: none;
             vertical-align: middle;
@@ -550,8 +551,8 @@
             line-height: 3;
             background-color: #1f80c1;
             text-align: center;
-            border-bottom-right-radius: 4px;
-            border-top-right-radius: 4px;
+            border-bottom-right-radius: 0px;
+            border-top-right-radius: 0px;
             vertical-align: middle;
           }
 
@@ -559,16 +560,16 @@
             background-image: url("../../../assets/search.png");
             background-size: cover;
             display: inline-block;
-            width: 24px;
-            height: 22px;
+            width: 18px;
+            height: 16px;
           }
         }
         .el-table {
-          border: 1px solid #ccc;
+          border: 1px solid #ddd;
           border-top-left-radius: 0;
           border-top-right-radius: 0;
-          border-bottom-left-radius: 4px;
-          border-bottom-right-radius: 4px;
+          border-bottom-left-radius: 0px;
+          border-bottom-right-radius: 0px;
           th {
             background-color: #f1f1f1;
             height: 60px !important;

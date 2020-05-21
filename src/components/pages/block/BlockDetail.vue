@@ -126,11 +126,11 @@
 <style lang="scss">
   .block-detail {
     width: 1200px;
-    box-shadow: 0px 6px 10px 0px #ccc;
+    border: 1px solid #ddd;
     background-color: #fff;
     .el-breadcrumb {
       padding: 21px 33px;
-      border-bottom: 1px solid #ccc;
+      border-bottom: 1px solid #ddd;
        
 
       .el-breadcrumb__item:first-of-type {
@@ -140,15 +140,16 @@
     .ig {
       height: 64px;
       line-height: 64px;
-      border-bottom: 1px solid #ccc;
+      border-bottom: 1px solid #ddd;
       padding: 0 33px;
     }
     .detail-content {
       margin: 40px 44px;
       text-align: left;
       font-weight: 500;
+      font-size: 15px;
       & > div {
-        border: 1px solid #ccc;
+        border: 1px solid #ddd;
         border-radius: 0px;
         padding: 35px 56px;
         & > div:not(:first-child) {

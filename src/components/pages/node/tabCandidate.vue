@@ -86,7 +86,7 @@
     <!--background-color: #fff;-->
     <!--.el-table {-->
       <!--width: 100%;-->
-      <!--border: 1px solid #ccc;-->
+      <!--border: 1px solid #ddd;-->
       <!--border-radius: 0px;-->
       <!--th {-->
         <!--background-color: #f1f1f1;-->

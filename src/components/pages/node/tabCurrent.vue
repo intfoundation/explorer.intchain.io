@@ -249,7 +249,7 @@
     }
     .el-table {
       width: 100%;
-      border: 1px solid #ccc;
+      border: 1px solid #ddd;
       border-radius: 0 !important;
       transform: translateY(-1px);
       th {

@@ -158,12 +158,12 @@
   .trans-details {
     width: 1200px;
     padding-bottom: 80px;
-    box-shadow: 0px 6px 10px 0px #ccc;
+    border: 1px solid #ddd;
     background-color: #fff;
     text-align: left;
     .el-breadcrumb {
       padding: 21px 33px;
-      border-bottom: 1px solid #ccc;
+      border-bottom: 1px solid #ddd;
 
       & .el-breadcrumb__item:first-of-type {
         position: relative;
@@ -174,7 +174,7 @@
       margin: 40px 44px;
     }
     .trade-content {
-      border: 1px solid #CCCCCC;
+      border: 1px solid #ddd;
       border-radius: 0px;
       font-size: 14px;
       padding-bottom: 16px;
@@ -232,7 +232,7 @@
       width: 200px;
       height: 62px;
       text-align: center;
-      border: 1px solid #CCCCCC;
+      border: 1px solid #ddd;
       display: inline-block;
       font-size:20px;
       line-height: 63px;
@@ -240,13 +240,13 @@
     }
 
     .input {
-      border-top-left-radius: 4px;
+      border-top-left-radius: 0px;
       border-right-style: none;
       border-bottom-style: none;
     }
 
     .log {
-      border-top-right-radius: 4px;
+      border-top-right-radius: 0px;
       border-bottom-style: none;
     }
 
@@ -255,23 +255,23 @@
       border-radius: 0px 4px 4px 4px;
       width: 1100px;
       height: 260px;
-      border: 1px solid #CCCCCC;
+      border: 1px solid #ddd;
     }
 
     .tabs {
       display: inline-block;
       padding: 14px 48px;
-      border-top: 1px solid #ccc;
-      border-left: 1px solid #ccc;
+      border-top: 1px solid #ddd;
+      border-left: 1px solid #ddd;
       cursor: pointer;
       font-weight: 500;
     }
     .tabs:nth-of-type(1) {
-      border-top-left-radius: 4px;
+      border-top-left-radius: 0px;
     }
     .tabs:nth-of-type(2) {
-      border-right: 1px solid #ccc;
-      border-top-right-radius: 4px;
+      border-right: 1px solid #ddd;
+      border-top-right-radius: 0px;
     }
     .tabs:hover {
       background-color: #f8f8f8;
@@ -281,13 +281,13 @@
 
     }
     .tab-content {
-      border: 1px solid #ccc;
+      border: 1px solid #ddd;
       background-color: #f8f8f8;
       color: #222222;
       height: 208px;
-      border-top-right-radius: 4px;
-      border-bottom-left-radius: 4px;
-      border-bottom-right-radius: 4px;
+      border-top-right-radius: 0px;
+      border-bottom-left-radius: 0px;
+      border-bottom-right-radius: 0px;
       padding-top: 25px;
       padding-left: 42px;
       padding-right: 42px;
@@ -304,7 +304,7 @@
   .invalidHash {
     width: 1200px;
     margin: 90px auto;
-    box-shadow: 0px 6px 10px 0px #ccc;
+    border: 1px solid #ddd;
     background-color: #fff;
     position: relative;
     .middle-p {

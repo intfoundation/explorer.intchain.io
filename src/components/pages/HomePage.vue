@@ -47,7 +47,7 @@
           <span>{{$t('transactionList.transactionListTitle')}}</span>
           <router-link to="/blockchain/txlist/1">{{$t('blocksList.viewMore')}}</router-link>
         </div>
-        <div class="common-list-item" v-for="item in transactionList" :key="item.hash" style="box-sizing: border-box;height: 160px;">
+        <div class="common-list-item" v-for="item in transactionList" :key="item.hash" style="box-sizing: border-box;height: 140px;">
           <div class="iu">
 
             <!--交易左侧部分-->
@@ -226,7 +226,7 @@
         text-align: left;
         border-bottom: 1px solid #e5e5e5;
         box-sizing: border-box;
-        height: 160px;
+        height: 140px;
         .im {
           margin-top: 6px;
           color: #222222;
@@ -310,20 +310,20 @@
     .common-list {
       width: 574px;
       display: inline-block;
-      box-shadow: 0px 2px 4px 0px #ccc;
+      border: 1px solid #ddd;
       background-color: #fff;
       .common-left-right {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        border-bottom: 1px solid #ccc;
-        padding: 22px 16px;
+        border-bottom: 1px solid #ddd;
+        padding: 16px;
         box-sizing: border-box;
         text-align: left;
         font-size: 14px;
         & > span {
-          font-size: 22px;
-          font-weight: 500;
+          font-size: 20px;
+          font-weight: 700;
         }
         & > a {
           float: right;

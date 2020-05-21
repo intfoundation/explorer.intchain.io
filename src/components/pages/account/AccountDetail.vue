@@ -488,17 +488,18 @@
 <style lang="scss">
   .account-detail {
     width: 1200px;
-    box-shadow: 0px 6px 10px 0px #ccc;
+    border: 1px solid #ddd;
     background-color: #fff;
     .el-breadcrumb {
       padding: 21px 33px;
-      border-bottom: 1px solid #ccc;
+      border-bottom: 1px solid #ddd;
     }
     .detail-content {
       padding: 40px 44px;
       text-align: left;
+      font-size: 15px;
       .overview {
-        border: 1px solid #ccc;
+        border: 1px solid #ddd;
         border-radius: 0px;
         padding: 35px 56px;
         margin-bottom: 56px;
@@ -533,16 +534,16 @@
         .tabs {
           display: inline-block;
           padding: 14px 48px;
-          border-top: 1px solid #ccc;
-          border-left: 1px solid #ccc;
+          border-top: 1px solid #ddd;
+          border-left: 1px solid #ddd;
           cursor: pointer;
         }
         .tabs:nth-of-type(1) {
-          border-top-left-radius: 4px;
+          border-top-left-radius: 0px;
         }
         .tabs:nth-of-type(2) {
-          border-right: 1px solid #ccc;
-          border-top-right-radius: 4px;
+          border-right: 1px solid #ddd;
+          border-top-right-radius: 0px;
         }
         .tabs:hover {
           background-color: #f1f1f1;
@@ -551,11 +552,11 @@
           background-color: #f1f1f1;
         }
         .delare {
-          border-top: 1px solid #ccc;
-          border-left: 1px solid #ccc;
-          border-right: 1px solid #ccc;
+          border-top: 1px solid #ddd;
+          border-left: 1px solid #ddd;
+          border-right: 1px solid #ddd;
           padding: 18px 26px;
-          border-top-right-radius: 4px;
+          border-top-right-radius: 0px;
           font-weight: 500;
           background-color: #f8f8f8;
           & a {
@@ -565,7 +566,7 @@
           }
         }
         .el-table {
-          border: 1px solid #ccc;
+          border: 1px solid #ddd;
           border-radius: 0 !important;
           th {
             background-color: #f1f1f1;
@@ -606,13 +607,13 @@
             text-overflow: ellipsis;
           }
           .btn-status {
-            padding: 6px 6px;
+            padding: 6px 6px 7px;
             cursor: default;
             span {
               color: #fff;
               display: inline-block;
               width: 31px;
-              font-size: 12px;
+              font-size: 11px !important;
             }
           }
           .cell {
@@ -675,7 +676,7 @@
 
   .token-down .t-num {
     padding: 2px 15px;
-    border: 1px solid #ccc;
+    border: 1px solid #ddd;
     border-radius: 5px;
     transition: all 0.3s;
   }

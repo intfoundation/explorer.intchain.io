@@ -32,10 +32,10 @@ module.exports = {
             block: 'Blocks',
             transaction: 'Transactions',
             token: 'Tokens',
-            account: 'Accounts',
+            account: 'Addresses',
             referendum: 'Referendum'
         },
-        bp: 'Thearchy Node',
+        bp: 'Node List',
         cnVersion: 'CN Version',
         enVersion: 'EN Version'
     },
@@ -89,7 +89,7 @@ module.exports = {
         balance2: 'Balance: ',
         token2: 'Token: ',
         token: 'Token Txns',
-        accounts: 'Accounts',
+        accounts: 'Addresses',
         inquire: 'Inquire about other token',
         otherToken: 'Other Token',
         weight: 'Weight',

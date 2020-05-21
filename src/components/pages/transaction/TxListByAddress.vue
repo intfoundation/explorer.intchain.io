@@ -208,11 +208,11 @@
   .txlistByAddress {
     width: 1200px;
     margin: 90px auto;
-    box-shadow: 0px 6px 10px 0px #ccc;
+    border: 1px solid #ddd;
     background-color: #fff;
     .el-breadcrumb {
       padding: 21px 33px;
-      border-bottom: 1px solid #ccc;
+      border-bottom: 1px solid #ddd;
        
 
       .el-breadcrumb__item:first-of-type {
@@ -245,7 +245,7 @@
     }
     .el-table {
       width: 100%;
-      border: 1px solid #ccc;
+      border: 1px solid #ddd;
       border-radius: 0px;
       th {
         background-color: #f1f1f1;

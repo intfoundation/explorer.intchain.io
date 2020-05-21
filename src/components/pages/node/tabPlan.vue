@@ -159,12 +159,12 @@
 
 <style lang="scss">
   .node-plan {
-    border: 1px solid #ccc;
+    border: 1px solid #ddd;
     padding: 22px 33px 48px 33px;
     background-color: #f8f8f8;
-    border-top-right-radius: 4px;
-    border-bottom-right-radius: 4px;
-    border-bottom-left-radius: 4px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
     .ii {
       margin-top: 36px;
       .font-lg {
@@ -194,7 +194,7 @@
       }
       .el-table {
         width: 100%;
-        border: 1px solid #ccc;
+        border: 1px solid #ddd;
         border-radius: 0px;
         th {
           background-color: #f8f8f8;

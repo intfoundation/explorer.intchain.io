@@ -120,12 +120,12 @@
 <style lang="scss">
   .details {
     width: 1200px;
-    box-shadow: 0px 6px 10px 0px #ccc;
+    border: 1px solid #ddd;
     background-color: #fff;
     text-align: left;
     .el-breadcrumb {
       padding: 21px 33px;
-      border-bottom: 1px solid #ccc;
+      border-bottom: 1px solid #ddd;
        
 
       .el-breadcrumb__item:first-of-type {
@@ -180,7 +180,7 @@
 
   .el-table {
     width: 100%;
-    border: 1px solid #ccc !important;
+    border: 1px solid #ddd;
     border-radius: 0px;
     th {
       background-color: #f1f1f1;

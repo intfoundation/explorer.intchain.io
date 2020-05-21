@@ -135,12 +135,12 @@
 
 <style lang="scss">
  .proposal{
-    border: 1px solid #ccc;
+    border: 1px solid #ddd;
     padding:30px 40px;
  }
  .line{
      height:30px;
-     border-bottom: 1px solid #ccc;
+     border-bottom: 1px solid #ddd;
  }
  .suc{
      top:-19px;

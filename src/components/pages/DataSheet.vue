@@ -166,7 +166,7 @@
 <style lang="scss">
   .charts {
     width: 1200px;
-    box-shadow: 0px 2px 4px 0px #ccc;
+    border: 1px solid #ddd;
     background-color: #fff;
     height: 400px;
     margin: 0 auto;
@@ -183,14 +183,14 @@
       width: 545px;
       float: right;
       .price {
-        padding: 27px 0px 28px 16px;
+        padding: 27px 0px 27px 16px;
         font-size: 40px;
         text-align: left;
-        border-bottom: 1px solid #ccc;
+        border-bottom: 1px solid #ddd;
         font-weight: 700;
       }
       .val {
-        padding: 22px 20px;
+        padding: 20px 20px 0;
         text-align: left;
         color: #222222;
         font-weight: 500;
@@ -209,7 +209,7 @@
       float: right;
     }
     .int-st {
-      border-bottom: 1px solid #ccc;
+      border-bottom: 1px solid #ddd;
       padding-bottom: 22px;
       .text {
         font-size: 18px;
