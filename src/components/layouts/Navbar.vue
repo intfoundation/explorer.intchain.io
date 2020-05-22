@@ -239,7 +239,8 @@ export default {
           }
         }
         .nav-active {
-          color: #d31515;
+          // color: #d31515;
+          font-weight: 700;
           padding-bottom: 2px;
         }
         .triangle-active {
