@@ -102,10 +102,11 @@
         }
         .tabs {
           display: inline-block;
-          padding: 14px 48px;
+          padding: 16px 48px;
           cursor: pointer;
           border-right: 1px solid #ddd;
           font-weight: 500;
+          font-size: 14px;
           border-top: none !important;
           border-left: none !important;
         }

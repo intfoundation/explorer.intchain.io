@@ -466,9 +466,10 @@
       .record {
         .tabs {
           display: inline-block;
-          padding: 14px 48px;
+          padding: 16px 48px;
           border-top: 1px solid #ddd;
           border-left: 1px solid #ddd;
+          font-size: 14px;
           cursor: pointer;
         }
         .tabs:nth-of-type(1) {
