@@ -239,9 +239,8 @@ export default {
           }
         }
         .nav-active {
-          // color: #d31515;
-          font-weight: 700;
-          padding-bottom: 2px;
+          color: #d31515;
+          // padding-bottom: 2px;
         }
         .triangle-active {
           border-color: #ffffff transparent transparent !important;
