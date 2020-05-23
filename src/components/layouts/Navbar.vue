@@ -168,40 +168,50 @@ export default {
   .nav-container {
     box-shadow: 0px 0px 6px 0px #ccc;
     background-color: #171921;
-    height: 70px;
+    height: 68px;
     .nav-panel {
       text-align: left;
-      padding: 10px 0px;
+      // padding: 10px 0px;
       box-sizing: border-box;
       width: 1200px;
       margin: 0 auto;
+      height: 68px;
+      display: flex;
+
       .ii {
         vertical-align: middle;
         .nav-logo {
-          width: 72px;
-          height: 72px;
-          margin-top: -12px;
+          width: 68px;
+          height: 68px;
+          // margin-top: -12px;
         }
       }
       .ic {
         margin-left: 40px;
+        display: flex;
+        align-items: center;
+        flex: 1;
+
         & a {
           margin-right: 30px;
           color: #ffffff;
           text-decoration: none;
           font-weight: 500;
+          cursor: pointer;
           span {
             vertical-align: middle;
           }
         }
         .pgy:hover {
-          color: #d31515;
-          padding-bottom: 2px;
+          color: #e73737;
+          // padding-bottom: 2px;
         }
         .vg {
           position: relative;
           display: inline-block;
           height: 55px;
+          top: 15px;
+          cursor: pointer;
           &:hover > .chain-dropdown {
             display: block !important;
           }
@@ -224,7 +234,7 @@ export default {
               margin-top: 8px;
             }
             .chain-dropdown-i:hover {
-              color: #d31515;
+              color: #e73737;
             }
           }
           .triangle {
@@ -239,7 +249,7 @@ export default {
           }
         }
         .nav-active {
-          color: #d31515;
+          color: #e73737;
           // padding-bottom: 2px;
         }
         .triangle-active {
@@ -247,14 +257,16 @@ export default {
         }
       }
       .help:hover {
-        color: #d31515;
+        color: #e73737;
         padding-bottom: 2px;
-        border-bottom: 2px solid #d31515;
+        border-bottom: 2px solid #e73737;
       }
       .iv {
-        height: 52px;
+        height: 68px;
         line-height: 48px;
-        float: right;
+        display: inline-flex;
+        align-items: center;
+
         & input {
           width: 280px;
           box-sizing: border-box;
