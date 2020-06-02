@@ -14,7 +14,12 @@
             :label="$t('token.name')"
             align="left">
             <template slot-scope="scope">
-              <img :src="scope.row.logoUrl" class="tokenImg" alt="" v-if="scope.row.logoUrl"><img src="../../../assets/token-logo.png" class="tokenImg" alt="" v-if="!scope.row.logoUrl"><span type="text" class="tokenName">{{getTokenName(scope.row.name, scope.row.symbol)}}</span>
+              <a v-if="scope.row.web !== 'javascript:void(0);'" :href="scope.row.web" class="a-link" target="_blank">
+                <img :src="scope.row.logoUrl" class="tokenImg" alt="" v-if="scope.row.logoUrl"><img src="../../../assets/token-logo.png" class="tokenImg" alt="" v-if="!scope.row.logoUrl"><span type="text" class="tokenName">{{getTokenName(scope.row.name, scope.row.symbol)}}</span>
+              </a>
+              <div v-else>
+                <img :src="scope.row.logoUrl" class="tokenImg" alt="" v-if="scope.row.logoUrl"><img src="../../../assets/token-logo.png" class="tokenImg" alt="" v-if="!scope.row.logoUrl"><span type="text" class="tokenName">{{getTokenName(scope.row.name, scope.row.symbol)}}</span>
+              </div>
             </template>
           </el-table-column>
           <el-table-column
@@ -91,6 +96,9 @@
             if (result.status === 'success') {
               that.isloading = false;
               that.tokenlist = result.data.accountList;
+              that.tokenlist.forEach(item => {
+                if (!item.web) item.web = 'javascript:void(0);'
+              })
               that.total = result.data.total;
               that.currentPage = +that.$route.params.p;
             }
@@ -212,9 +220,18 @@
     }
     .tokenName {
       display: inline-block;
-      cursor: default;
       color: #222222;
       vertical-align: middle;
     }
+    .a-link {
+      display: inline-block;
+    }
+    .a-link .tokenName {
+      color: #1f80c1;
+    }
+    .a-link:hover .tokenName {
+      text-decoration: underline;
+    }
+
   }
 </style>
