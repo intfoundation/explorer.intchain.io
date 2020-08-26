@@ -135,12 +135,12 @@
 
 <style lang="scss">
  .proposal{
-    border: 1px solid #ccc;
+    border: 1px solid #ddd;
     padding:30px 40px;
  }
  .line{
      height:30px;
-     border-bottom: 1px solid #ccc;
+     border-bottom: 1px solid #ddd;
  }
  .suc{
      top:-19px;
@@ -205,25 +205,25 @@
         margin: 0 5px;
       }
       .el-pager li:hover {
-        color: #3C31D7;
+        color: #1f80c1;
       }
       .el-pager li.active {
         color: #fff;
-        background-color: #3C31D7;
+        background-color: #1f80c1;
         border-radius: 5px;
       }
       .el-pager .more::before {
         line-height: 0px;
       }
       .el-select .el-input.is-focus .el-input__inner {
-        border-color: #3C31D7;
+        border-color: #1f80c1;
       }
       .el-input__inner:focus {
-        border-color: #3C31D7;
+        border-color: #1f80c1;
         outline: 0;
       }
       .el-pagination__sizes .el-input .el-input__inner:hover {
-        border-color: #3C31D7;
+        border-color: #1f80c1;
       }
       .el-input__inner {
         box-shadow: none;

@@ -1,7 +1,7 @@
 module.exports = {
     blocksList: {
         blocksListTitle: 'Blocks',
-        viewMore: 'View More > ',
+        viewMore: 'View More',
         height: 'Height: ',
         miner: 'Miner: ',
         reward: 'Block Reward: ',
@@ -32,10 +32,10 @@ module.exports = {
             block: 'Blocks',
             transaction: 'Transactions',
             token: 'Tokens',
-            account: 'Accounts',
+            account: 'Addresses',
             referendum: 'Referendum'
         },
-        bp: 'Thearchy Node',
+        bp: 'Node List',
         cnVersion: 'CN Version',
         enVersion: 'EN Version'
     },
@@ -43,6 +43,7 @@ module.exports = {
         transactionListTitle: 'Transactions',
         txHash: 'TxHash: ',
         from: 'From: ',
+        by: 'By: ',
         to: 'To: ',
         txReceiptStatus: 'TxReceiptStatus: ',
         value: 'Value: ',
@@ -89,7 +90,7 @@ module.exports = {
         balance2: 'Balance: ',
         token2: 'Token: ',
         token: 'Token Txns',
-        accounts: 'Accounts',
+        accounts: 'Addresses',
         inquire: 'Inquire about other token',
         otherToken: 'Other Token',
         weight: 'Weight',
@@ -133,7 +134,7 @@ module.exports = {
         Voting_mortgage: 'Voting mortgage',
         Transfer_accounts: 'Transfer accounts',
         Contact_us: 'Contact Us',
-        link: 'link',
+        link: 'Links',
         wechat: "WeChat",
         micro_blog: 'Weibo',
         Subscription: 'Subscription',

@@ -2,6 +2,7 @@
 .idea
 .git
 node_modules/
+dist/
 
 g.log*
 yarn-error.log*

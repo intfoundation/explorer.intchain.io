@@ -22,7 +22,7 @@
         <div>
           <span class="detail-span">{{$t('blocksList.timestamp')}}</span>
           <span>{{blockdetail.timestamp}}</span>
-          <span style="margin-left: 10px;font-size: 15px;">({{timer}})</span>
+          <span style="margin-left: 10px;font-size: 14px;">({{timer}})</span>
         </div>
       </div>
 
@@ -126,40 +126,31 @@
 <style lang="scss">
   .block-detail {
     width: 1200px;
-    box-shadow: 0px 6px 10px 0px #ccc;
+    border: 1px solid #ddd;
     background-color: #fff;
     .el-breadcrumb {
       padding: 21px 33px;
-      border-bottom: 1px solid #ccc;
-      & .el-breadcrumb__item:first-of-type {
-        & span {
-          margin-left: 30px;
-        }
-      }
+      border-bottom: 1px solid #ddd;
+       
 
       .el-breadcrumb__item:first-of-type {
         position: relative;
-      }
-      .el-breadcrumb__item:first-of-type:before {
-        display: inline-block;
-        content: url('../../../assets/home.png');
-        position: absolute;
-        top: -3px;
       }
     }
     .ig {
       height: 64px;
       line-height: 64px;
-      border-bottom: 1px solid #ccc;
+      border-bottom: 1px solid #ddd;
       padding: 0 33px;
     }
     .detail-content {
       margin: 40px 44px;
       text-align: left;
       font-weight: 500;
+      font-size: 15px;
       & > div {
-        border: 1px solid #ccc;
-        border-radius: 4px;
+        border: 1px solid #ddd;
+        border-radius: 0px;
         padding: 35px 56px;
         & > div:not(:first-child) {
           margin-top: 22px;
@@ -168,16 +159,16 @@
           .detail-span {
             display: inline-block;
             width: 110px;
-            font-size: 15px;
+            font-size: 14px;
           }
           .detail-span + span {
-            font-size: 15px;
+            font-size: 14px;
           }
           .detail-span + a {
-            font-size: 15px;
+            font-size: 14px;
           }
           .click-span {
-            color: #3C31D7;
+            color: #1f80c1;
             text-decoration: none;
           }
           .click-span:hover {

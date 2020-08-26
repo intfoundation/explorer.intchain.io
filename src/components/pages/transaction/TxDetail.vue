@@ -48,7 +48,7 @@
           <span class="span-width">{{$t('detail.time_stamp')}}：</span>
           <span v-if="transObj.returnCode !== -1">
             <span>{{transObj.timestamp}}</span>
-            <span v-if="transObj.timestamp" style="margin-left: 10px;font-size: 15px;vertical-align: -1px;">({{timer}})</span>
+            <span v-if="transObj.timestamp" style="margin-left: 10px;font-size: 14px;vertical-align: -1px;">({{timer}})</span>
           </span>
           <span v-else>Pending</span>
         </div>
@@ -87,11 +87,11 @@
   import { formatPassTime } from '../../../utils/common.js'
   Vue.component('tab-input', {
     props: ['input'],
-    template: '<div style="word-break: break-all;">{{input}}</div>'
+    template: '<div class="tab-input-wrapper" style="word-break: break-all;">{{input}}</div>'
   })
   Vue.component('tab-log', {
     props: ['logs'],
-    template: '<div style="word-break: break-all;">{{logs}}</div>'
+    template: '<div class="tab-log-wrapper" style="word-break: break-all;">{{logs}}</div>'
   })
   export default {
     name: 'TxDetail',
@@ -158,33 +158,25 @@
   .trans-details {
     width: 1200px;
     padding-bottom: 80px;
-    box-shadow: 0px 6px 10px 0px #ccc;
+    border: 1px solid #ddd;
     background-color: #fff;
     text-align: left;
     .el-breadcrumb {
       padding: 21px 33px;
-      border-bottom: 1px solid #ccc;
+      border-bottom: 1px solid #ddd;
 
       & .el-breadcrumb__item:first-of-type {
         position: relative;
-        & span {
-          margin-left: 30px;
-        }
-      }
-      .el-breadcrumb__item:first-of-type:before {
-        display: inline-block;
-        content: url('../../../assets/home.png');
-        position: absolute;
-        top: -3px
+         
       }
     }
     .details-list {
       margin: 40px 44px;
     }
     .trade-content {
-      border: 1px solid #CCCCCC;
-      border-radius: 4px;
-      font-size: 15px;
+      border: 1px solid #ddd;
+      border-radius: 0px;
+      font-size: 14px;
       padding-bottom: 16px;
     }
 
@@ -200,11 +192,11 @@
     }
 
     .sus {
-      background: #31D7A8;
+      background: #2ebf54;
     }
 
     .fal {
-      background: #D7316F;
+      background: #dc4056;
     }
 
     .pending {
@@ -214,12 +206,13 @@
     .trade-state {
       display: inline-block;
       width: 62px;
-      height: 24px;
-      border-radius: 4px;
-      font-size: 14px;
+      height: 26px;
+      border-radius: 3px;
+      font-size: 12px;
       color: #FFFFFF;
       text-align: center;
-      line-height: 24px;
+      line-height: 26px;
+      font-weight: 700;
     }
 
     .trad-list:not(:first-of-type) {
@@ -228,7 +221,7 @@
 
 
     .format{
-      color:#372fd2;
+      color:#1f80c1;
       text-decoration: none;
     }
 
@@ -240,7 +233,7 @@
       width: 200px;
       height: 62px;
       text-align: center;
-      border: 1px solid #CCCCCC;
+      border: 1px solid #ddd;
       display: inline-block;
       font-size:20px;
       line-height: 63px;
@@ -248,54 +241,55 @@
     }
 
     .input {
-      border-top-left-radius: 4px;
+      border-top-left-radius: 0px;
       border-right-style: none;
       border-bottom-style: none;
     }
 
     .log {
-      border-top-right-radius: 4px;
+      border-top-right-radius: 0px;
       border-bottom-style: none;
     }
 
     .tab_msg {
-      background-color: #F9F9FF;
+      background-color: #f8f8f8;
       border-radius: 0px 4px 4px 4px;
       width: 1100px;
       height: 260px;
-      border: 1px solid #CCCCCC;
+      border: 1px solid #ddd;
     }
 
     .tabs {
       display: inline-block;
-      padding: 14px 48px;
-      border-top: 1px solid #ccc;
-      border-left: 1px solid #ccc;
+      padding: 16px 48px;
+      border-top: 1px solid #ddd;
+      border-left: 1px solid #ddd;
+      font-size: 14px;
       cursor: pointer;
       font-weight: 500;
     }
     .tabs:nth-of-type(1) {
-      border-top-left-radius: 4px;
+      border-top-left-radius: 0px;
     }
     .tabs:nth-of-type(2) {
-      border-right: 1px solid #ccc;
-      border-top-right-radius: 4px;
+      border-right: 1px solid #ddd;
+      border-top-right-radius: 0px;
     }
     .tabs:hover {
-      background-color: #f9f9ff;
+      background-color: #f8f8f8;
     }
     .active-tab {
-      background-color: #F9F9FF;
+      background-color: #f8f8f8;
 
     }
     .tab-content {
-      border: 1px solid #ccc;
-      background-color: #f9f9ff;
-      color: #666;
+      border: 1px solid #ddd;
+      background-color: #f8f8f8;
+      color: #222222;
       height: 208px;
-      border-top-right-radius: 4px;
-      border-bottom-left-radius: 4px;
-      border-bottom-right-radius: 4px;
+      border-top-right-radius: 0px;
+      border-bottom-left-radius: 0px;
+      border-bottom-right-radius: 0px;
       padding-top: 25px;
       padding-left: 42px;
       padding-right: 42px;
@@ -312,7 +306,7 @@
   .invalidHash {
     width: 1200px;
     margin: 90px auto;
-    box-shadow: 0px 6px 10px 0px #ccc;
+    border: 1px solid #ddd;
     background-color: #fff;
     position: relative;
     .middle-p {
@@ -333,6 +327,11 @@
       }
     }
 
+  }
+
+  .tab-input-wrapper,
+  .tab-log-wrapper {
+    font-size: 13px;
   }
 
 </style>

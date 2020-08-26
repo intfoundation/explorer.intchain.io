@@ -246,33 +246,24 @@
 <style lang="scss">
   .contract-detail {
     width: 1200px;
-    box-shadow: 0px 6px 10px 0px #ccc;
+    border: 1px solid #ddd;
     background-color: #fff;
     .el-breadcrumb {
       padding: 21px 33px;
-      border-bottom: 1px solid #ccc;
-      & .el-breadcrumb__item:first-of-type {
-        & span {
-          margin-left: 30px;
-        }
-      }
+      border-bottom: 1px solid #ddd;
+       
       .el-breadcrumb__item:first-of-type {
         position: relative;
-      }
-      .el-breadcrumb__item:first-of-type:before {
-        display: inline-block;
-        content: url('../../../assets/home.png');
-        position: absolute;
-        top: -3px;
       }
     }
     .detail-content {
       margin: 40px 44px;
       padding-bottom: 40px;
       text-align: left;
+      font-size: 15px;
       .overview {
-        border: 1px solid #ccc;
-        border-radius: 4px;
+        border: 1px solid #ddd;
+        border-radius: 0px;
         padding: 35px 56px;
         margin-bottom: 56px;
         & > div:not(:first-child) {
@@ -282,7 +273,7 @@
           .detail-span {
             display: inline-block;
             width: 130px;
-            font-size: 15px;
+            font-size: 14px;
           }
         }
         .detail-address {
@@ -293,7 +284,7 @@
           white-space: nowrap;
           text-overflow: ellipsis;
           text-decoration: none;
-          color: #3C31D7;
+          color: #1f80c1;
         }
         .detail-address:hover {
           text-decoration: underline;
@@ -302,33 +293,34 @@
       .record {
         .tabs {
           display: inline-block;
-          padding: 14px 48px;
-          border-top: 1px solid #ccc;
-          border-left: 1px solid #ccc;
-          border-right: 1px solid #ccc;
+          padding: 16px 48px;
+          border-top: 1px solid #ddd;
+          border-left: 1px solid #ddd;
+          border-right: 1px solid #ddd;
+          font-size: 14px;
           cursor: pointer;
         }
         .tabs:nth-of-type(1) {
-          border-top-left-radius: 4px;
+          border-top-left-radius: 0px;
         }
         .tabs:nth-of-type(2) {
-          border-right: 1px solid #ccc;
-          border-top-right-radius: 4px;
+          border-right: 1px solid #ddd;
+          border-top-right-radius: 0px;
         }
         .tabs:hover {
-          background-color: #f9f9ff;
+          background-color: #f8f8f8;
         }
         .tab-active {
-          background-color: #f9f9ff;
+          background-color: #f8f8f8;
         }
         .delare {
-          border-top: 1px solid #ccc;
-          border-left: 1px solid #ccc;
-          border-right: 1px solid #ccc;
+          border-top: 1px solid #ddd;
+          border-left: 1px solid #ddd;
+          border-right: 1px solid #ddd;
           padding: 18px 26px;
-          border-top-right-radius: 4px;
+          border-top-right-radius: 0px;
           font-weight: 500;
-          background-color: #f9f9ff;
+          background-color: #f8f8f8;
           & a {
             float: right;
             text-decoration: none;
@@ -336,20 +328,20 @@
           }
         }
         .el-table {
-          border: 1px solid #ccc;
+          border: 1px solid #ddd;
           th {
-            background-color: #f1f1ff;
+            background-color: #f1f1f1;
             height: 60px !important;
           }
           td {
             border-bottom: none;
           }
           .el-table__row:nth-of-type(even) {
-            background-color: #f9f9ff;
+            background-color: #f8f8f8;
           }
           .btn-height {
             padding: 6px 18px 6px 0;
-            color: #3C31D7;
+            color: #1f80c1;
             font-weight: 500;
             cursor: pointer;
           }
@@ -364,7 +356,7 @@
             text-overflow: ellipsis;
           }
           .btn-hash {
-            color: #3C31D7;
+            color: #1f80c1;
             font-weight: 500;
             cursor: pointer;
           }
@@ -372,7 +364,7 @@
             text-decoration: underline;
           }
           .el-loading-spinner .path {
-            stroke: #3C31D7;
+            stroke: #1f80c1;
           }
           .txfail {
             display: inline-block;
@@ -396,11 +388,11 @@
             margin: 0 5px;
           }
           .el-pager li:hover {
-            color: #3C31D7;
+            color: #1f80c1;
           }
           .el-pager li.active {
             color: #fff;
-            background-color: #3C31D7;
+            background-color: #1f80c1;
             border-radius: 5px;
           }
         }

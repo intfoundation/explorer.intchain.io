@@ -62,21 +62,26 @@
 
       </div>
     </div>
-      <div style="font-size: 14px; display:inline-block;">Copyright © 2018 INT</div>
+      <div style="font-size: 14px; display:inline-block;">Copyright © {{ year }} INT</div>
   </div>
 </template>
 
 <script>
   export default {
-    name: 'FooterPanel'
+    name: 'FooterPanel',
+    data() {
+      return {
+        year: '2019 - ' + (new Date()).getFullYear()
+      }
+    }
   }
 </script>
 
 <style lang="scss">
   .footer-panel {
     height: 320px;
-    color: #A5A5AD;
-    background-color: #49494D;
+    color: #ffffff;
+    background: #171928;
     .footer-content {
       margin: 0 auto;
       width: 1200px;
@@ -94,7 +99,7 @@
     .footer-left {
       display: inline-block;
       width:740px;
-      margin-bottom:40px;
+      margin-bottom: 60px;
     }
     .footer-right {
       display: inline-block;
@@ -104,17 +109,17 @@
     }
     .isc {
       display: inline-block;
-      width: 140px;
-      line-height: 36px;
+      width: 134px;
+      line-height: 29px;
       vertical-align: middle;
       font-weight: normal;
-      padding-bottom: 18px;
+      padding-bottom: 5px;
       position: relative;
       text-decoration: none;
       .link{
-        font-size: 15px;
+        font-size: 14px;
         text-decoration:none;
-        color:#A5A5AD;
+        color:#ffffff;
       }
       .link:hover {
         color: #fff;
@@ -130,10 +135,11 @@
   }
   .rmb {
     display: inline-block;
-    width: 32px;
-    height: 32px;
+    width: 20px;
+    height: 20px;
     background-size: cover;
     vertical-align: middle;
+    margin-right: 6px;
   }
   .twitter{
     background-image: url("../../assets/twitter.png");

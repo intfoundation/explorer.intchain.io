@@ -17,7 +17,7 @@
   .invalidHash {
     width: 1200px;
     margin: 90px auto;
-    box-shadow: 0px 6px 10px 0px #ccc;
+    border: 1px solid #ddd;
     background-color: #fff;
     position: relative;
     .middle-p {

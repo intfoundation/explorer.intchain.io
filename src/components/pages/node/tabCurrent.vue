@@ -79,16 +79,13 @@
 
     <div class="seperator">
       <div>
-        <!--<span class="declare">Top<span>13</span> nodes are INT super nodes</span>-->
-        <span class="declare" style="font-size: 16px;">The top 13 candidate nodes with the most votes are Thearchy Nodes.</span>
+        <span class="declare" style="font-size: 14px;">The top 13 candidate nodes are Thearchy Validator Nodes</span>
       </div>
-      <i class="no">NO</i>
     </div>
 
     <el-table
       :data="candidateList.filter( data => !search || data.node.toLowerCase().indexOf(search.toLowerCase()) > -1 || (data.teamName && data.teamName.toLowerCase().indexOf(search.toLowerCase()) > -1))"
-      class="candidate"
-      style="border-bottom-right-radius: 4px !important; border-bottom-left-radius: 4px !important;">
+      class="candidate">
       <el-table-column
         :label="$t('account.rank')"
         align="left"
@@ -252,21 +249,21 @@
     }
     .el-table {
       width: 100%;
-      border: 1px solid #ccc;
+      border: 1px solid #ddd;
       border-radius: 0 !important;
       transform: translateY(-1px);
       th {
-        background-color: #f1f1ff;
+        background-color: #f1f1f1;
         height: 60px !important;
       }
       td {
         border-bottom: none;
       }
       .el-table__row:nth-of-type(even) {
-        background-color: #f9f9ff;
+        background-color: #f8f8f8;
       }
       .el-loading-spinner .path {
-        stroke: #3C31D7;
+        stroke: #1f80c1;
       }
       .icon-hyper-link {
         display: inline-block;
@@ -279,7 +276,7 @@
       .format {
         text-decoration: none;
         font-weight: 500;
-        color: #3C31D7;
+        color: #1f80c1;
       }
       .format:hover {
         text-decoration: underline;
@@ -297,15 +294,18 @@
       }
     }
     .seperator {
-      height: 56px;
-      background-color: #3D93FA;
+      height: 48px;
+      padding-bottom: 2px;
       position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
       div {
-        line-height: 56px;
-        font-size: 14px;
+        font-size: 12px;
         text-align: center;
         .declare {
-          color: #fff;
+          color: #089a13;
           span:first-of-type {
             font-size: 22px;
             font-weight: 500;

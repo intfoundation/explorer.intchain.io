@@ -2,7 +2,7 @@
   <div class="nav-container">
     <div class="nav-panel">
       <router-link tag="div" to="/" class="common-inline-block ii">
-        <img src="../../assets/int-logo.png" alt="int logo" class="nav-logo">
+        <img src="../../assets/int-logo-title.png" alt="int logo" class="nav-logo">
       </router-link>
       <div class="common-inline-block ic" style="vertical-align: 10px;">
         <router-link to="/" id="home" :class="{'nav-active': $route.path === '/'}" class="pgy">{{$t('nav.home')}}</router-link>
@@ -166,43 +166,55 @@ export default {
 
 <style lang="scss">
   .nav-container {
-    box-shadow: 0px 6px 10px 0px #ddd;
-    background-color: #fff;
-    height: 72px;
+    box-shadow: 0px 0px 6px 0px #ccc;
+    background-color: #171921;
+    height: 68px;
     .nav-panel {
       text-align: left;
-      padding: 10px 0px;
+      // padding: 10px 0px;
       box-sizing: border-box;
       width: 1200px;
       margin: 0 auto;
+      height: 68px;
+      display: flex;
+
       .ii {
         vertical-align: middle;
         .nav-logo {
-          width: 72px;
-          height: 72px;
-          margin-top: -12px;
+          width: 136px;
+          height: 68px;
+          // margin-top: -12px;
         }
       }
       .ic {
         margin-left: 40px;
+        display: flex;
+        align-items: center;
+        flex: 1;
+
         & a {
           margin-right: 30px;
-          color: #666666;
+          color: #ffffff;
           text-decoration: none;
           font-weight: 500;
+          font-size: 15px;
+          padding-top: 1px;
+          cursor: pointer;
           span {
             vertical-align: middle;
           }
         }
         .pgy:hover {
-          color: #3C31D7;
-          padding-bottom: 2px;
-          border-bottom: 2px solid #3C31D7;
+          color: #e73737;
+          // padding-bottom: 2px;
         }
         .vg {
           position: relative;
           display: inline-block;
           height: 55px;
+          top: 16px;
+          padding-top: 1px;
+          cursor: pointer;
           &:hover > .chain-dropdown {
             display: block !important;
           }
@@ -210,8 +222,9 @@ export default {
             position: absolute;
             width: 110px;
             top: 45px;
-            box-shadow: 0px 6px 10px 0px #ccc;
-            background-color: #fff;
+            box-shadow: 0px 2px 4px 0px #ccc;
+            background-color: #171921;
+            color: #fff;
             padding: 10px 15px;
             left: -16px;
             font-size: 14px;
@@ -224,7 +237,7 @@ export default {
               margin-top: 8px;
             }
             .chain-dropdown-i:hover {
-              color: #3EC2FF;
+              color: #e73737;
             }
           }
           .triangle {
@@ -233,36 +246,35 @@ export default {
             height: 0;
             border-width: 7px 7px 0;
             border-style: solid;
-            border-color: #999 transparent transparent;
+            border-color: #ffffff transparent transparent;
             margin-left: 8px;
             vertical-align: middle;
           }
         }
         .nav-active {
-          color: #3C31D7;
-          padding-bottom: 2px;
-          border-bottom: 2px solid #3C31D7;
+          color: #e73737;
+          // padding-bottom: 2px;
         }
         .triangle-active {
-          border-color: #3C31D7 transparent transparent !important;
+          border-color: #ffffff transparent transparent !important;
         }
       }
       .help:hover {
-        color: #3C31D7;
+        color: #e73737;
         padding-bottom: 2px;
-        border-bottom: 2px solid #3C31D7;
+        border-bottom: 2px solid #e73737;
       }
       .iv {
-        height: 52px;
-        line-height: 52px;
-        float: right;
+        height: 68px;
+        line-height: 48px;
+        display: inline-flex;
+        align-items: center;
+
         & input {
           width: 280px;
           box-sizing: border-box;
           height: 37px;
           padding-left: 10px;
-          border-top-left-radius: 4px;
-          border-bottom-left-radius: 4px;
           border: 1px solid #ccc;
           border-right: none !important;
           outline: none;
@@ -273,18 +285,18 @@ export default {
           width: 53px;
           height: 37px;
           line-height: 3;
-          background-color: #3A3CDA;
+          background-color: #1f80c1;
           text-align: center;
-          border-bottom-right-radius: 4px;
-          border-top-right-radius: 4px;
           vertical-align: middle;
         }
         .search-icon {
           background-image: url("../../assets/search.png");
           background-size: cover;
           display: inline-block;
-          width: 24px;
-          height: 22px;
+          width: 18px;
+          height: 16px;
+          position: relative;
+          top: -3px;
         }
       }
     }

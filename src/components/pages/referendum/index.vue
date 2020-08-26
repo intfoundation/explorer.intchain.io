@@ -66,34 +66,24 @@
 <style lang="scss">
   .node {
     width: 1200px;
-    box-shadow: 0px 6px 10px 0px #ccc;
+    border: 1px solid #ddd;
     background-color: #fff;
     .el-breadcrumb {
       padding: 21px 33px;
-      border-bottom: 1px solid #ccc;
-      & .el-breadcrumb__item:first-of-type {
-        & span {
-          margin-left: 30px;
-        }
-      }
+      border-bottom: 1px solid #ddd;
+       
 
       .el-breadcrumb__item:first-of-type {
         position: relative;
-      }
-      .el-breadcrumb__item:first-of-type:before {
-        display: inline-block;
-        content: url('../../../assets/home.png');
-        position: absolute;
-        top: -3px
       }
     }
     .node-content {
       padding: 40px 44px;
       text-align: left;
       & > div:first-child {
-        border-top: 1px solid #ccc;
-        border-left: 1px solid #ccc;
-        border-right: 1px solid #ccc;
+        border-top: 1px solid #ddd;
+        border-left: 1px solid #ddd;
+        border-right: 1px solid #ddd;
         padding-right: 20px;
         .row-input {
           height: 51px;
@@ -105,31 +95,32 @@
             box-sizing: border-box;
             height: 37px;
             padding-left: 10px;
-            border-radius: 4px;
-            border: 1px solid #ccc;
+            border-radius: 0px;
+            border: 1px solid #ddd;
             outline: none;
           }
         }
         .tabs {
           display: inline-block;
-          padding: 14px 48px;
+          padding: 16px 48px;
           cursor: pointer;
-          border-right: 1px solid #ccc;
+          border-right: 1px solid #ddd;
           font-weight: 500;
+          font-size: 14px;
           border-top: none !important;
           border-left: none !important;
         }
         .tabs:nth-of-type(1) {
-          border-top-left-radius: 4px;
+          border-top-left-radius: 0px;
         }
         .tabs:nth-of-type(2) {
-          border-right: 1px solid #ccc;
+          border-right: 1px solid #ddd;
         }
         .tabs:hover {
-          background-color: #f9f9ff;
+          background-color: #f8f8f8;
         }
         .tab-active {
-          background-color: #f9f9ff;
+          background-color: #f8f8f8;
         }
       }
     }

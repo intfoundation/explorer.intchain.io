@@ -40,6 +40,7 @@ const referendum = resolve => require(['@/components/pages/referendum'], resolve
 
 Vue.use(Router)
 const router = new Router({
+    mode: 'history',
     routes: [{
         path: '/',
         // name: 'Layout',
