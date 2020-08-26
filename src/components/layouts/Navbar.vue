@@ -2,7 +2,7 @@
   <div class="nav-container">
     <div class="nav-panel">
       <router-link tag="div" to="/" class="common-inline-block ii">
-        <img src="../../assets/int-logo.png" alt="int logo" class="nav-logo">
+        <img src="../../assets/int-logo-title.png" alt="int logo" class="nav-logo">
       </router-link>
       <div class="common-inline-block ic" style="vertical-align: 10px;">
         <router-link to="/" id="home" :class="{'nav-active': $route.path === '/'}" class="pgy">{{$t('nav.home')}}</router-link>
@@ -181,7 +181,7 @@ export default {
       .ii {
         vertical-align: middle;
         .nav-logo {
-          width: 68px;
+          width: 136px;
           height: 68px;
           // margin-top: -12px;
         }
@@ -197,6 +197,8 @@ export default {
           color: #ffffff;
           text-decoration: none;
           font-weight: 500;
+          font-size: 15px;
+          padding-top: 1px;
           cursor: pointer;
           span {
             vertical-align: middle;
@@ -210,7 +212,8 @@ export default {
           position: relative;
           display: inline-block;
           height: 55px;
-          top: 15px;
+          top: 16px;
+          padding-top: 1px;
           cursor: pointer;
           &:hover > .chain-dropdown {
             display: block !important;
