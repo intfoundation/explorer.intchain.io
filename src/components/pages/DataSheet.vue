@@ -129,7 +129,7 @@
     methods: {
       coinMarket () {
         let that = this;
-        axios.get('/api/intInfo').then(res1 => {
+        axios.get('https://titansexplorer.intchain.io/api/wallet/intInfo').then(res1 => {
           let obj = res1.data;
           that.int.price = obj.intPrice;
           that.int.volume_24h = dataFilter(obj.volumeDay * obj.intPrice,4);
